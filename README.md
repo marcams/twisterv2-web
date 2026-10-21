@@ -1,6 +1,6 @@
 # TwisterV2 Web
 
-Aplicação web para modelagem paramétrica, visualização 3D e exportação de luminárias Twister.
+Aplicação web open-source para modelagem paramétrica de vasos e cúpulas para luminárias e geração de malhas para impressão 3D.
 
 ## Executar
 
