@@ -46,6 +46,7 @@ body { font-family:"Segoe UI",system-ui,sans-serif; font-size:12.5px; background
 .brand { display:flex; align-items:center; gap:8px; font-weight:700; font-size:15px; color:var(--fg-header); }
 .brand-badge { font-size:10px; background:var(--accent); color:#fff; padding:2px 7px; border-radius:4px; font-weight:600; }
 .toolbar { display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+#language-select { min-width:86px; padding:4px 5px; border:1px solid var(--border); border-radius:4px; background:var(--bg-widget); color:var(--fg-main); font:inherit; font-size:11px; }
 button { background:var(--bg-widget); color:var(--fg-main); border:1px solid var(--border); border-radius:4px; padding:4px 9px; font-size:12px; cursor:pointer; display:inline-flex; align-items:center; gap:4px; }
 button:hover { background:var(--bg-hover); }
 button.primary { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600; }
@@ -205,6 +206,11 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
     <button id="btn-export-stl" class="primary" title="Exportar STL (Ctrl/Cmd+E)" disabled>⬇ Exportar STL</button>
     <button id="btn-debug" onclick="var d=document.getElementById('debug-drawer');d.hidden=!d.hidden;">🐞 Debug</button>
     <button id="btn-about" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="about-overlay">ⓘ Sobre</button>
+    <select id="language-select" aria-label="Idioma" title="Idioma">
+      <option value="en">English</option>
+      <option value="pt-BR">Português (Brasil)</option>
+      <option value="es">Español</option>
+    </select>
     <button id="btn-theme" title="Alternar tema (T)" aria-label="Alternar tema">🌓</button>
   </div>
 </header>
@@ -397,6 +403,253 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
 </footer>
 
 <script>
+const APP_LANGUAGES = ['en', 'pt-BR', 'es'];
+const APP_TRANSLATIONS = {
+  'Undo':['Undo','Desfazer','Deshacer'], '↶ Undo':['↶ Undo','↶ Desfazer','↶ Deshacer'], 'Redo':['Redo','Refazer','Rehacer'], '↷ Redo':['↷ Redo','↷ Refazer','↷ Rehacer'],
+  'Enquadrar':['Frame','Enquadrar','Encuadrar'], 'Enquadrar modelo (F)':['Frame model (F)','Enquadrar modelo (F)','Encuadrar modelo (F)'],
+  '⌖ Enquadrar':['⌖ Frame','⌖ Enquadrar','⌖ Encuadrar'], 'Abrir JSON':['Open JSON','Abrir JSON','Abrir JSON'], '📂 Abrir JSON':['📂 Open JSON','📂 Abrir JSON','📂 Abrir JSON'], 'Salvar JSON':['Save JSON','Salvar JSON','Guardar JSON'],
+  '💾 Salvar JSON':['💾 Save JSON','💾 Salvar JSON','💾 Guardar JSON'],
+  'Salvar projeto (Ctrl/Cmd+S)':['Save project (Ctrl/Cmd+S)','Salvar projeto (Ctrl/Cmd+S)','Guardar proyecto (Ctrl/Cmd+S)'],
+  'Exportar STL':['Export STL','Exportar STL','Exportar STL'], '⬇ Exportar STL':['⬇ Export STL','⬇ Exportar STL','⬇ Exportar STL'], 'Exportar STL (Ctrl/Cmd+E)':['Export STL (Ctrl/Cmd+E)','Exportar STL (Ctrl/Cmd+E)','Exportar STL (Ctrl/Cmd+E)'],
+  'Sobre':['About','Sobre','Acerca de'], 'ⓘ Sobre':['ⓘ About','ⓘ Sobre','ⓘ Acerca de'], '🐞 Debug':['🐞 Debug','🐞 Diagnóstico','🐞 Depuración'], 'Idioma':['Language','Idioma','Idioma'], 'Alternar tema (T)':['Toggle theme (T)','Alternar tema (T)','Cambiar tema (T)'],
+  'Alternar tema':['Toggle theme','Alternar tema','Cambiar tema'],
+  'Fechar janela Sobre':['Close About window','Fechar janela Sobre','Cerrar ventana Acerca de'], 'Fechar':['Close','Fechar','Cerrar'],
+  'Sobre o aplicativo':['About the app','Sobre o aplicativo','Acerca de la aplicación'],
+  'Ferramenta de modelagem paramétrica para criar, visualizar e exportar luminárias Twister em 3D.':['A parametric modeling tool to create, view, and export 3D Twister lampshades.','Ferramenta de modelagem paramétrica para criar, visualizar e exportar luminárias Twister em 3D.','Herramienta de modelado paramétrico para crear, visualizar y exportar pantallas Twister en 3D.'],
+  'Versão':['Version','Versão','Versión'], 'Criador':['Creator','Criador','Creador'], 'Aplicativo':['Application','Aplicativo','Aplicación'],
+  'Licença do aplicativo':['Application license','Licença do aplicativo','Licencia de la aplicación'], 'GNU AGPL v3.0 ou posterior':['GNU AGPL v3.0 or later','GNU AGPL v3.0 ou posterior','GNU AGPL v3.0 o posterior'],
+  'Código-fonte':['Source code','Código-fonte','Código fuente'], 'GitHub · código e versões':['GitHub · source and releases','GitHub · código e versões','GitHub · código y versiones'],
+  'Você pode redistribuir e modificar este aplicativo sob os termos da licença. O software é fornecido sem garantias.':['You may redistribute and modify this application under the terms of the license. The software is provided without warranty.','Você pode redistribuir e modificar este aplicativo sob os termos da licença. O software é fornecido sem garantias.','Puedes redistribuir y modificar esta aplicación según los términos de la licencia. El software se proporciona sin garantías.'],
+  'Créditos de terceiros':['Third-party credits','Créditos de terceiros','Créditos de terceros'],
+  'Three.js — Copyright 2010–2021 Three.js Authors, distribuído sob a licença MIT.':['Three.js — Copyright 2010–2021 Three.js Authors, distributed under the MIT License.','Three.js — Copyright 2010–2021 Three.js Authors, distribuído sob a licença MIT.','Three.js — Copyright 2010–2021 Three.js Authors, distribuido bajo la licencia MIT.'],
+  'Modelagem paramétrica · Visualização 3D · Exportação STL':['Parametric modeling · 3D visualization · STL export','Modelagem paramétrica · Visualização 3D · Exportação STL','Modelado paramétrico · Visualización 3D · Exportación STL'],
+  'Painéis da aplicação':['Application panels','Painéis da aplicação','Paneles de la aplicación'], 'Editor':['Editor','Editor','Editor'], 'Modelo 3D':['3D model','Modelo 3D','Modelo 3D'], 'Controles':['Controls','Controles','Controles'], '📚 Presets ▾':['📚 Presets ▾','📚 Predefinições ▾','📚 Preajustes ▾'],
+  'Pipeline de Estágios':['Stage pipeline','Pipeline de Estágios','Etapas del proceso'], 'Adicionar':['Add','Adicionar','Añadir'],
+  'Flex Shape (fundação)':['Flex Shape (foundation)','Flex Shape (fundação)','Flex Shape (base)'], 'Polygon Base (fundação)':['Polygon Base (foundation)','Polygon Base (fundação)','Polygon Base (base)'],
+  'Curva Spline (USP)':['Spline curve (USP)','Curva Spline (USP)','Curva spline (USP)'], 'Spline:':['Spline:','Spline:','Spline:'], 'Tipo:':['Type:','Tipo:','Tipo:'],
+  'PCHIP (Monotônica Fritsch-Carlson)':['PCHIP (Fritsch–Carlson monotone)','PCHIP (Monotônica Fritsch-Carlson)','PCHIP (monótona de Fritsch-Carlson)'],
+  'Cubic Spline (Natural)':['Cubic spline (natural)','Cubic Spline (Natural)','Spline cúbica (natural)'], 'Linear':['Linear','Linear','Lineal'],
+  'Perfil Vertical (Z)':['Vertical profile (Z)','Perfil Vertical (Z)','Perfil vertical (Z)'], '📈 Perfil Vertical (Z)':['📈 Vertical profile (Z)','📈 Perfil Vertical (Z)','📈 Perfil vertical (Z)'],
+  'Seção Polar 2D (Z)':['2D polar section (Z)','Seção Polar 2D (Z)','Sección polar 2D (Z)'], '🎯 Seção Polar 2D (Z)':['🎯 2D polar section (Z)','🎯 Seção Polar 2D (Z)','🎯 Sección polar 2D (Z)'],
+  'Mesh 3D':['3D mesh','Mesh 3D','Malla 3D'], '🧊 Mesh 3D':['🧊 3D mesh','🧊 Mesh 3D','🧊 Malla 3D'],
+  'Arrastar nó:':['Drag node:','Arrastar nó:','Arrastrar nodo:'], 'Move valor/Z':['Move value/Z','Move valor/Z','Mover valor/Z'], 'Linha amarela:':['Yellow line:','Linha amarela:','Línea amarilla:'], 'Seeker Z':['Z seeker','Seeker Z','Marcador Z'],
+  'Duplo clique:':['Double-click:','Duplo clique:','Doble clic:'], 'Novo nó':['New node','Novo nó','Nuevo nodo'], 'Botão direito no nó:':['Right-click node:','Botão direito no nó:','Clic derecho en el nodo:'], 'Suavizar/Excluir':['Smooth/Delete','Suavizar/Excluir','Suavizar/Eliminar'],
+  'Expandir Perfil Vertical (Z) para o painel central':['Expand vertical profile (Z) to the main panel','Expandir Perfil Vertical (Z) para o painel central','Ampliar perfil vertical (Z) al panel central'],
+  'Editor de forma polar':['Polar shape editor','Editor de forma polar','Editor de forma polar'], 'Janela Mesh 3D':['3D mesh window','Janela Mesh 3D','Ventana de malla 3D'],
+  'Visualização tridimensional interativa':['Interactive 3D view','Visualização tridimensional interativa','Vista 3D interactiva'], 'Vértices:':['Vertices:','Vértices:','Vértices:'], 'Faces:':['Faces:','Faces:','Caras:'], 'Modo:':['Mode:','Modo:','Modo:'],
+  '🐞 CONSOLE DE DIAGNÓSTICO':['🐞 DIAGNOSTICS CONSOLE','🐞 CONSOLE DE DIAGNÓSTICO','🐞 CONSOLA DE DIAGNÓSTICO'], '📋 Copiar Logs':['📋 Copy logs','📋 Copiar Logs','📋 Copiar registros'], '✖ Ocultar':['✖ Hide','✖ Ocultar','✖ Ocultar'],
+  'Janela Seção Polar 2D (Z)':['2D polar section (Z) window','Janela Seção Polar 2D (Z)','Ventana de sección polar 2D (Z)'],
+  'Parâmetros do Estágio':['Stage parameters','Parâmetros do Estágio','Parámetros de la etapa'], 'Resolução, Engine & Envelope':['Resolution, engine & envelope','Resolução, Engine & Envelope','Resolución, motor y envolvente'],
+  'Engine:':['Engine:','Engine:','Motor:'], 'Uniform Grid (Clássico)':['Uniform grid (classic)','Uniform Grid (Clássico)','Cuadrícula uniforme (clásica)'],
+  'Auto Nyquist + Z':['Auto Nyquist + Z','Auto Nyquist + Z','Nyquist + Z automáticos'], 'Torção Lagrangiana':['Lagrangian torsion','Torção Lagrangiana','Torsión lagrangiana'],
+  'Manufatura & Solidificação':['Manufacturing & solidification','Manufatura & Solidificação','Fabricación y solidificación'], 'Impressão:':['Printing:','Impressão:','Impresión:'],
+  'Modo Vaso (Casca Simples)':['Vase mode (single shell)','Modo Vaso (Casca Simples)','Modo jarrón (pared simple)'], 'Modo Sólido (Parede Dupla)':['Solid mode (double wall)','Modo Sólido (Parede Dupla)','Modo sólido (pared doble)'],
+  'Fechar Base (Cap)':['Close base (cap)','Fechar Base (Cap)','Cerrar base (tapa)'], 'Fechar Topo (Cap)':['Close top (cap)','Fechar Topo (Cap)','Cerrar parte superior (tapa)'],
+  'Visualização 3D & Overhang':['3D view & overhang','Visualização 3D & Overhang','Vista 3D y voladizos'], 'Cores Overhang':['Overhang colors','Cores Overhang','Colores de voladizo'], 'Diferenciar paredes':['Distinguish walls','Diferenciar paredes','Diferenciar paredes'],
+  'Wireframe (W)':['Wireframe (W)','Wireframe (W)','Estructura alámbrica (W)'], 'Flat Shading':['Flat shading','Flat Shading','Sombreado plano'], 'Anel Z & Eixos':['Z ring & axes','Anel Z & Eixos','Anillo Z y ejes'], 'Mostrar Mesa':['Show build plate','Mostrar Mesa','Mostrar base de impresión'],
+  'Editar valor…':['Edit value…','Editar valor…','Editar valor…'], 'Editar altura Z…':['Edit Z height…','Editar altura Z…','Editar altura Z…'], 'Suavizar neste nó':['Smooth at this node','Suavizar neste nó','Suavizar en este nodo'],
+  'Excluir nó':['Delete node','Excluir nó','Eliminar nodo'], 'Inserir nó com valores…':['Insert node with values…','Inserir nó com valores…','Insertar nodo con valores…'],
+  'Inicializando TwisterV2 v2.0...':['Initializing TwisterV2 v2.0...','Inicializando TwisterV2 v2.0...','Iniciando TwisterV2 v2.0...'], 'Progresso da geração da malha':['Mesh generation progress','Progresso da geração da malha','Progreso de generación de malla'],
+  'Escala radial':['Radial scale','Escala radial','Escala radial'], 'Normalização da forma':['Shape normalization','Normalização da forma','Normalización de la forma'], 'Multiplicador':['Multiplier','Multiplicador','Multiplicador'],
+  'Raio externo fixo':['Fixed outer radius','Raio externo fixo','Radio exterior fijo'], 'Raio interno fixo':['Fixed inner radius','Raio interno fixo','Radio interior fijo'], 'Forma da fundação':['Foundation shape','Forma da fundação','Forma de la base'],
+  'Círculo':['Circle','Círculo','Círculo'], 'Quadrado':['Square','Quadrado','Cuadrado'], 'Polígono':['Polygon','Polígono','Polígono'], 'Estrela':['Star','Estrela','Estrella'], 'Coração':['Heart','Coração','Corazón'], 'Gota':['Teardrop','Gota','Gota'],
+  'Engrenagem':['Gear','Engrenagem','Engranaje'], 'Supershape customizada':['Custom supershape','Supershape customizada','Superforma personalizada'], 'Lados / dentes':['Sides / teeth','Lados / dentes','Lados / dientes'], 'Arredondamento':['Roundness','Arredondamento','Redondez'], 'Amplitude dos dentes':['Tooth amplitude','Amplitude dos dentes','Amplitud de los dientes'],
+  'Propagar por raio simétrico':['Propagate by symmetric radius','Propagar por raio simétrico','Propagar por radio simétrico'], 'Frequência angular':['Angular frequency','Frequência angular','Frecuencia angular'], 'Forma de onda':['Waveform','Forma de onda','Forma de onda'],
+  'Seno':['Sine','Seno','Seno'], 'Quadrada':['Square','Quadrada','Cuadrada'], 'Triangular':['Triangular','Triangular','Triangular'], 'Dente de serra':['Sawtooth','Dente de serra','Diente de sierra'], 'Modo da onda':['Wave mode','Modo da onda','Modo de onda'],
+  'Automático':['Automatic','Automático','Automático'], 'Direta (Afiada)':['Direct (sharp)','Direta (Afiada)','Directa (nítida)'], 'Direta (afiada)':['Direct (sharp)','Direta (afiada)','Directa (nítida)'], 'Fourier (Suave)':['Fourier (smooth)','Fourier (Suave)','Fourier (suave)'], 'Fourier (suave)':['Fourier (smooth)','Fourier (suave)','Fourier (suave)'], 'Harmônicos':['Harmonics','Harmônicos','Armónicos'],
+  'Padrão Gray–Scott':['Gray–Scott pattern','Padrão Gray–Scott','Patrón Gray–Scott'], 'Resolução da textura':['Texture resolution','Resolução da textura','Resolución de textura'], 'Iterações':['Iterations','Iterações','Iteraciones'], 'Contraste':['Contrast','Contraste','Contraste'],
+  'Labyrinth':['Labyrinth','Labirinto','Laberinto'], 'Spots':['Spots','Pontos','Manchas'], 'Coral':['Coral','Coral','Coral'], 'Worms':['Worms','Vermes','Gusanos'], 'Mitosis':['Mitosis','Mitose','Mitosis'],
+  'Feed rate':['Feed rate','Taxa de alimentação','Tasa de alimentación'], 'Kill rate':['Kill rate','Taxa de remoção','Tasa de eliminación'],
+  'Escala angular':['Angular scale','Escala angular','Escala angular'], 'Escala vertical':['Vertical scale','Escala vertical','Escala vertical'], 'Seed':['Seed','Semente','Semilla'], 'Pontos iniciais':['Initial points','Pontos iniciais','Puntos iniciales'], 'Raio máximo inicial (células)':['Maximum initial radius (cells)','Raio máximo inicial (células)','Radio inicial máximo (celdas)'], 'Inverter padrão':['Invert pattern','Inverter padrão','Invertir patrón'],
+  'Resolução Angular':['Angular resolution','Resolução Angular','Resolución angular'], 'Precisão adaptativa':['Adaptive precision','Precisão adaptativa','Precisión adaptativa'], 'Suavização do envelope':['Envelope smoothing','Suavização do envelope','Suavizado de la envolvente'], 'Camadas Z (n_layers)':['Z layers (n_layers)','Camadas Z (n_layers)','Capas Z (n_layers)'],
+  'Amostras por ciclo':['Samples per cycle','Amostras por ciclo','Muestras por ciclo'], 'Largura do bico (mm)':['Nozzle width (mm)','Largura do bico (mm)','Ancho de boquilla (mm)'], 'Altura da camada (mm)':['Layer height (mm)','Altura da camada (mm)','Altura de capa (mm)'], 'Espessura da parede (mm)':['Wall thickness (mm)','Espessura da parede (mm)','Grosor de pared (mm)'],
+  '✨ Aplicar recomendação':['✨ Apply recommendation','✨ Aplicar recomendação','✨ Aplicar recomendación'], 'Aplica os valores recomendados para este estágio e seus parâmetros atuais.':['Applies the recommended values for this stage and its current parameters.','Aplica os valores recomendados para este estágio e seus parâmetros atuais.','Aplica los valores recomendados para esta etapa y sus parámetros actuales.'],
+  'Adicionar seção para começar a editar a forma polar.':['Add a section to start editing the polar shape.','Adicione uma seção para começar a editar a forma polar.','Añade una sección para empezar a editar la forma polar.'],
+  '＋ Seção em Z atual':['＋ Section at current Z','＋ Seção em Z atual','＋ Sección en Z actual'], '− Remover seção':['− Remove section','− Remover seção','− Eliminar sección'],
+  'Adicionar seção em Z atual':['Add section at current Z','Adicionar seção em Z atual','Añadir sección en Z actual'], 'Remover seção':['Remove section','Remover seção','Eliminar sección'], 'Seção transversal editável':['Editable cross-section','Seção transversal editável','Sección transversal editable'],
+  'Já existe uma seção próxima desta altura Z.':['A section already exists near this Z height.','Já existe uma seção próxima desta altura Z.','Ya existe una sección cerca de esta altura Z.'],
+  'Excluir este ponto do perfil polar?':['Delete this point from the polar profile?','Excluir este ponto do perfil polar?','¿Eliminar este punto del perfil polar?'],
+  'Altura Z do novo nó (mm):':['Z height of the new node (mm):','Altura Z do novo nó (mm):','Altura Z del nuevo nodo (mm):'], 'Valor de':['Value of','Valor de','Valor de'],
+  'Informe valores numéricos válidos.':['Enter valid numeric values.','Informe valores numéricos válidos.','Introduce valores numéricos válidos.'], 'Informe um valor numérico válido.':['Enter a valid numeric value.','Informe um valor numérico válido.','Introduce un valor numérico válido.'],
+  'O novo nó precisa estar dentro do perfil e a pelo menos 0,5 mm dos nós vizinhos.':['The new node must be within the profile and at least 0.5 mm from neighboring nodes.','O novo nó precisa estar dentro do perfil e a pelo menos 0,5 mm dos nós vizinhos.','El nuevo nodo debe estar dentro del perfil y a 0,5 mm como mínimo de los nodos vecinos.'],
+  'Altura Z (mm):':['Z height (mm):','Altura Z (mm):','Altura Z (mm):'], 'A altura precisa ficar entre os nós vizinhos, com espaçamento mínimo de 0,5 mm.':['The height must stay between neighboring nodes, with a minimum spacing of 0.5 mm.','A altura precisa ficar entre os nós vizinhos, com espaçamento mínimo de 0,5 mm.','La altura debe quedar entre los nodos vecinos, con una separación mínima de 0,5 mm.'],
+  'Resolução da malha':['Mesh resolution','Resolução da malha','Resolución de malla'], 'Visualização 3D indisponível':['3D view unavailable','Visualização 3D indisponível','Vista 3D no disponible'],
+  'Este navegador não conseguiu inicializar WebGL. Você ainda pode editar o perfil e exportar o STL. Detalhe:':['This browser could not initialize WebGL. You can still edit the profile and export STL. Details:','Este navegador não conseguiu inicializar WebGL. Você ainda pode editar o perfil e exportar o STL. Detalhe:','Este navegador no pudo iniciar WebGL. Aún puedes editar el perfil y exportar el STL. Detalle:'],
+  'WebGL perdeu o contexto gráfico':['WebGL lost the graphics context','WebGL perdeu o contexto gráfico','WebGL perdió el contexto gráfico'], 'Contexto WebGL perdido; o navegador pode tentar restaurá-lo.':['WebGL context lost; the browser may try to restore it.','Contexto WebGL perdido; o navegador pode tentar restaurá-lo.','Se perdió el contexto de WebGL; el navegador puede intentar restaurarlo.'],
+  'Atualizando prévia…':['Updating preview…','Atualizando prévia…','Actualizando vista previa…'], 'Gerando malha em segundo plano…':['Generating mesh in the background…','Gerando malha em segundo plano…','Generando malla en segundo plano…'],
+  'Pronto — Modelo 3D Renderizado':['Ready — 3D model rendered','Pronto — Modelo 3D Renderizado','Listo — modelo 3D renderizado'], 'Malha pronta — visualização 3D indisponível':['Mesh ready — 3D view unavailable','Malha pronta — visualização 3D indisponível','Malla lista — vista 3D no disponible'],
+  'Erro ao exibir malha':['Error displaying mesh','Erro ao exibir malha','Error al mostrar la malla'], 'Preparando visualização 3D...':['Preparing 3D view...','Preparando visualização 3D...','Preparando vista 3D...'],
+  'Nenhum arquivo JSON encontrado na pasta selecionada.':['No JSON files found in the selected folder.','Nenhum arquivo JSON encontrado na pasta selecionada.','No se encontraron archivos JSON en la carpeta seleccionada.'],
+  '📂 Selecionar / atualizar pasta…':['📂 Select / refresh folder…','📂 Selecionar / atualizar pasta…','📂 Seleccionar / actualizar carpeta…'], 'A pasta selecionada não contém arquivos JSON.':['The selected folder contains no JSON files.','A pasta selecionada não contém arquivos JSON.','La carpeta seleccionada no contiene archivos JSON.'],
+  'Tipo de interpolação da spline':['Spline interpolation type','Tipo de interpolação da spline','Tipo de interpolación de la spline'], 'Logs copiados para a área de transferência!':['Logs copied to clipboard!','Logs copiados para a área de transferência!','¡Registros copiados al portapapeles!'],
+  'Erro ao copiar:':['Copy error:','Erro ao copiar:','Error al copiar:'], 'Logger ativo. Verificando Three.js...':['Logger active. Checking Three.js...','Logger ativo. Verificando Three.js...','Registro activo. Comprobando Three.js...'],
+  'Three.js embutido não foi carregado.':['Embedded Three.js failed to load.','Three.js embutido não foi carregado.','No se pudo cargar Three.js integrado.'],
+  'Viewport 3D pronta.':['3D viewport ready.','Viewport 3D pronta.','Vista 3D lista.'],
+  'Contexto WebGL restaurado.':['WebGL context restored.','Contexto WebGL restaurado.','Contexto WebGL restaurado.'],
+  'Já existe uma seção próxima desta altura Z.':['A section already exists near this Z height.','Já existe uma seção próxima desta altura Z.','Ya existe una sección cerca de esta altura Z.'],
+  'Presets carregados nesta sessão; o navegador não permitiu salvar a lista localmente.':['Presets loaded for this session; the browser did not allow the list to be saved locally.','Presets carregados nesta sessão; o navegador não permitiu salvar a lista localmente.','Preajustes cargados en esta sesión; el navegador no permitió guardar la lista localmente.'],
+  'Interface pronta. Gerando pré-visualização inicial.':['Interface ready. Generating initial preview.','Interface pronta. Gerando pré-visualização inicial.','Interfaz lista. Generando vista previa inicial.'],
+  'Erro ao exibir malha:':['Error displaying mesh:','Erro ao exibir malha:','Error al mostrar la malla:'],
+  'Erro ao gerar malha:':['Mesh generation error:','Erro ao gerar malha:','Error al generar la malla:'],
+  'Erro ao ler JSON:':['Error reading JSON:','Erro ao ler JSON:','Error al leer JSON:'],
+  'JSON importado com sucesso:':['JSON imported successfully:','JSON importado com sucesso:','JSON importado correctamente:'],
+  'Preset carregado: ':['Preset loaded: ','Preset carregado: ','Preajuste cargado: '], 'Erro ao carregar preset ':['Error loading preset ','Erro ao carregar preset ','Error al cargar el preajuste '],
+  'ERRO JS:':['JS ERROR:','ERRO JS:','ERROR JS:'],
+  'Three.js r':['Three.js r','Three.js r','Three.js r'], 'carregado com sucesso.':['loaded successfully.','carregado com sucesso.','cargado correctamente.'],
+  'A tampa precisa de pelo menos três pontos distintos.':['The cap needs at least three distinct points.','A tampa precisa de pelo menos três pontos distintos.','La tapa necesita al menos tres puntos distintos.'],
+  'O contorno da tampa é degenerado.':['The cap outline is degenerate.','O contorno da tampa é degenerado.','El contorno de la tapa es degenerado.'], 'O contorno da tampa tem área nula.':['The cap outline has zero area.','O contorno da tampa tem área nula.','El contorno de la tapa tiene área nula.'],
+  'Não foi possível triangular a tampa:':['Could not triangulate the cap:','Não foi possível triangular a tampa:','No se pudo triangular la tapa:'],
+  'A triangulação da tampa terminou com uma face degenerada.':['Cap triangulation ended with a degenerate face.','A triangulação da tampa terminou com uma face degenerada.','La triangulación de la tapa terminó con una cara degenerada.'],
+  'O arquivo JSON precisa conter um objeto de projeto.':['The JSON file must contain a project object.','O arquivo JSON precisa conter um objeto de projeto.','El archivo JSON debe contener un objeto de proyecto.'],
+  'O Worker retornou uma malha vazia ou uma mensagem incompleta; refazendo a geração localmente.':['The worker returned an empty mesh or an incomplete message; retrying locally.','O Worker retornou uma malha vazia ou uma mensagem incompleta; refazendo a geração localmente.','El worker devolvió una malla vacía o un mensaje incompleto; se volverá a generar localmente.'],
+  'O Worker falhou; refazendo a geração localmente.':['The worker failed; retrying mesh generation locally.','O Worker falhou; refazendo a geração localmente.','El worker falló; se volverá a generar la malla localmente.'],
+  'Web Worker indisponível; gerando a malha localmente.':['Web Worker unavailable; generating the mesh locally.','Web Worker indisponível; gerando a malha localmente.','Web Worker no disponible; generando la malla localmente.'],
+  'Não foi possível iniciar o Worker; gerando a malha localmente.':['Could not start the worker; generating the mesh locally.','Não foi possível iniciar o Worker; gerando a malha localmente.','No se pudo iniciar el worker; generando la malla localmente.'],
+  'A resposta do Worker não pôde ser lida; refazendo a geração localmente.':['The worker response could not be read; retrying locally.','A resposta do Worker não pôde ser lida; refazendo a geração localmente.','No se pudo leer la respuesta del worker; se volverá a generar localmente.'],
+  'Adicione uma seção para começar a editar a forma polar.':['Add a section to start editing the polar shape.','Adicione uma seção para começar a editar a forma polar.','Añade una sección para empezar a editar la forma polar.'],
+  'STL Binário exportado (':['Binary STL exported (','STL Binário exportado (','STL binario exportado (' ],
+  'Malha gerada com sucesso (':['Mesh generated successfully (','Malha gerada com sucesso (','Malla generada correctamente ('],
+  'Raio':['Radius','Raio','Radio'], 'Torção':['Twist','Torção','Torsión'], 'Fase':['Phase','Fase','Fase'], 'Pico':['Peak','Pico','Pico'], 'Vale':['Valley','Vale','Valle'], 'Amplitude':['Amplitude','Amplitude','Amplitud'], 'Amp.':['Amp.','Amp.','Amp.'], 'Seção':['Section','Seção','Sección'],
+  'controle deslizante':['slider','controle deslizante','control deslizante'], 'valor numérico':['numeric value','valor numérico','valor numérico'], 'Excluir':['Delete','Excluir','Eliminar'],
+  'voltas':['turns','voltas','vueltas'], 'adimensional':['dimensionless','adimensional','adimensional'], 'Nó':['Node','Nó','Nodo'], 'Ponto polar':['Polar point','Ponto polar','Punto polar'],
+  'Radius profile':['Radius profile','Perfil de raio','Perfil de radio'], 'Torsion profile':['Torsion profile','Perfil de torção','Perfil de torsión'], 'Phase profile':['Phase profile','Perfil de fase','Perfil de fase'], 'Amplitude profile':['Amplitude profile','Perfil de amplitude','Perfil de amplitud'],
+  'Polygon Base':['Polygon Base','Base poligonal','Base poligonal'], 'Flex Shape':['Flex Shape','Forma flexível','Forma flexible'], 'Radial Pattern':['Radial Pattern','Padrão radial','Patrón radial'], 'Harmonics':['Harmonics','Harmônicos','Armónicos'], 'Reaction Diffusion':['Reaction Diffusion','Difusão de reação','Reacción-difusión'],
+  'Feature-Aligned (Chebyshev Snap)':['Feature-aligned (Chebyshev snap)','Feature-Aligned (Chebyshev Snap)','Alineado a rasgos (ajuste de Chebyshev)'], 'Uniform Grid':['Uniform grid','Uniform Grid','Cuadrícula uniforme'],
+  'vaso':['vase','vaso','jarrón'], 'solido':['solid','solido','sólido'], 'Vase':['Vase','Vaso','Jarrón'],
+  'Preview LOD em tempo real':['Real-time LOD preview','Preview LOD em tempo real','Vista previa LOD en tiempo real'],
+  'Vértices':['Vertices','Vértices','Vértices'], 'vértices':['vertices','vértices','vértices'], 'Caras':['Faces','Faces','Caras'], 'Faces':['Faces','Faces','Caras'], 'Faces:':['Faces:','Faces:','Caras:'], 'faces':['faces','faces','caras'], 'Nó:':['Node:','Nó:','Nodo:'], 'mm':['mm','mm','mm'],
+  'Gerando malha':['Generating mesh','Gerando malha','Generando malla'], 'WebGL indisponível:':['WebGL unavailable:','WebGL indisponível:','WebGL no disponible:'],
+  'Ativar':['Enable','Ativar','Activar'], 'Excluir estágio':['Delete stage','Excluir estágio','Eliminar etapa'], 'Erro:':['Error:','Erro:','Error:'],
+  'Janela grande':['Main window','Janela grande','Ventana principal'], 'Janela pequena':['Small window','Janela pequena','Ventana pequeña'],
+  'Expandir':['Expand','Expandir','Ampliar'], 'para o painel central':['to the main panel','para o painel central','al panel central']
+};
+const APP_TRANSLATION_INDEX = { en:0, 'pt-BR':1, es:2 };
+const APP_TRANSLATION_SOURCE = new Map();
+for (const [source,values] of Object.entries(APP_TRANSLATIONS)) {
+  values.forEach(value => { if (!APP_TRANSLATION_SOURCE.has(value)) APP_TRANSLATION_SOURCE.set(value, source); });
+}
+const APP_TRANSLATION_PREFIXES = Object.entries(APP_TRANSLATIONS)
+  .filter(([source]) => source.endsWith(':') || source.endsWith(' '))
+  .flatMap(([source,values]) => values.map(value => ({source,value})))
+  .sort((a,b) => b.value.length - a.value.length);
+function appT(source) {
+  const key = APP_TRANSLATIONS[source] ? source : (APP_TRANSLATION_SOURCE.get(source) || source);
+  return APP_TRANSLATIONS[key]?.[APP_TRANSLATION_INDEX[appLanguage]] ?? source;
+}
+function translateAppText(value) {
+  const source = APP_TRANSLATION_SOURCE.get(value) || value;
+  const exact = appT(source);
+  if (exact !== source) return exact;
+  const prefix = APP_TRANSLATION_PREFIXES.find(item => item.value && source.startsWith(item.value) && source.length > item.value.length);
+  if (prefix) return `${appT(prefix.source)}${source.slice(prefix.value.length)}`;
+  let match = source.match(/^Seção Z ([-\d.,]+) mm$/);
+  if (match) return `${appT('Seção')} Z ${match[1]} mm`;
+  match = source.match(/^Gerando malha… (\d+)%$/);
+  if (match) return `${appT('Gerando malha')}… ${match[1]}%`;
+  match = source.match(/^STL Binário exportado \((.*) faces\)\.$/);
+  if (match) return `${appT('STL Binário exportado (')}${match[1]} ${appT('faces')}.`;
+  match = source.match(/^Three\.js r(.*) carregado com sucesso\.$/);
+  if (match) return `Three.js r${match[1]} ${appT('carregado com sucesso.')}`;
+  match = source.match(/^Malha gerada com sucesso \((.*) vértices, (.*) faces\)\.$/);
+  if (match) return `${appT('Malha gerada com sucesso (')}${match[1]} ${appT('vértices')}, ${match[2]} ${appT('faces')}.`;
+  match = source.match(/^Ponto polar (\d+)$/);
+  if (match) return `${appT('Ponto polar')} ${match[1]}`;
+  match = source.match(/^([+−]\s*)(Seção em Z atual|Remover seção)$/);
+  if (match) return `${match[1]}${appT(match[2])}`;
+  match = source.match(/^(.*), controle deslizante$/);
+  if (match) return `${appT(match[1])}, ${appT('controle deslizante')}`;
+  match = source.match(/^(.*), valor numérico$/);
+  if (match) return `${appT(match[1])}, ${appT('valor numérico')}`;
+  match = source.match(/^Ativar (.*)$/);
+  if (match) return `${appT('Ativar')} ${appT(match[1])}`;
+  match = source.match(/^Excluir (.*)$/);
+  if (match) return `${appT('Excluir')} ${appT(match[1])}`;
+  match = source.match(/^\[\+([\d.]+s\] )(.*)$/);
+  if (match) return `[+${match[1]}${translateAppText(match[2])}`;
+  return source;
+}
+let appLanguage = (() => {
+  try {
+    const saved = localStorage.getItem('twisterv2-language');
+    if (APP_LANGUAGES.includes(saved)) return saved;
+  } catch (_) {}
+  const browser = (navigator.language || '').toLowerCase();
+  return browser.startsWith('es') ? 'es' : browser.startsWith('en') ? 'en' : 'pt-BR';
+})();
+const textSourceMap = new WeakMap(), textOutputMap = new WeakMap(), attrSourceMap = new WeakMap(), attrOutputMap = new WeakMap();
+function translateTextNode(node) {
+  const current = node.nodeValue;
+  let source = textSourceMap.get(node);
+  if (source === undefined || current !== textOutputMap.get(node)) {
+    source = current;
+    textSourceMap.set(node, source);
+  }
+  if (!source.trim()) { textOutputMap.set(node, current); return; }
+  const leading = source.match(/^\s*/)?.[0] || '', trailing = source.match(/\s*$/)?.[0] || '';
+  const core = source.slice(leading.length, source.length - trailing.length);
+  const translated = leading + translateAppText(core) + trailing;
+  if (current !== translated) node.nodeValue = translated;
+  textOutputMap.set(node, translated);
+}
+const APP_TRANSLATABLE_ATTRIBUTES = ['title','aria-label','aria-description','placeholder','alt'];
+function translateElement(element) {
+  if (!(element instanceof Element) || element.closest('#preset-dropdown [data-preset-index],[data-i18n-ignore]')) return;
+  for (const name of APP_TRANSLATABLE_ATTRIBUTES) {
+    if (!element.hasAttribute(name)) continue;
+    const current = element.getAttribute(name);
+    let source = attrSourceMap.get(element)?.[name];
+    if (source === undefined || current !== attrOutputMap.get(element)?.[name]) {
+      source = current;
+      const sources = attrSourceMap.get(element) || {}; sources[name] = source; attrSourceMap.set(element, sources);
+    }
+    const translated = translateAppText(source);
+    if (current !== translated) element.setAttribute(name, translated);
+    const outputs = attrOutputMap.get(element) || {}; outputs[name] = translated; attrOutputMap.set(element, outputs);
+  }
+}
+function translateAppTree(root = document.body) {
+  if (!root) return;
+  if (root.nodeType === Node.ELEMENT_NODE) translateElement(root);
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (!parent || parent.closest('script,style,textarea,#language-select,#preset-dropdown [data-preset-index],[data-i18n-ignore]')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  while (walker.nextNode()) translateTextNode(walker.currentNode);
+  if (root.querySelectorAll) root.querySelectorAll('*').forEach(translateElement);
+}
+function applyAppLanguage() {
+  document.documentElement.lang = appLanguage;
+  document.title = appT('TwisterV2 Web v2.0 Full');
+  translateAppTree();
+}
+const languageSelect = document.getElementById('language-select');
+languageSelect.value = appLanguage;
+languageSelect.addEventListener('change', () => {
+  appLanguage = APP_LANGUAGES.includes(languageSelect.value) ? languageSelect.value : 'pt-BR';
+  try { localStorage.setItem('twisterv2-language', appLanguage); } catch (_) {}
+  applyAppLanguage();
+  if (typeof syncUI === 'function') syncUI();
+  if (typeof updateViewLayout === 'function') updateViewLayout();
+  translateAppTree();
+});
+const appLanguageObserver = new MutationObserver(records => {
+  for (const record of records) {
+    if (record.type === 'characterData') translateTextNode(record.target);
+    else if (record.type === 'attributes') translateElement(record.target);
+    else record.addedNodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE) translateTextNode(node);
+      else if (node.nodeType === Node.ELEMENT_NODE) translateAppTree(node);
+    });
+  }
+});
+appLanguageObserver.observe(document.body, { childList:true, subtree:true, characterData:true, attributes:true, attributeFilter:APP_TRANSLATABLE_ATTRIBUTES });
+applyAppLanguage();
+</script>
+
+<script>
 var bootT0 = performance.now();
 function logDebug(msg, level) {
   level = level || 'info';
@@ -420,9 +673,9 @@ function copyLogs() {
   if (!list) return;
   var text = list.innerText;
   navigator.clipboard.writeText(text).then(function() {
-    alert('Logs copiados para a área de transferência!');
+    alert(appT('Logs copiados para a área de transferência!'));
   }).catch(function(err) {
-    alert('Erro ao copiar: ' + err);
+    alert(`${appT('Erro ao copiar:')} ${err}`);
   });
 }
 window.addEventListener('error', function(e) {
@@ -2204,14 +2457,14 @@ catch(error){
   viewport3DAvailable=false;
   const notice=document.createElement('div');notice.className='webgl-unavailable';
   const title=document.createElement('strong');title.textContent='Visualização 3D indisponível';
-  const detail=document.createElement('span');detail.textContent=`Este navegador não conseguiu inicializar WebGL. Você ainda pode editar o perfil e exportar o STL. Detalhe: ${error.message||error}`;
+  const detail=document.createElement('span');detail.textContent=`${appT('Este navegador não conseguiu inicializar WebGL. Você ainda pode editar o perfil e exportar o STL. Detalhe:')} ${error.message||error}`;
   notice.append(title,detail);document.getElementById('mesh3d-view').appendChild(notice);
   const position={z:0};
   viewport={meshItem:null,hasFramedOnce:false,showOverhang:false,edgeHilight:true,lastVertices:null,lastFaces:null,lastNormals:null,lastFaceRoles:null,lastPrintParams:null,
     axesHelper:{visible:true},gridHelper:{visible:true},zRing:{visible:true,position},
     updateMesh(vertices,faces,normals,params,roles,overhang){this.lastVertices=vertices;this.lastFaces=faces;this.lastNormals=normals;this.lastPrintParams=params;this.lastFaceRoles=roles;this.lastOverhangFaces=overhang;},
     refreshMesh(){},frameMesh(){}};
-  logDebug('WebGL indisponível: '+(error.message||error),'err');
+  logDebug(`${appT('WebGL indisponível:')} ${error.message||error}`,'err');
 }
 const meshWorkerClient=new MeshWorkerClient(
   (result,meta)=>applyMeshResult(result,meta),
@@ -2284,16 +2537,29 @@ function getProfileSplineName(compact = false) {
     m_profile:'m', n1_profile:'n₁', n2_profile:'n₂', n3_profile:'n₃',
     pico_profile:'Pico', vale_profile:'Vale', amplitude_profile:'Amplitude'
   };
-  if (compact && activeSpline === 'amplitude_profile') return 'Amp.';
-  return labels[activeSpline] || activeSpline.replace(/_profile$/, '').replaceAll('_', ' ');
+  if (compact && activeSpline === 'amplitude_profile') return appT('Amp.');
+  return appT(labels[activeSpline] || labels[activeSpline.replace(/_profile$/, '')] || activeSpline.replace(/_profile$/, '').replaceAll('_', ' '));
+}
+
+function getSplineDisplayName(splineId) {
+  const labels = {
+    radius_profile:'Radius profile', torsion_profile:'Torsion profile', phase_profile:'Phase profile',
+    m_profile:'m', n1_profile:'n₁', n2_profile:'n₂', n3_profile:'n₃',
+    pico_profile:'Pico', vale_profile:'Vale', amplitude_profile:'Amplitude profile'
+  };
+  return appT(labels[splineId] || splineId.replace(/_profile$/, '').replaceAll('_', ' '));
+}
+
+function getLocalizedStageName(name) {
+  return appT(name);
 }
 
 function getProfileAxisLabel(stage) {
   const Stage = StageRegistry.getClass(stage?.mode);
   const contract = Stage?.getSplineContracts?.()?.[activeSpline] || {};
   const name = getProfileSplineName();
-  const unit = contract.uiDomain === 'mm' ? 'mm' : contract.uiDomain === 'turns' ? 'voltas' : '';
-  return unit ? `${name} (${unit})` : `${name} (adimensional)`;
+  const unit = contract.uiDomain === 'mm' ? 'mm' : contract.uiDomain === 'turns' ? appT('voltas') : '';
+  return unit ? `${name} (${unit})` : `${name} (${appT('adimensional')})`;
 }
 
 function updateSeekerZLabel() {
@@ -2304,7 +2570,7 @@ function updateSeekerZLabel() {
   const curve = CurveData.fromJSON(stage?.params?.[activeSpline], activeSpline, getMaxH());
   const value = curve.getInterpolator()(seekerZ);
   const formattedValue = Number.isFinite(value) ? value.toFixed(2) : '—';
-  const unit = contract.uiDomain === 'mm' ? ' mm' : contract.uiDomain === 'turns' ? ' voltas' : ' adim.';
+  const unit = contract.uiDomain === 'mm' ? ' mm' : contract.uiDomain === 'turns' ? ` ${appT('voltas')}` : ` ${appT('adimensional')}`;
   label.textContent = `Z: ${seekerZ.toFixed(1)} mm | ${getProfileSplineName(true)}: ${formattedValue}${unit}`;
 }
 
@@ -2394,7 +2660,7 @@ function renderProfileEditor2D() {
     c.setAttribute('stroke-width', '2.5'); c.style.cursor = 'grab';
     c.setAttribute('data-point-index', idx);
     c.setAttribute('tabindex','0');c.setAttribute('role','slider');
-    c.setAttribute('aria-label',`Nó ${idx+1}, ${activeSpline}, Z ${pt.z.toFixed(1)} mm`);c.setAttribute('aria-valuemin',String(valueAxis.min));c.setAttribute('aria-valuemax',String(valueAxis.max));c.setAttribute('aria-valuenow',String(pt.value));
+    c.setAttribute('aria-label',`${appT('Nó')} ${idx+1}, ${getProfileSplineName()}, Z ${pt.z.toFixed(1)} mm`);c.setAttribute('aria-valuemin',String(valueAxis.min));c.setAttribute('aria-valuemax',String(valueAxis.max));c.setAttribute('aria-valuenow',String(pt.value));
     svg.appendChild(c);
   });
 }
@@ -2430,6 +2696,7 @@ function renderPolarEditor2D() {
 }
 
 const VIEW_LABELS = { mesh3d:'Mesh 3D', profile:'Perfil Vertical (Z)', polar:'Seção Polar 2D (Z)' };
+function getViewLabel(viewId) { return appT(VIEW_LABELS[viewId]); }
 const VIEW_ELEMENTS = {
   mesh3d:document.getElementById('mesh3d-view'),
   profile:document.getElementById('profile-editor-wrapper'),
@@ -2449,8 +2716,8 @@ function updateViewLayout() {
   smallSlot.appendChild(VIEW_ELEMENTS[smallViewId]);
   const hiddenViewId = Object.keys(VIEW_ELEMENTS).find(id => id !== mainViewId && id !== smallViewId);
   stash.appendChild(VIEW_ELEMENTS[hiddenViewId]);
-  mainSlot.setAttribute('aria-label', `Janela grande: ${VIEW_LABELS[mainViewId]}`);
-  smallSlot.setAttribute('aria-label', `Janela pequena: ${VIEW_LABELS[smallViewId]}`);
+  mainSlot.setAttribute('aria-label', `${appT('Janela grande')}: ${getViewLabel(mainViewId)}`);
+  smallSlot.setAttribute('aria-label', `${appT('Janela pequena')}: ${getViewLabel(smallViewId)}`);
 
   for (const [id, button] of Object.entries(VIEW_BUTTONS)) {
     const selected = id === smallViewId;
@@ -2458,10 +2725,10 @@ function updateViewLayout() {
     button.setAttribute('aria-pressed', String(selected));
   }
   const expandButton = document.getElementById('btn-expand-view');
-  expandButton.setAttribute('aria-label', `Expandir ${VIEW_LABELS[smallViewId]} para o painel central`);
-  expandButton.title = `Expandir ${VIEW_LABELS[smallViewId]} para o painel central`;
+  expandButton.setAttribute('aria-label', `${appT('Expandir')} ${getViewLabel(smallViewId)} ${appT('para o painel central')}`);
+  expandButton.title = `${appT('Expandir')} ${getViewLabel(smallViewId)} ${appT('para o painel central')}`;
   const mobileViewportTab = document.querySelector('#mobile-panel-tabs [data-mobile-panel="viewport"]');
-  if (mobileViewportTab) mobileViewportTab.textContent = VIEW_LABELS[mainViewId];
+  if (mobileViewportTab) mobileViewportTab.textContent = getViewLabel(mainViewId);
   renderEditor2D();
   requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
 }
@@ -2513,33 +2780,33 @@ function applyProfileContextAction(action) {
   const points = target.points, index = target.pointIndex;
   if (action === 'add-manual') {
     const h = getMaxH();
-    const zInput = window.prompt('Altura Z do novo nó (mm):', String(seekerZ.toFixed(1)));
+    const zInput = window.prompt(appT('Altura Z do novo nó (mm):'), String(seekerZ.toFixed(1)));
     if (zInput === null) return closeProfileContextMenu();
-    const valueInput = window.prompt(`Valor de ${target.spline}:`, String(points[Math.max(0, index)]?.value ?? 0));
+    const valueInput = window.prompt(`${appT('Valor de')} ${getSplineDisplayName(target.spline)}:`, String(points[Math.max(0, index)]?.value ?? 0));
     if (valueInput === null) return closeProfileContextMenu();
     const z = Number(zInput), value = Number(valueInput);
-    if (!Number.isFinite(z) || !Number.isFinite(value)) { alert('Informe valores numéricos válidos.'); return; }
+    if (!Number.isFinite(z) || !Number.isFinite(value)) { alert(appT('Informe valores numéricos válidos.')); return; }
     const ordered = points.slice().sort((a, b) => a.z - b.z);
     const insertAt = ordered.findIndex(p => p.z > z);
     const at = insertAt < 0 ? ordered.length : insertAt;
     const low = ordered[at - 1]?.z ?? -Infinity, high = ordered[at]?.z ?? Infinity;
-    if (z < 0 || z > h || z - low < 0.5 || high - z < 0.5) { alert('O novo nó precisa estar dentro do perfil e a pelo menos 0,5 mm dos nós vizinhos.'); return; }
+    if (z < 0 || z > h || z - low < 0.5 || high - z < 0.5) { alert(appT('O novo nó precisa estar dentro do perfil e a pelo menos 0,5 mm dos nós vizinhos.')); return; }
     recordUndoSnapshot();
     points.splice(0, points.length, ...ordered.slice(0, at), { z: Number(z.toFixed(2)), value: Number(value.toFixed(3)) }, ...ordered.slice(at));
   } else {
     if (!Number.isInteger(index) || !points[index]) return closeProfileContextMenu();
     if (action === 'edit-value') {
-      const input = window.prompt(`Valor de ${target.spline}:`, String(points[index].value));
+      const input = window.prompt(`${appT('Valor de')} ${getSplineDisplayName(target.spline)}:`, String(points[index].value));
       if (input === null) return closeProfileContextMenu();
       const value = Number(input);
-      if (!Number.isFinite(value)) { alert('Informe um valor numérico válido.'); return; }
+      if (!Number.isFinite(value)) { alert(appT('Informe um valor numérico válido.')); return; }
       recordUndoSnapshot();
       points[index].value = Number(value.toFixed(3));
     } else if (action === 'edit-z' && index > 0 && index < points.length - 1) {
-      const input = window.prompt('Altura Z (mm):', String(points[index].z));
+      const input = window.prompt(appT('Altura Z (mm):'), String(points[index].z));
       if (input === null) return closeProfileContextMenu();
       const z = Number(input);
-      if (!Number.isFinite(z) || z <= points[index - 1].z + 0.5 || z >= points[index + 1].z - 0.5) { alert('A altura precisa ficar entre os nós vizinhos, com espaçamento mínimo de 0,5 mm.'); return; }
+      if (!Number.isFinite(z) || z <= points[index - 1].z + 0.5 || z >= points[index + 1].z - 0.5) { alert(appT('A altura precisa ficar entre os nós vizinhos, com espaçamento mínimo de 0,5 mm.')); return; }
       recordUndoSnapshot();
       points[index].z = Number(z.toFixed(2));
     } else if (action === 'smooth' && index > 0 && index < points.length - 1) {
@@ -2613,7 +2880,7 @@ shapeEditorContainer.addEventListener('contextmenu',e=>{
   const sections=stage.params.sections||[],h=getMaxH(),zNorm=seekerZ/(h||1);let si=0;
   for(let i=1;i<sections.length;i++)if(Math.abs(sections[i].z_norm-zNorm)<Math.abs(sections[si].z_norm-zNorm))si=i;
   const points=sections[si]?.points,index=Number(handle.getAttribute('data-shape-index'));
-  if(!points||points.length<=3||!window.confirm('Excluir este ponto do perfil polar?'))return;
+  if(!points||points.length<=3||!window.confirm(appT('Excluir este ponto do perfil polar?')))return;
   recordUndoSnapshot();points.splice(index,1);renderShapeEditor(shapeEditorContainer,stage);requestMeshUpdate(false);
 });
 shapeEditorContainer.addEventListener('pointerdown',e=>{
@@ -2949,8 +3216,8 @@ function syncUI() {
   document.getElementById('chk-auto-res').checked = currentParams.auto_res_enabled !== false;
   document.getElementById('chk-lagrangian').checked = !!currentParams.lagrangian_torsion;
   document.getElementById('select-print-mode').value = currentParams.modo_impressao || 'vaso';
-  document.getElementById('stat-engine').textContent=currentParams.mesh_engine||'feature_aligned';
-  document.getElementById('stat-mode').textContent=currentParams.modo_impressao||'vaso';
+  document.getElementById('stat-engine').textContent=appT(currentParams.mesh_engine==='uniform_grid'?'Uniform Grid':'Feature-Aligned (Chebyshev Snap)');
+  document.getElementById('stat-mode').textContent=appT(currentParams.modo_impressao||'vaso');
 
   const listEl = document.getElementById('pipeline-list');
   listEl.innerHTML = '';
@@ -2961,11 +3228,11 @@ function syncUI() {
     card.tabIndex=0;
     card.setAttribute('role','group');
     const isFoundation=['polygon_base','flex_shape'].includes(st.mode);
-    const stageName=StageRegistry._classes.get(st.mode)?.name||st.mode;
+    const stageName=getLocalizedStageName(StageRegistry._classes.get(st.mode)?.name||st.mode);
     card.setAttribute('aria-label',`${idx+1}. ${stageName}`);
     const safeStageName=escapeHtml(stageName);
     const detail=st.mode==='radial_pattern'||st.mode==='harmonics'?` · f=${st.params.freq??0}`:'';
-    card.innerHTML = `<div class="stage-card-left"><input type="checkbox" aria-label="Ativar ${safeStageName}" ${st.enabled!==false?'checked':''} ${isFoundation?'disabled':''}><span>${idx+1}. ${safeStageName}${detail}</span></div><button type="button" class="stage-delete" aria-label="Excluir ${safeStageName}" title="Excluir estágio" ${isFoundation?'disabled':''}>×</button>`;
+    card.innerHTML = `<div class="stage-card-left"><input type="checkbox" aria-label="${appT('Ativar')} ${safeStageName}" ${st.enabled!==false?'checked':''} ${isFoundation?'disabled':''}><span>${idx+1}. ${safeStageName}${detail}</span></div><button type="button" class="stage-delete" aria-label="${appT('Excluir')} ${safeStageName}" title="${appT('Excluir estágio')}" ${isFoundation?'disabled':''}>×</button>`;
     card.querySelector('input').addEventListener('click', e => {
       e.stopPropagation(); recordUndoSnapshot(); st.enabled = e.target.checked; syncUI(); requestMeshUpdate(false);
     });
@@ -2989,7 +3256,7 @@ function syncUI() {
   sel.innerHTML = '';
   const keys = Object.keys(st.params).filter(k => k.endsWith('_profile'));
   keys.forEach(k => {
-    const o = document.createElement('option'); o.value = k; o.textContent = k; sel.appendChild(o);
+    const o = document.createElement('option'); o.value = k; o.textContent = getSplineDisplayName(k); sel.appendChild(o);
   });
   if (!keys.includes(activeSpline)) activeSpline = keys[0];
   sel.value = activeSpline;
@@ -3117,7 +3384,7 @@ document.getElementById('select-spline-kind').addEventListener('change', e => {
   requestMeshUpdate(false);
 });
 document.getElementById('btn-add-stage').addEventListener('click',()=>addPipelineStage(document.getElementById('select-add-stage').value));
-document.getElementById('select-engine').addEventListener('change',e=>{recordUndoSnapshot();currentParams.mesh_engine=e.target.value;document.getElementById('stat-engine').textContent=e.target.value;requestMeshUpdate(false);});
+document.getElementById('select-engine').addEventListener('change',e=>{recordUndoSnapshot();currentParams.mesh_engine=e.target.value;document.getElementById('stat-engine').textContent=appT(e.target.value==='uniform_grid'?'Uniform Grid':'Feature-Aligned (Chebyshev Snap)');requestMeshUpdate(false);});
 document.getElementById('chk-auto-res').addEventListener('change',e=>{recordUndoSnapshot();currentParams.auto_res_enabled=e.target.checked;requestMeshUpdate(false);});
 document.getElementById('chk-lagrangian').addEventListener('change',e=>{recordUndoSnapshot();currentParams.lagrangian_torsion=e.target.checked;requestMeshUpdate(false);});
 document.getElementById('select-print-mode').addEventListener('change',e=>{recordUndoSnapshot();currentParams.modo_impressao=e.target.value;syncUI();requestMeshUpdate(false);});

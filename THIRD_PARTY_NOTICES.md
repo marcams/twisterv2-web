@@ -1,8 +1,20 @@
-# Avisos de terceiros
+# Third-party notices / Avisos de terceiros / Avisos de terceros
+
+## English
+
+The self-contained application file includes Three.js r128. The following is its copyright notice and MIT license.
+
+## Português (Brasil)
+
+O arquivo autocontido da aplicação inclui o Three.js r128. A seguir estão o aviso de copyright e a licença MIT da biblioteca.
+
+## Español
+
+El archivo autónomo de la aplicación incluye Three.js r128. A continuación se muestran el aviso de copyright y la licencia MIT de la biblioteca.
 
 ## Three.js r128
 
-Copyright 2010–2021 Three.js Authors. Distribuído sob a licença MIT.
+Copyright 2010–2021 Three.js Authors. Distributed under the MIT License. / Distribuído sob a licença MIT. / Distribuido bajo la licencia MIT.
 
 ```text
 MIT License
