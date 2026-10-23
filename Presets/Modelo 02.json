@@ -1,0 +1,172 @@
+{
+  "n_layers": 500,
+  "res_angular": 360,
+  "auto_res_enabled": false,
+  "auto_res_precision": 1,
+  "fechar_base": true,
+  "fechar_topo": false,
+  "modo_impressao": "vaso",
+  "thickness": 2,
+  "height": 240,
+  "mesh_engine": "uniform_grid",
+  "design_pipeline": [
+    {
+      "id": "foundation_1",
+      "mode": "polygon_base",
+      "enabled": true,
+      "params": {
+        "shape_mode": "supershape",
+        "foundation_radius": 1,
+        "foundation_sides": 4,
+        "foundation_roundness": 0.15,
+        "radius_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 58
+            },
+            {
+              "z": 65,
+              "value": 86
+            },
+            {
+              "z": 159.7,
+              "value": 55.21
+            },
+            {
+              "z": 240,
+              "value": 72
+            }
+          ],
+          "kind": "cubic"
+        },
+        "torsion_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 240,
+              "value": 0.75
+            }
+          ],
+          "kind": "pchip"
+        },
+        "m_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 5
+            },
+            {
+              "z": 240,
+              "value": 5
+            }
+          ],
+          "kind": "pchip"
+        },
+        "n1_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 1.4
+            },
+            {
+              "z": 240,
+              "value": 1.4
+            }
+          ],
+          "kind": "pchip"
+        },
+        "n2_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 1.2
+            },
+            {
+              "z": 240,
+              "value": 1.2
+            }
+          ],
+          "kind": "pchip"
+        },
+        "n3_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 1.2
+            },
+            {
+              "z": 240,
+              "value": 1.2
+            }
+          ],
+          "kind": "pchip"
+        }
+      }
+    },
+    {
+      "id": "radial_wave_1",
+      "mode": "radial_pattern",
+      "enabled": true,
+      "params": {
+        "wave_type": "sine",
+        "frequency": 18,
+        "fourier_terms": 5,
+        "peak_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 40,
+              "value": 3.5
+            },
+            {
+              "z": 200,
+              "value": 3.5
+            },
+            {
+              "z": 240,
+              "value": 0.5
+            }
+          ],
+          "kind": "pchip"
+        },
+        "valley_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 120,
+              "value": -2
+            },
+            {
+              "z": 240,
+              "value": 0
+            }
+          ],
+          "kind": "pchip"
+        },
+        "torsion_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 240,
+              "value": -0.5
+            }
+          ],
+          "kind": "pchip"
+        }
+      }
+    }
+  ]
+}

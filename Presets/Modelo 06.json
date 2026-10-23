@@ -1,0 +1,217 @@
+{
+  "n_layers": 256,
+  "res_angular": 1024,
+  "n_harmonicos": 20,
+  "samples_per_cycle": 2,
+  "envelope_suave": 0.89,
+  "fechar_base": true,
+  "fechar_topo": false,
+  "auto_res_enabled": true,
+  "auto_res_precision": 1.8,
+  "lagrangian_torsion": true,
+  "mesh_engine": "uniform_grid",
+  "modo_impressao": "vaso",
+  "thickness": 4,
+  "design_pipeline": [
+    {
+      "mode": "polygon_base",
+      "enabled": true,
+      "id": "foundation_1",
+      "params": {
+        "preset_profile": "Circle",
+        "foundation_radius": 1,
+        "torsion_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 196.3,
+              "value": 0
+            }
+          ],
+          "kind": "pchip"
+        },
+        "radius_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 51.72
+            },
+            {
+              "z": 18.8,
+              "value": 62.57
+            },
+            {
+              "z": 51,
+              "value": 71.48
+            },
+            {
+              "z": 94.9,
+              "value": 68.27
+            },
+            {
+              "z": 122.6,
+              "value": 54.17
+            },
+            {
+              "z": 137.5,
+              "value": 42.67
+            },
+            {
+              "z": 196.3,
+              "value": 41.68
+            }
+          ],
+          "kind": "cubic"
+        },
+        "m_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 4
+            },
+            {
+              "z": 196.3,
+              "value": 4
+            }
+          ],
+          "kind": "pchip"
+        },
+        "n1_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 2
+            },
+            {
+              "z": 196.3,
+              "value": 2
+            }
+          ],
+          "kind": "pchip"
+        },
+        "n2_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 2
+            },
+            {
+              "z": 196.3,
+              "value": 2
+            }
+          ],
+          "kind": "pchip"
+        },
+        "n3_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 2
+            },
+            {
+              "z": 196.3,
+              "value": 2
+            }
+          ],
+          "kind": "pchip"
+        }
+      }
+    },
+    {
+      "id": "stage_radial_pattern_1792613400585",
+      "mode": "radial_pattern",
+      "enabled": true,
+      "params": {
+        "freq": 6,
+        "wave_shape": "Sine",
+        "wave_mode": "Auto",
+        "n_harmonics": 8,
+        "pico_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 8
+            },
+            {
+              "z": 196.3,
+              "value": 8
+            }
+          ],
+          "kind": "pchip"
+        },
+        "vale_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 8
+            },
+            {
+              "z": 196.3,
+              "value": 8
+            }
+          ],
+          "kind": "pchip"
+        },
+        "torsion_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 196.3,
+              "value": 0
+            }
+          ],
+          "kind": "pchip"
+        }
+      }
+    },
+    {
+      "id": "stage_reaction_diffusion_1792613132790",
+      "mode": "reaction_diffusion",
+      "enabled": true,
+      "params": {
+        "rd_preset": "Labyrinth",
+        "feed_rate": 0.029,
+        "kill_rate": 0.057,
+        "grid_resolution": 256,
+        "n_iterations": 5000,
+        "seed": 42,
+        "contrast": 2,
+        "scale_theta": 1,
+        "scale_z": 1,
+        "invert": false,
+        "amplitude_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 3
+            },
+            {
+              "z": 196.3,
+              "value": 3
+            }
+          ],
+          "kind": "pchip"
+        },
+        "torsion_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 196.3,
+              "value": 0
+            }
+          ],
+          "kind": "pchip"
+        }
+      }
+    }
+  ]
+}

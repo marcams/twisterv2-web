@@ -1,0 +1,69 @@
+{
+  "n_layers": 200,
+  "res_angular": 1024,
+  "n_harmonicos": 5,
+  "samples_per_cycle": 4,
+  "envelope_suave": 0.69,
+  "fechar_base": false,
+  "fechar_topo": false,
+  "auto_res_enabled": true,
+  "auto_res_precision": 1.0,
+  "lagrangian_torsion": false,
+  "mesh_engine": "feature_aligned",
+  "modo_impressao": "vaso",
+  "thickness": 1.6,
+  "design_pipeline": [
+    {
+      "mode": "polygon_base",
+      "enabled": true,
+      "id": "foundation_1",
+      "params": {
+        "preset_profile": "Circle",
+        "foundation_radius": 1.0,
+        "torsion_profile": { "points": [{ "z": 0, "value": 0 }, { "z": 280, "value": 0 }], "kind": "pchip" },
+        "radius_profile": {
+          "points": [
+            { "z": 0, "value": 85, "tangent_out": 0 },
+            { "z": 45, "value": 85, "tangent_in": 0, "tangent_out": 0 },
+            { "z": 50, "value": 85, "tangent_in": 0, "tangent_out": 0 },
+            { "z": 95, "value": 75, "tangent_in": 0, "tangent_out": 0 },
+            { "z": 140, "value": 85, "tangent_in": 0, "tangent_out": 0 },
+            { "z": 145, "value": 85, "tangent_in": 0, "tangent_out": 0 },
+            { "z": 190, "value": 75, "tangent_in": 0, "tangent_out": 0 },
+            { "z": 235, "value": 85, "tangent_in": 0, "tangent_out": 0 },
+            { "z": 280, "value": 70, "tangent_in": -0.591625 }
+          ],
+          "kind": "pchip"
+        },
+        "m_profile": { "points": [{ "z": 0, "value": 4 }, { "z": 280, "value": 4 }], "kind": "pchip" },
+        "n1_profile": { "points": [{ "z": 0, "value": 2 }, { "z": 280, "value": 2 }], "kind": "pchip" },
+        "n2_profile": { "points": [{ "z": 0, "value": 2 }, { "z": 280, "value": 2 }], "kind": "pchip" },
+        "n3_profile": { "points": [{ "z": 0, "value": 2 }, { "z": 280, "value": 2 }], "kind": "pchip" }
+      }
+    },
+    {
+      "mode": "radial_pattern",
+      "enabled": true,
+      "id": "stage_radial_1",
+      "params": {
+        "freq": 6.0,
+        "wave_shape": "Seno",
+        "pico_profile": { "points": [{ "z": 0, "value": 0 }, { "z": 45, "value": 30 }, { "z": 280, "value": 30 }], "kind": "pchip" },
+        "vale_profile": { "points": [{ "z": 0, "value": 0 }, { "z": 45, "value": 30 }, { "z": 280, "value": 30 }], "kind": "pchip" },
+        "torsion_profile": { "points": [{ "z": 0, "value": 0 }, { "z": 280, "value": 0 }], "kind": "pchip" }
+      }
+    },
+    {
+      "mode": "radial_pattern",
+      "enabled": true,
+      "id": "stage_radial_2",
+      "params": {
+        "freq": 200.0,
+        "wave_shape": "Seno",
+        "pico_profile": { "points": [{ "z": 0, "value": 0 }, { "z": 45, "value": 1 }, { "z": 280, "value": 1 }], "kind": "pchip" },
+        "vale_profile": { "points": [{ "z": 0, "value": 0 }, { "z": 45, "value": 1 }, { "z": 280, "value": 1 }], "kind": "pchip" },
+        "torsion_profile": { "points": [{ "z": 0, "value": 0 }, { "z": 280, "value": 0 }], "kind": "pchip" }
+      }
+    }
+  ]
+}

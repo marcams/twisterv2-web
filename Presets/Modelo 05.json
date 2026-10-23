@@ -1,0 +1,133 @@
+{
+  "n_layers": 295,
+  "res_angular": 960,
+  "n_harmonicos": 20,
+  "samples_per_cycle": 4,
+  "envelope_suave": 0.89,
+  "fechar_base": false,
+  "fechar_topo": false,
+  "auto_res_enabled": true,
+  "auto_res_precision": 1.8,
+  "lagrangian_torsion": false,
+  "mesh_engine": "feature_aligned",
+  "modo_impressao": "vaso",
+  "thickness": 1.6,
+  "design_pipeline": [
+    {
+      "mode": "polygon_base",
+      "enabled": true,
+      "id": "foundation_1",
+      "params": {
+        "preset_profile": "Circle",
+        "foundation_radius": 1.0,
+        "torsion_profile": { "points": [{ "z": 0, "value": 0 }, { "z": 196.3, "value": 0 }], "kind": "pchip" },
+        "radius_profile": {
+          "points": [
+            { "z": 0.0, "value": 46.895 },
+            { "z": 41.94455, "value": 87.47769 },
+            { "z": 60.68371, "value": 96.10308 },
+            { "z": 82.7863, "value": 98.53588 },
+            { "z": 131.3159, "value": 85.26605 },
+            { "z": 166.1515, "value": 64.69781 },
+            { "z": 196.3, "value": 39.55 }
+          ],
+          "kind": "pchip"
+        },
+        "m_profile": { "points": [{ "z": 0, "value": 4 }, { "z": 196.3, "value": 4 }], "kind": "pchip" },
+        "n1_profile": { "points": [{ "z": 0, "value": 2 }, { "z": 196.3, "value": 2 }], "kind": "pchip" },
+        "n2_profile": { "points": [{ "z": 0, "value": 2 }, { "z": 196.3, "value": 2 }], "kind": "pchip" },
+        "n3_profile": { "points": [{ "z": 0, "value": 2 }, { "z": 196.3, "value": 2 }], "kind": "pchip" }
+      }
+    },
+    {
+      "mode": "radial_pattern",
+      "enabled": true,
+      "id": "stage_radial_1",
+      "params": {
+        "freq": 20.0,
+        "wave_shape": "Seno",
+        "pico_profile": {
+          "points": [
+            { "z": 0, "value": 0 },
+            { "z": 41.94455, "value": 5.61913 },
+            { "z": 60.68371, "value": 6.35699 },
+            { "z": 82.7863, "value": 6.86782 },
+            { "z": 131.3159, "value": 6.18672 },
+            { "z": 166.1515, "value": 5.05154 },
+            { "z": 196.3, "value": 3.5024 }
+          ],
+          "kind": "pchip"
+        },
+        "vale_profile": {
+          "points": [
+            { "z": 0, "value": 0 },
+            { "z": 41.94455, "value": 4.25692 },
+            { "z": 60.68371, "value": 5.22182 },
+            { "z": 82.7863, "value": 4.93 },
+            { "z": 131.3159, "value": 4.06 },
+            { "z": 166.1515, "value": 3.48 },
+            { "z": 196.3, "value": 2.61 }
+          ],
+          "kind": "pchip"
+        },
+        "torsion_profile": {
+          "points": [
+            { "z": 0, "value": 0.04 },
+            { "z": 41.94455, "value": 0.08 },
+            { "z": 60.68371, "value": 0.12 },
+            { "z": 82.7863, "value": 0.16 },
+            { "z": 131.3159, "value": 0.2 },
+            { "z": 166.1515, "value": 0.24 },
+            { "z": 196.3, "value": 0.28 }
+          ],
+          "kind": "pchip"
+        }
+      }
+    },
+    {
+      "mode": "radial_pattern",
+      "enabled": true,
+      "id": "stage_radial_2",
+      "params": {
+        "freq": 160.0,
+        "wave_shape": "Seno",
+        "pico_profile": {
+          "points": [
+            { "z": 0, "value": 0 },
+            { "z": 41.94455, "value": 0.86564 },
+            { "z": 60.68371, "value": 0.9233 },
+            { "z": 82.7863, "value": 0.9233 },
+            { "z": 131.3159, "value": 0.9233 },
+            { "z": 166.1515, "value": 0.75014 },
+            { "z": 196.3, "value": 0.46165 }
+          ],
+          "kind": "pchip"
+        },
+        "vale_profile": {
+          "points": [
+            { "z": 0, "value": 0 },
+            { "z": 41.94455, "value": 0.86564 },
+            { "z": 60.68371, "value": 0.9233 },
+            { "z": 82.7863, "value": 0.9233 },
+            { "z": 131.3159, "value": 0.9233 },
+            { "z": 166.1515, "value": 0.75014 },
+            { "z": 196.3, "value": 0.46165 }
+          ],
+          "kind": "pchip"
+        },
+        "torsion_profile": {
+          "points": [
+            { "z": 0, "value": -0.04 },
+            { "z": 41.94455, "value": -0.085 },
+            { "z": 60.68371, "value": -0.135 },
+            { "z": 82.7863, "value": -0.19 },
+            { "z": 131.3159, "value": -0.25 },
+            { "z": 166.1515, "value": -0.315 },
+            { "z": 196.3, "value": -0.385 }
+          ],
+          "kind": "pchip"
+        }
+      }
+    }
+  ]
+}
