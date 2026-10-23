@@ -6,7 +6,11 @@
 
 Open-source web application for parametric modeling of vases and lampshades and generating meshes for 3D printing.
 
-### Run the application
+### Try it in the browser!
+
+<https://marcams.github.io/twisterv2-web/>
+
+### Run the application locally
 
 Open `index.html` in a modern browser with WebGL support. The application is a self-contained HTML page and runs locally in the browser. Use the language selector in the top-right toolbar to switch between English, Brazilian Portuguese, and Spanish.
 
@@ -28,7 +32,11 @@ Marcelo Silva — <marcams@gmail.com>
 
 Aplicação web open-source para modelagem paramétrica de vasos e cúpulas para luminárias e geração de malhas para impressão 3D.
 
-### Executar a aplicação
+### Teste ela no browser!
+
+<https://marcams.github.io/twisterv2-web/>
+
+### Executar a aplicação localmente
 
 Abra `index.html` em um navegador moderno com suporte a WebGL. A aplicação é uma página HTML autocontida e funciona localmente no navegador. Use o seletor de idioma no topo à direita para alternar entre inglês, português brasileiro e espanhol.
 
@@ -50,7 +58,11 @@ Marcelo Silva — <marcams@gmail.com>
 
 Aplicación web de código abierto para el modelado paramétrico de jarrones y pantallas para lámparas, y la generación de mallas para impresión 3D.
 
-### Ejecutar la aplicación
+### ¡Pruébala en el navegador!
+
+<https://marcams.github.io/twisterv2-web/>
+
+### Ejecutar la aplicación localmente
 
 Abre `index.html` en un navegador moderno con compatibilidad con WebGL. La aplicación es una página HTML autónoma y se ejecuta localmente en el navegador. Usa el selector de idioma de la esquina superior derecha para cambiar entre inglés, portugués brasileño y español.
 
