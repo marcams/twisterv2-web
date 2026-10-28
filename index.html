@@ -530,7 +530,16 @@ const APP_TRANSLATIONS = {
   'Gerando malha':['Generating mesh','Gerando malha','Generando malla'], 'WebGL indisponível:':['WebGL unavailable:','WebGL indisponível:','WebGL no disponible:'],
   'Ativar':['Enable','Ativar','Activar'], 'Excluir estágio':['Delete stage','Excluir estágio','Eliminar etapa'], 'Erro:':['Error:','Erro:','Error:'],
   'Janela grande':['Main window','Janela grande','Ventana principal'], 'Janela pequena':['Small window','Janela pequena','Ventana pequeña'],
-  'Expandir':['Expand','Expandir','Ampliar'], 'para o painel central':['to the main panel','para o painel central','al panel central']
+  'Expandir':['Expand','Expandir','Ampliar'], 'para o painel central':['to the main panel','para o painel central','al panel central'],
+  'Altura do modelo (mm)':['Model height (mm)','Altura do modelo (mm)','Altura del modelo (mm)'],
+  'Modo de ajuste Z':['Z adjustment mode','Modo de ajuste Z','Modo de ajuste Z'],
+  'Escalonamento proporcional':['Proportional scaling','Escalonamento proporcional','Escalado proporcional'],
+  'Adicionar / cortar nó no topo':['Add / trim node at top','Adicionar / cortar nó no topo','Añadir / recortar nodo superior'],
+  'Escalar curvas dependentes de Z':['Scale Z-dependent curves','Escalar curvas dependentes de Z','Escalar curvas dependientes de Z'],
+  'Escala proporcionalmente os valores das curvas marcadas no contrato com inheritsZScale (ex.: Torção, Fase).':['Proportionally scales values of curves marked with inheritsZScale in their contract (e.g., Twist, Phase).','Escala proporcionalmente os valores das curvas marcadas no contrato com inheritsZScale (ex.: Torção, Fase).','Escala proporcionalmente los valores de las curvas marcadas con inheritsZScale en su contrato (p. ej., Torsión, Fase).'],
+  'Alterar altura total Z…':['Change total Z height…','Alterar altura total Z…','Cambiar altura Z total…'],
+  'Nova altura total Z (mm):':['New total Z height (mm):','Nova altura total Z (mm):','Nueva altura Z total (mm):'],
+  'A altura total precisa estar entre 10 mm e 1000 mm.':['Total height must be between 10 mm and 1000 mm.','A altura total precisa estar entre 10 mm e 1000 mm.','La altura total debe estar entre 10 mm y 1000 mm.']
 };
 const APP_TRANSLATION_INDEX = { en:0, 'pt-BR':1, es:2 };
 const APP_TRANSLATION_SOURCE = new Map();
@@ -1275,7 +1284,15 @@ function buildAllSplines(params) {
 const SplineRole = Object.freeze({ PEAK:'peak', VALLEY:'valley', TORSION:'torsion', BASE_RADIUS:'base', BASE_PROFILE:'profile', HEIGHT:'height', SMOOTHING:'smoothing' });
 const HandleType = Object.freeze({ RADIAL:'radial', ANGULAR:'angular', FREE:'free' });
 class SplineContract {
-  constructor(config) { Object.assign(this, config); }
+  constructor(config = {}) {
+    const isTorsionLike = config.uiRole === SplineRole.TORSION || config.uiDomain === 'turns';
+    const isRadialLike = config.uiRole === SplineRole.BASE_PROFILE || config.uiRole === SplineRole.PEAK || config.uiRole === SplineRole.VALLEY;
+    Object.assign(this, {
+      inheritsRadialScale: isRadialLike,
+      inheritsZScale: isTorsionLike,
+      ...config
+    });
+  }
 }
 class StagePolicy {
   constructor({ providesFoundation = false, minInstances = 0, resolutionBias = 1, lodProtection = 0.1 } = {}) {
@@ -1362,6 +1379,74 @@ class DeformationStage {
   static getSideEffects() { return {}; }
   static getPolicy() { return new StagePolicy(); }
   static getDefaultParams() { return {}; }
+  static scaleStageParams(params, oldH, newH, options = {}) {
+    if (!params || typeof params !== 'object') return;
+    const safeOldH = Math.max(1e-6, Number(oldH) || 240);
+    const safeNewH = Math.max(10, Number(newH) || safeOldH);
+    const fZ = safeNewH / safeOldH;
+    const fR = Number.isFinite(Number(options.fR)) ? Number(options.fR) : 1;
+    const modeZ = options.modeZ === 'add_node' ? 'add_node' : 'proportional';
+    const scaleZValues = options.scaleZValues !== false;
+    const contracts = this.getSplineContracts() || {};
+
+    for (const [contractKey, contract] of Object.entries(contracts)) {
+      const binding = contract?.jsonBinding || contractKey;
+      const curveObj = params[binding];
+      if (!curveObj || !Array.isArray(curveObj.points) || !curveObj.points.length) continue;
+
+      const sourcePoints = curveObj.points
+        .map(pt => ({ ...pt, z: Number(pt.z), value: Number(pt.value) }))
+        .sort((a, b) => a.z - b.z);
+
+      if (modeZ === 'proportional') {
+        const lastIdx = sourcePoints.length - 1;
+        curveObj.points = sourcePoints.map((pt, idx) => {
+          const nextPt = { ...pt };
+          nextPt.z = idx === 0 ? 0 : idx === lastIdx ? Number(safeNewH.toFixed(2)) : Number((pt.z * fZ).toFixed(2));
+          if (nextPt.tangent_in !== undefined && nextPt.tangent_in !== null) nextPt.tangent_in = Number((Number(nextPt.tangent_in) / fZ).toFixed(6));
+          if (nextPt.tangent_out !== undefined && nextPt.tangent_out !== null) nextPt.tangent_out = Number((Number(nextPt.tangent_out) / fZ).toFixed(6));
+          if (scaleZValues && contract.inheritsZScale) {
+            nextPt.value = Number((nextPt.value * fZ).toFixed(4));
+          }
+          if (fR !== 1 && contract.inheritsRadialScale) {
+            nextPt.value = Number((nextPt.value * fR).toFixed(4));
+          }
+          return nextPt;
+        });
+      } else {
+        const curveInstance = new CurveData(sourcePoints, curveObj.kind || 'pchip', binding);
+        const interp = curveInstance.getInterpolator();
+        const minSpacing = 0.5;
+        if (safeNewH >= safeOldH) {
+          const updated = sourcePoints.map(pt => ({ ...pt }));
+          const lastPt = updated[updated.length - 1];
+          let topValue = lastPt.value;
+          if (scaleZValues && contract.inheritsZScale && updated.length >= 2) {
+            const slope = curveInstance.getDerivative(lastPt.z);
+            topValue = lastPt.value + slope * (safeNewH - lastPt.z);
+          }
+          if (safeNewH - lastPt.z >= minSpacing) {
+            updated.push({ z: Number(safeNewH.toFixed(2)), value: Number(topValue.toFixed(4)) });
+          } else {
+            lastPt.z = Number(safeNewH.toFixed(2));
+            lastPt.value = Number(topValue.toFixed(4));
+          }
+          curveObj.points = updated;
+        } else {
+          const valAtNewH = Number(interp(safeNewH).toFixed(4));
+          const kept = sourcePoints.filter(pt => pt.z <= safeNewH - minSpacing).map(pt => ({ ...pt }));
+          if (!kept.length) {
+            kept.push({ z: 0, value: sourcePoints[0].value });
+          }
+          kept.push({ z: Number(safeNewH.toFixed(2)), value: valAtNewH });
+          curveObj.points = kept;
+        }
+        if (fR !== 1 && contract.inheritsRadialScale) {
+          for (const pt of curveObj.points) pt.value = Number((pt.value * fR).toFixed(4));
+        }
+      }
+    }
+  }
 }
 
 class PolygonBaseStage extends DeformationStage {
@@ -1464,6 +1549,35 @@ class FlexShapeStage extends PolygonBaseStage {
     }).sort((a,b)=>a.z_norm-b.z_norm);
   }
   static getTypeId() { return 'flex_shape'; }
+  static scaleStageParams(params, oldH, newH, options = {}) {
+    super.scaleStageParams(params, oldH, newH, options);
+    if (options.modeZ !== 'add_node' || !Array.isArray(params?.sections) || !params.sections.length) return;
+    const safeOldH = Math.max(1e-6, Number(oldH) || 240);
+    const safeNewH = Math.max(10, Number(newH) || safeOldH);
+    const sorted = params.sections.map(s => ({
+      ...s,
+      z_abs: (Number(s.z_norm) || 0) * safeOldH,
+      points: (s.points || []).map(p => ({ ...p }))
+    })).sort((a, b) => a.z_abs - b.z_abs);
+
+    if (safeNewH >= safeOldH) {
+      const topClone = deepCopy(sorted[sorted.length - 1].points || []);
+      const remapped = sorted.map(s => ({ z_norm: Math.max(0, Math.min(1, s.z_abs / safeNewH)), points: s.points }));
+      if (1 - remapped[remapped.length - 1].z_norm > 0.01) {
+        remapped.push({ z_norm: 1, points: topClone });
+      } else {
+        remapped[remapped.length - 1].z_norm = 1;
+      }
+      params.sections = remapped;
+    } else {
+      const kept = sorted.filter(s => s.z_abs < safeNewH - 0.5);
+      const topSource = sorted.reduce((best, s) => Math.abs(s.z_abs - safeNewH) < Math.abs(best.z_abs - safeNewH) ? s : best, sorted[0]);
+      if (!kept.length) kept.push({ z_abs: 0, points: deepCopy(sorted[0].points || []) });
+      const remapped = kept.map(s => ({ z_norm: Math.max(0, Math.min(1, s.z_abs / safeNewH)), points: s.points }));
+      remapped.push({ z_norm: 1, points: deepCopy(topSource.points || []) });
+      params.sections = remapped;
+    }
+  }
   static getSplineContracts() { return { radius_profile:new SplineContract({ splineId:'radius_profile', uiDomain:'mm', uiRole:SplineRole.BASE_PROFILE, jsonBinding:'radius_profile' }), torsion_profile:new SplineContract({ splineId:'torsion_profile', uiDomain:'turns', uiRole:SplineRole.TORSION, jsonBinding:'torsion_profile' }) }; }
   static getFixedParamsSchema() { return {
     foundation_radius:{type:'float',label:'Escala radial',min:0.2,max:2.5,step:0.05,default:1},
@@ -2595,10 +2709,55 @@ const meshWorkerClient=new MeshWorkerClient(
 window.addEventListener('pagehide',()=>meshWorkerClient.dispose());
 logDebug('Viewport 3D pronta.', 'ok');
 
-function getMaxH() {
-  const f = currentParams.design_pipeline.find(s => ['polygon_base','flex_shape'].includes(s.mode));
+let zScaleConfig = {
+  modeZ: 'proportional',
+  scaleZValues: true
+};
+
+function getMaxH(stateObj = currentParams) {
+  const f = (stateObj?.design_pipeline || []).find(s => ['polygon_base','flex_shape'].includes(s.mode));
   const pts = f?.params?.radius_profile?.points;
   return (pts && pts.length > 0) ? pts[pts.length - 1].z : 240;
+}
+
+function getActiveZScaleContracts(stateObj = currentParams) {
+  const matches = [];
+  for (const st of stateObj?.design_pipeline || []) {
+    if (st.enabled === false) continue;
+    const Stage = StageRegistry.getClass(st.mode);
+    if (!Stage) continue;
+    const contracts = Stage.getSplineContracts?.() || {};
+    for (const [id, contract] of Object.entries(contracts)) {
+      if (contract?.inheritsZScale) {
+        matches.push({ stageId: st.id, stageMode: st.mode, splineId: contract.jsonBinding || id, contract });
+      }
+    }
+  }
+  return matches;
+}
+
+function applyGeometricHeightScale(targetHeight, { baseSnapshot = null, isLod = false, options = zScaleConfig } = {}) {
+  const clampedH = Math.max(10, Math.min(1000, Number(targetHeight)));
+  if (!Number.isFinite(clampedH)) return;
+  const sourceState = baseSnapshot ? JSON.parse(baseSnapshot) : deepCopy(currentParams);
+  const oldH = getMaxH(sourceState);
+  if (Math.abs(clampedH - oldH) < 1e-4 && !baseSnapshot) return;
+
+  for (const stage of sourceState.design_pipeline || []) {
+    const Stage = StageRegistry.getClass(stage.mode);
+    if (Stage && typeof Stage.scaleStageParams === 'function') {
+      Stage.scaleStageParams(stage.params, oldH, clampedH, options);
+    }
+  }
+
+  currentParams = sourceState;
+  if (options.modeZ === 'proportional' && oldH > 0) {
+    seekerZ = Math.max(0, Math.min(clampedH, Number(((seekerZ / oldH) * clampedH).toFixed(1))));
+  } else {
+    seekerZ = Math.max(0, Math.min(clampedH, seekerZ));
+  }
+  renderEditor2D();
+  requestMeshUpdate(isLod);
 }
 
 const PROFILE_PLOT = { left:55, right:286, top:24, bottom:290 };
@@ -2883,8 +3042,11 @@ function showProfileContextMenu(event, pointIndex) {
   const points = st?.params?.[activeSpline]?.points;
   if (!Array.isArray(points)) return;
   profileContextTarget = { stageId: st.id, spline: activeSpline, points, pointIndex };
+  const editZBtn = menu.querySelector('[data-action="edit-z"]');
+  const isTopNode = pointIndex === points.length - 1 && points.length >= 2;
+  editZBtn.textContent = appT(isTopNode ? 'Alterar altura total Z…' : 'Editar altura Z…');
   menu.querySelector('[data-action="edit-value"]').disabled = pointIndex < 0;
-  menu.querySelector('[data-action="edit-z"]').disabled = pointIndex < 0 || pointIndex === 0 || pointIndex === points.length - 1;
+  editZBtn.disabled = pointIndex <= 0;
   menu.querySelector('[data-action="smooth"]').disabled = pointIndex < 0 || pointIndex === 0 || pointIndex === points.length - 1;
   menu.querySelector('[data-action="delete"]').disabled = pointIndex < 0 || points.length <= 2;
   const x = Math.min(event.clientX, window.innerWidth - 190);
@@ -3000,18 +3162,31 @@ function applyProfileContextAction(action) {
         requestMeshUpdate(false);
       }
     });
-  } else if (action === 'edit-z' && index > 0 && index < points.length - 1) {
-    openCustomDialog({
-      title: appT('Editar altura Z…'),
-      fields: [{ key: 'z', label: appT('Altura Z (mm):'), value: points[index].z, step: '0.1' }],
-      onConfirm: ({ z }) => {
-        if (!Number.isFinite(z) || z <= points[index - 1].z + 0.5 || z >= points[index + 1].z - 0.5) return appT('A altura precisa ficar entre os nós vizinhos, com espaçamento mínimo de 0,5 mm.');
-        recordUndoSnapshot();
-        points[index].z = Number(z.toFixed(2));
-        renderEditor2D();
-        requestMeshUpdate(false);
-      }
-    });
+  } else if (action === 'edit-z' && index > 0) {
+    if (index === points.length - 1) {
+      openCustomDialog({
+        title: appT('Alterar altura total Z…'),
+        fields: [{ key: 'z', label: appT('Nova altura total Z (mm):'), value: getMaxH(), step: '1' }],
+        onConfirm: ({ z }) => {
+          if (!Number.isFinite(z) || z < 10 || z > 1000) return appT('A altura total precisa estar entre 10 mm e 1000 mm.');
+          recordUndoSnapshot();
+          applyGeometricHeightScale(z, { isLod: false, options: zScaleConfig });
+          syncUI();
+        }
+      });
+    } else {
+      openCustomDialog({
+        title: appT('Editar altura Z…'),
+        fields: [{ key: 'z', label: appT('Altura Z (mm):'), value: points[index].z, step: '0.1' }],
+        onConfirm: ({ z }) => {
+          if (!Number.isFinite(z) || z <= points[index - 1].z + 0.5 || z >= points[index + 1].z - 0.5) return appT('A altura precisa ficar entre os nós vizinhos, com espaçamento mínimo de 0,5 mm.');
+          recordUndoSnapshot();
+          points[index].z = Number(z.toFixed(2));
+          renderEditor2D();
+          requestMeshUpdate(false);
+        }
+      });
+    }
   } else if (action === 'smooth' && index > 0 && index < points.length - 1) {
     recordUndoSnapshot();
     const slope = (points[index + 1].value - points[index - 1].value) / (points[index + 1].z - points[index - 1].z);
@@ -3306,14 +3481,14 @@ function makeSlider(container, label, min, max, step, val, onChange) {
   };
   rng.addEventListener('pointerdown', captureBeforeEdit);
   rng.addEventListener('keydown', captureBeforeEdit);
-  rng.addEventListener('input', () => { captureBeforeEdit(); num.value = rng.value; onChange(parseFloat(rng.value), true); });
-  rng.addEventListener('change', () => { captureBeforeEdit(); onChange(parseFloat(rng.value), false); commitEdit(); });
+  rng.addEventListener('input', () => { captureBeforeEdit(); num.value = rng.value; onChange(parseFloat(rng.value), true, beforeEdit); });
+  rng.addEventListener('change', () => { captureBeforeEdit(); onChange(parseFloat(rng.value), false, beforeEdit); commitEdit(); });
   num.addEventListener('focus', captureBeforeEdit);
   num.addEventListener('keydown', captureBeforeEdit);
   num.addEventListener('change', () => {
     captureBeforeEdit();const parsed=Number(num.value);
     if(!Number.isFinite(parsed)){num.value=rng.value;commitEdit();return;}
-    const clamped=Math.max(Number(min),Math.min(Number(max),parsed));num.value=String(clamped);rng.value=String(clamped);onChange(clamped,false);commitEdit();
+    const clamped=Math.max(Number(min),Math.min(Number(max),parsed));num.value=String(clamped);rng.value=String(clamped);onChange(clamped,false,beforeEdit);commitEdit();
   });
   container.appendChild(div);
 }
@@ -3481,6 +3656,34 @@ function syncUI() {
 
   const resC = document.getElementById('controls-resolution');
   resC.innerHTML = '';
+  makeSlider(resC, 'Altura do modelo (mm)', 20, 600, 1, Number(getMaxH().toFixed(1)), (v, lod, baseSnap) => {
+    applyGeometricHeightScale(v, { baseSnapshot: baseSnap, isLod: lod, options: zScaleConfig });
+  });
+  const modeSelectDiv = document.createElement('div');
+  modeSelectDiv.className = 'slider-spinbox';
+  modeSelectDiv.innerHTML = `<label><span>${appT('Modo de ajuste Z')}</span></label>
+    <select aria-label="${appT('Modo de ajuste Z')}">
+      <option value="proportional">${appT('Escalonamento proporcional')}</option>
+      <option value="add_node">${appT('Adicionar / cortar nó no topo')}</option>
+    </select>`;
+  const modeSelectEl = modeSelectDiv.querySelector('select');
+  modeSelectEl.value = zScaleConfig.modeZ;
+  modeSelectEl.addEventListener('change', () => { zScaleConfig.modeZ = modeSelectEl.value; });
+  resC.appendChild(modeSelectDiv);
+
+  const zContracts = getActiveZScaleContracts();
+  if (zContracts.length > 0) {
+    const zScaleLabel = document.createElement('label');
+    zScaleLabel.className = 'checkbox-label';
+    zScaleLabel.style.marginBottom = '8px';
+    zScaleLabel.title = appT('Escala proporcionalmente os valores das curvas marcadas no contrato com inheritsZScale (ex.: Torção, Fase).');
+    const zScaleChk = document.createElement('input');
+    zScaleChk.type = 'checkbox';
+    zScaleChk.checked = !!zScaleConfig.scaleZValues;
+    zScaleChk.addEventListener('change', () => { zScaleConfig.scaleZValues = zScaleChk.checked; });
+    zScaleLabel.append(zScaleChk, document.createTextNode(' ' + appT('Escalar curvas dependentes de Z')));
+    resC.appendChild(zScaleLabel);
+  }
   makeSlider(resC, 'Camadas Z (n_layers)', 30, 1200, 5, currentParams.n_layers || 200, (v, lod) => {
     currentParams.n_layers = v; requestMeshUpdate(lod);
   });
