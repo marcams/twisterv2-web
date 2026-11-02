@@ -15,8 +15,8 @@ FOR A PARTICULAR PURPOSE. See LICENSE for the complete license text.
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TwisterV2 Web v2.0 Full</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<title>TwisterV2 Web v2.1 Full</title>
+<script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=owoxnHQ3Or0nfYjj6B9i0zV-XCqVSAqJcAS_nrjsrpmIsAovdoUcYTOL-VVP2xMeHm19zonOyqgJfBRz354Ustplmbm5A9URcc9ksY5CGe5JseH0MgoYDj-4fuHP2vnWfjH_42qldmx207hG-XfsESreQEGpWVmNC4paAsg_hhd1b2JNtQjQC7tR0a41l1RUktz7ok5WPqCqfc-A9sI-QVy47-g8fp7s5kMMhWR8vgz0JkeIAttOSpinEXdaGR3m95YFA7qdenxtranXaSgx4Mou-k59nn5cFkPmNmQ7zyBjPv88WZNDbJpuHrAWnKUq" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pBNU1UY3dNRGt3TnpFNVpUZGtNV1ZsTURBd05qVm1NMlZqTVRoaFlURm1NVEF4WldVNFpEVXlaVEl5TWpCaE16SVNDeElIRVBtMnhldUJFUmdCJmZpbGVuYW1lPWluZGV4Lmh0bWwmb3BpPTEwMzEzNTA1MA"/><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root[data-theme="dark"] {
   --bg-main:#1e1f22; --bg-panel:#2b2b2b; --bg-widget:#333333; --bg-hover:#3d3d3d;
@@ -111,12 +111,11 @@ label.checkbox-label { display:flex; align-items:center; gap:6px; font-size:11.5
 #small-view-slot #viewport-overlay, #small-view-slot #debug-drawer { display:none; }
 .expand-view-button { position:absolute; z-index:600; top:6px; right:6px; width:28px; height:28px; padding:0; justify-content:center; align-items:center; font-size:18px; line-height:1; background:color-mix(in srgb, var(--bg-panel) 88%, transparent); box-shadow:0 1px 5px rgba(0,0,0,.35); }
 #small-view-slot .profile-hint { padding-right:25px; }
-#profile-svg-container circle[data-point-index]:focus-visible, #shape-editor-container circle[data-shape-index]:focus-visible { outline:none; stroke-width:4; filter:drop-shadow(0 0 3px var(--accent)); }
-#shape-editor-container { padding:8px 11px; border-top:1px solid var(--border); }
-#shape-editor-container[hidden] { display:none; }
-#shape-editor-container svg { width:100%; height:210px; background:var(--plot-bg); border:1px solid var(--border); border-radius:4px; touch-action:none; }
-#shape-editor-container circle { cursor:grab; }
-#shape-editor-container .shape-editor-toolbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; color:var(--fg-muted); }
+#profile-svg-container circle[data-point-index]:focus-visible, #polar-svg-container circle[data-shape-index]:focus-visible { outline:none; stroke-width:4; filter:drop-shadow(0 0 3px var(--accent)); }
+#polar-svg-container circle[data-shape-index] { cursor:grab; }
+.shape-editor-toolbar { display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:6px; color:var(--fg-muted); }
+.shape-editor-toolbar[hidden] { display:none; }
+#small-view-slot #polar-toolbar { padding-right:32px; }
 .profile-hint { font-size:10.5px; color:var(--fg-muted); margin-top:5px; line-height:1.3; }
 #profile-context-menu { position:fixed; z-index:2000; min-width:178px; padding:5px; background:var(--bg-panel); color:var(--fg-main); border:1px solid var(--border); border-radius:6px; box-shadow:0 8px 24px rgba(0,0,0,.42); }
 #profile-context-menu[hidden] { display:none; }
@@ -187,7 +186,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
 <header id="titlebar">
   <div class="brand">
     <span>TwisterV2 Web</span>
-    <span class="brand-badge">v2.0 Full</span>
+    <span class="brand-badge">v2.1 Full</span>
   </div>
   <div class="toolbar">
     <button id="btn-undo">↶ Undo</button>
@@ -221,11 +220,11 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
         <div class="about-kicker">Sobre o aplicativo</div>
         <h1 id="about-title">TwisterV2 Web</h1>
       </div>
-      <span class="brand-badge">v2.0 Full</span>
+      <span class="brand-badge">v2.1 Full</span>
     </div>
     <p id="about-description" class="about-description">Ferramenta de modelagem paramétrica para criar, visualizar e exportar luminárias Twister em 3D.</p>
     <dl class="about-meta">
-      <div><dt>Versão</dt><dd>2.0 Full</dd></div>
+      <div><dt>Versão</dt><dd>2.1 Full</dd></div>
       <div><dt>Criador</dt><dd>Marcelo Silva<br><a href="mailto:marcams@gmail.com">marcams@gmail.com</a></dd></div>
       <div><dt>Aplicativo</dt><dd>TwisterV2 Web</dd></div>
       <div><dt>Licença do aplicativo</dt><dd><a href="LICENSE" target="_blank" rel="noopener noreferrer">GNU AGPL v3.0 ou posterior</a></dd></div>
@@ -312,7 +311,6 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
       </div>
       <button id="btn-expand-view" class="expand-view-button" type="button" aria-label="Expandir Perfil Vertical (Z) para o painel central" title="Expandir Perfil Vertical (Z) para o painel central">⤢</button>
     </div>
-    <section id="shape-editor-container" hidden aria-label="Editor de forma polar"></section>
   </aside>
 
   <section id="viewport-container">
@@ -321,7 +319,8 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
         <canvas id="viewport3d" aria-label="Visualização tridimensional interativa"></canvas>
         <div id="viewport-overlay">
           Vértices: <span id="stat-verts">0</span> | Faces: <span id="stat-faces">0</span><br>
-          Engine: <span id="stat-engine">feature_aligned</span> | Modo: <span id="stat-mode">vaso</span>
+          Engine: <span id="stat-engine">feature_aligned</span> | Modo: <span id="stat-mode">vaso</span><br>
+          Altura: <span id="stat-height">0.0 mm</span> | Largura máx.: <span id="stat-width">0.0 mm</span>
         </div>
         <div id="debug-drawer" hidden>
           <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #444;padding-bottom:4px;margin-bottom:6px;">
@@ -337,7 +336,9 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
     </div>
     <div id="view-stash" hidden>
       <section id="polar-2d-wrapper" class="interchangeable-view" aria-label="Janela Seção Polar 2D (Z)">
+        <div id="polar-toolbar" class="shape-editor-toolbar" hidden></div>
         <div id="polar-svg-container"></div>
+        <div id="polar-hint" class="profile-hint"></div>
       </section>
     </div>
   </section>
@@ -406,7 +407,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
 <footer id="statusbar">
   <div class="status-left">
     <span id="status-dot" class="status-dot"></span>
-    <span id="status-text" role="status" aria-live="polite">Inicializando TwisterV2 v2.0...</span>
+    <span id="status-text" role="status" aria-live="polite">Inicializando TwisterV2 v2.1...</span>
   </div>
   <progress id="mesh-progress" max="100" value="0" aria-label="Progresso da geração da malha" hidden></progress>
 </footer>
@@ -458,7 +459,7 @@ const APP_TRANSLATIONS = {
   'Wireframe (W)':['Wireframe (W)','Wireframe (W)','Estructura alámbrica (W)'], 'Flat Shading':['Flat shading','Flat Shading','Sombreado plano'], 'Anel Z & Eixos':['Z ring & axes','Anel Z & Eixos','Anillo Z y ejes'], 'Mostrar Mesa':['Show build plate','Mostrar Mesa','Mostrar base de impresión'],
   'Editar valor…':['Edit value…','Editar valor…','Editar valor…'], 'Editar altura Z…':['Edit Z height…','Editar altura Z…','Editar altura Z…'], 'Suavizar neste nó':['Smooth at this node','Suavizar neste nó','Suavizar en este nodo'],
   'Excluir nó':['Delete node','Excluir nó','Eliminar nodo'], 'Inserir nó com valores…':['Insert node with values…','Inserir nó com valores…','Insertar nodo con valores…'],
-  'Inicializando TwisterV2 v2.0...':['Initializing TwisterV2 v2.0...','Inicializando TwisterV2 v2.0...','Iniciando TwisterV2 v2.0...'], 'Progresso da geração da malha':['Mesh generation progress','Progresso da geração da malha','Progreso de generación de malla'],
+  'Inicializando TwisterV2 v2.1...':['Initializing TwisterV2 v2.1...','Inicializando TwisterV2 v2.1...','Iniciando TwisterV2 v2.1...'], 'Progresso da geração da malha':['Mesh generation progress','Progresso da geração da malha','Progreso de generación de malla'],
   'Escala radial':['Radial scale','Escala radial','Escala radial'], 'Normalização da forma':['Shape normalization','Normalização da forma','Normalización de la forma'], 'Multiplicador':['Multiplier','Multiplicador','Multiplicador'],
   'Raio externo fixo':['Fixed outer radius','Raio externo fixo','Radio exterior fijo'], 'Raio interno fixo':['Fixed inner radius','Raio interno fixo','Radio interior fijo'], 'Forma da fundação':['Foundation shape','Forma da fundação','Forma de la base'],
   'Círculo':['Circle','Círculo','Círculo'], 'Quadrado':['Square','Quadrado','Cuadrado'], 'Polígono':['Polygon','Polígono','Polígono'], 'Estrela':['Star','Estrela','Estrella'], 'Coração':['Heart','Coração','Corazón'], 'Gota':['Teardrop','Gota','Gota'],
@@ -531,15 +532,24 @@ const APP_TRANSLATIONS = {
   'Ativar':['Enable','Ativar','Activar'], 'Excluir estágio':['Delete stage','Excluir estágio','Eliminar etapa'], 'Erro:':['Error:','Erro:','Error:'],
   'Janela grande':['Main window','Janela grande','Ventana principal'], 'Janela pequena':['Small window','Janela pequena','Ventana pequeña'],
   'Expandir':['Expand','Expandir','Ampliar'], 'para o painel central':['to the main panel','para o painel central','al panel central'],
+  'Altura:':['Height:','Altura:','Altura:'],
+  'Largura máx.:':['Max width:','Largura máx.:','Ancho máx.:'],
   'Altura do modelo (mm)':['Model height (mm)','Altura do modelo (mm)','Altura del modelo (mm)'],
+  'Largura máx. da peça (mm)':['Max part width (mm)','Largura máx. da peça (mm)','Ancho máx. de la pieza (mm)'],
   'Modo de ajuste Z':['Z adjustment mode','Modo de ajuste Z','Modo de ajuste Z'],
   'Escalonamento proporcional':['Proportional scaling','Escalonamento proporcional','Escalado proporcional'],
   'Adicionar / cortar nó no topo':['Add / trim node at top','Adicionar / cortar nó no topo','Añadir / recortar nodo superior'],
   'Escalar curvas dependentes de Z':['Scale Z-dependent curves','Escalar curvas dependentes de Z','Escalar curvas dependientes de Z'],
-  'Escala proporcionalmente os valores das curvas marcadas no contrato com inheritsZScale (ex.: Torção, Fase).':['Proportionally scales values of curves marked with inheritsZScale in their contract (e.g., Twist, Phase).','Escala proporcionalmente os valores das curvas marcadas no contrato com inheritsZScale (ex.: Torção, Fase).','Escala proporcionalmente los valores de las curvas marcadas con inheritsZScale en su contrato (p. ej., Torsión, Fase).'],
+  'Escala proporcionalmente curvas e parâmetros marcados no contrato com inheritsZScale / scaleWithZ (ex.: Torção, Escala vertical).':['Proportionally scales curves and parameters marked with inheritsZScale / scaleWithZ in their contract (e.g., Twist, Vertical scale).','Escala proporcionalmente curvas e parâmetros marcados no contrato com inheritsZScale / scaleWithZ (ex.: Torção, Escala vertical).','Escala proporcionalmente curvas y parámetros marcados con inheritsZScale / scaleWithZ en su contrato (p. ej., Torsión, Escala vertical).'],
+  'Escalar relevos proporcionalmente à largura':['Scale reliefs proportionally to width','Escalar relevos proporcionalmente à largura','Escalar relieves proporcionalmente al ancho'],
+  'Escala as amplitudes dos estágios modificadores marcados no contrato com inheritsRadialScale (ex.: Pico, Vale, Amplitude) junto com a largura da peça.':['Scales modifier stage amplitudes marked with inheritsRadialScale in their contract (e.g., Peak, Valley, Amplitude) together with part width.','Escala as amplitudes dos estágios modificadores marcados no contrato com inheritsRadialScale (ex.: Pico, Vale, Amplitude) junto com a largura da peça.','Escala las amplitudes de las etapas modificadoras marcadas con inheritsRadialScale en su contrato (p. ej., Pico, Valle, Amplitud) junto con el ancho de la pieza.'],
   'Alterar altura total Z…':['Change total Z height…','Alterar altura total Z…','Cambiar altura Z total…'],
   'Nova altura total Z (mm):':['New total Z height (mm):','Nova altura total Z (mm):','Nueva altura Z total (mm):'],
-  'A altura total precisa estar entre 10 mm e 1000 mm.':['Total height must be between 10 mm and 1000 mm.','A altura total precisa estar entre 10 mm e 1000 mm.','La altura total debe estar entre 10 mm y 1000 mm.']
+  'A altura total precisa estar entre 10 mm e 1000 mm.':['Total height must be between 10 mm and 1000 mm.','A altura total precisa estar entre 10 mm e 1000 mm.','La altura total debe estar entre 10 mm y 1000 mm.'],
+  'Edição simétrica':['Symmetric editing','Edição simétrica','Edición simétrica'],
+  'Tolerância de simetria (mm)':['Symmetry tolerance (mm)','Tolerância de simetria (mm)','Tolerancia de simetría (mm)'],
+  'Redefinir seção circular':['Reset circular section','Redefinir seção circular','Restablecer sección circular'],
+  'Trocar fundação preservou a forma transversal em Flex Shape.':['Foundation swap preserved cross-section shape in Flex Shape.','Trocar fundação preservou a forma transversal em Flex Shape.','El cambio de base conservó la forma transversal en Flex Shape.']
 };
 const APP_TRANSLATION_INDEX = { en:0, 'pt-BR':1, es:2 };
 const APP_TRANSLATION_SOURCE = new Map();
@@ -640,7 +650,7 @@ function translateAppTree(root = document.body) {
 }
 function applyAppLanguage() {
   document.documentElement.lang = appLanguage;
-  document.title = appT('TwisterV2 Web v2.0 Full');
+  document.title = appT('TwisterV2 Web v2.1 Full');
   translateAppTree();
 }
 const languageSelect = document.getElementById('language-select');
@@ -653,7 +663,7 @@ languageSelect.addEventListener('change', () => {
   if (typeof updateViewLayout === 'function') updateViewLayout();
   translateAppTree();
 });
-['seeker-z-label', 'stat-verts', 'stat-faces'].forEach(id => {
+['seeker-z-label', 'stat-verts', 'stat-faces', 'stat-height', 'stat-width'].forEach(id => {
   document.getElementById(id)?.setAttribute('data-i18n-ignore', 'true');
 });
 const appLanguageObserver = new MutationObserver(records => {
@@ -1124,7 +1134,7 @@ function buildNaturalCubic(pts) {
   return evaluate;
 }
 
-function buildPeriodicPCHIP(thetas, radii) {
+function buildPeriodicPCHIP(thetas, radii, tension = 1.0) {
   const sorted = thetas.map((t, i) => ({ z: Number(t), value: Number(radii[i]) }))
     .sort((a, b) => a.z - b.z);
   if (sorted.length < 2) { const constant=()=>sorted[0]?.value??0;constant.derivative=()=>0;return constant; }
@@ -1136,7 +1146,9 @@ function buildPeriodicPCHIP(thetas, radii) {
     ...sorted.slice(0, pad).map(p => ({ z: p.z + period, value: p.value }))
   ];
   const clean = all.filter((p, i) => i === 0 || p.z - all[i - 1].z > 1e-6);
-  const interp = buildPCHIP(clean);
+  const pchip = buildPCHIP(clean);
+  const xs = clean.map(p => p.z), ys = clean.map(p => p.value);
+  const tau = Number.isFinite(Number(tension)) ? Math.max(0, Math.min(1, Number(tension))) : 1.0;
   const normalize=theta=>{
     let t = Number(theta) % period;
     if (t < 0) t += period;
@@ -1144,8 +1156,26 @@ function buildPeriodicPCHIP(thetas, radii) {
     while (t > sorted[0].z + period) t -= period;
     return t;
   };
-  const periodic=theta=>interp(normalize(theta));
-  periodic.derivative=theta=>interp.derivative?.(normalize(theta))??0;
+  if (tau >= 0.999) {
+    const periodic=theta=>pchip(normalize(theta));
+    periodic.derivative=theta=>pchip.derivative?.(normalize(theta))??0;
+    return periodic;
+  }
+  const linearDeriv = z => {
+    if (z <= xs[0] || z >= xs[xs.length - 1]) return 0;
+    let i = 0;
+    while (i < xs.length - 1 && xs[i + 1] < z) i++;
+    const dx = xs[i + 1] - xs[i];
+    return dx > 1e-9 ? (ys[i + 1] - ys[i]) / dx : 0;
+  };
+  const periodic=theta=>{
+    const nt = normalize(theta);
+    return tau * pchip(nt) + (1 - tau) * linearInterp(xs, ys, nt);
+  };
+  periodic.derivative=theta=>{
+    const nt = normalize(theta);
+    return tau * (pchip.derivative?.(nt) ?? 0) + (1 - tau) * linearDeriv(nt);
+  };
   return periodic;
 }
 
@@ -1285,11 +1315,11 @@ const SplineRole = Object.freeze({ PEAK:'peak', VALLEY:'valley', TORSION:'torsio
 const HandleType = Object.freeze({ RADIAL:'radial', ANGULAR:'angular', FREE:'free' });
 class SplineContract {
   constructor(config = {}) {
-    const isTorsionLike = config.uiRole === SplineRole.TORSION || config.uiDomain === 'turns';
-    const isRadialLike = config.uiRole === SplineRole.BASE_PROFILE || config.uiRole === SplineRole.PEAK || config.uiRole === SplineRole.VALLEY;
+    const isTorsionRole = config.uiRole === SplineRole.TORSION && config.splineId !== 'phase_profile';
+    const isRadialRole = (config.uiRole === SplineRole.BASE_PROFILE || config.uiRole === SplineRole.PEAK || config.uiRole === SplineRole.VALLEY) && config.uiDomain === 'mm';
     Object.assign(this, {
-      inheritsRadialScale: isRadialLike,
-      inheritsZScale: isTorsionLike,
+      inheritsRadialScale: isRadialRole,
+      inheritsZScale: isTorsionRole,
       ...config
     });
   }
@@ -1379,14 +1409,26 @@ class DeformationStage {
   static getSideEffects() { return {}; }
   static getPolicy() { return new StagePolicy(); }
   static getDefaultParams() { return {}; }
+  static preparePresetParams(presetData, targetZMax) {
+    const params = deepCopy(presetData || {});
+    const refZ = Number(params.reference_z);
+    if (Number.isFinite(refZ) && refZ > 0 && Number.isFinite(targetZMax) && targetZMax > 0 && Math.abs(targetZMax - refZ) > 1e-4) {
+      this.scaleStageParams(params, refZ, targetZMax, { fR: 1, modeZ: 'proportional', scaleZValues: true, scaleRadialModifiers: true });
+    }
+    params.reference_z = Number((targetZMax || 240).toFixed(2));
+    return params;
+  }
   static scaleStageParams(params, oldH, newH, options = {}) {
     if (!params || typeof params !== 'object') return;
     const safeOldH = Math.max(1e-6, Number(oldH) || 240);
     const safeNewH = Math.max(10, Number(newH) || safeOldH);
-    const fZ = safeNewH / safeOldH;
-    const fR = Number.isFinite(Number(options.fR)) ? Number(options.fR) : 1;
+    const heightChanged = Math.abs(safeNewH - safeOldH) > 1e-4;
+    const fZ = heightChanged ? safeNewH / safeOldH : 1;
+    const fR = Number.isFinite(Number(options.fR)) && Number(options.fR) > 0 ? Number(options.fR) : 1;
+    const radiusChanged = Math.abs(fR - 1) > 1e-6;
     const modeZ = options.modeZ === 'add_node' ? 'add_node' : 'proportional';
     const scaleZValues = options.scaleZValues !== false;
+    const scaleRadialModifiers = options.scaleRadialModifiers !== false;
     const contracts = this.getSplineContracts() || {};
 
     for (const [contractKey, contract] of Object.entries(contracts)) {
@@ -1394,22 +1436,29 @@ class DeformationStage {
       const curveObj = params[binding];
       if (!curveObj || !Array.isArray(curveObj.points) || !curveObj.points.length) continue;
 
+      const isBaseProfile = contract.uiRole === SplineRole.BASE_PROFILE;
+      const applyZValScale = heightChanged && scaleZValues && !!contract.inheritsZScale;
+      const applyRadialScale = radiusChanged && !!contract.inheritsRadialScale && (isBaseProfile || scaleRadialModifiers);
+      const valueScale = (applyZValScale ? fZ : 1) * (applyRadialScale ? fR : 1);
+
       const sourcePoints = curveObj.points
         .map(pt => ({ ...pt, z: Number(pt.z), value: Number(pt.value) }))
         .sort((a, b) => a.z - b.z);
 
-      if (modeZ === 'proportional') {
+      if (!heightChanged || modeZ === 'proportional') {
         const lastIdx = sourcePoints.length - 1;
+        const tangentFactor = valueScale / fZ;
         curveObj.points = sourcePoints.map((pt, idx) => {
           const nextPt = { ...pt };
-          nextPt.z = idx === 0 ? 0 : idx === lastIdx ? Number(safeNewH.toFixed(2)) : Number((pt.z * fZ).toFixed(2));
-          if (nextPt.tangent_in !== undefined && nextPt.tangent_in !== null) nextPt.tangent_in = Number((Number(nextPt.tangent_in) / fZ).toFixed(6));
-          if (nextPt.tangent_out !== undefined && nextPt.tangent_out !== null) nextPt.tangent_out = Number((Number(nextPt.tangent_out) / fZ).toFixed(6));
-          if (scaleZValues && contract.inheritsZScale) {
-            nextPt.value = Number((nextPt.value * fZ).toFixed(4));
+          if (heightChanged) {
+            nextPt.z = idx === 0 ? 0 : idx === lastIdx ? Number(safeNewH.toFixed(2)) : Number((pt.z * fZ).toFixed(2));
           }
-          if (fR !== 1 && contract.inheritsRadialScale) {
-            nextPt.value = Number((nextPt.value * fR).toFixed(4));
+          if (valueScale !== 1) {
+            nextPt.value = Number((nextPt.value * valueScale).toFixed(4));
+          }
+          if (Math.abs(tangentFactor - 1) > 1e-6) {
+            if (nextPt.tangent_in !== undefined && nextPt.tangent_in !== null) nextPt.tangent_in = Number((Number(nextPt.tangent_in) * tangentFactor).toFixed(6));
+            if (nextPt.tangent_out !== undefined && nextPt.tangent_out !== null) nextPt.tangent_out = Number((Number(nextPt.tangent_out) * tangentFactor).toFixed(6));
           }
           return nextPt;
         });
@@ -1441,10 +1490,30 @@ class DeformationStage {
           kept.push({ z: Number(safeNewH.toFixed(2)), value: valAtNewH });
           curveObj.points = kept;
         }
-        if (fR !== 1 && contract.inheritsRadialScale) {
-          for (const pt of curveObj.points) pt.value = Number((pt.value * fR).toFixed(4));
+        if (applyRadialScale) {
+          for (const pt of curveObj.points) {
+            pt.value = Number((pt.value * fR).toFixed(4));
+            if (pt.tangent_in !== undefined && pt.tangent_in !== null) pt.tangent_in = Number((Number(pt.tangent_in) * fR).toFixed(6));
+            if (pt.tangent_out !== undefined && pt.tangent_out !== null) pt.tangent_out = Number((Number(pt.tangent_out) * fR).toFixed(6));
+          }
         }
       }
+    }
+
+    if (heightChanged && scaleZValues) {
+      const schema = this.getFixedParamsSchema?.() || {};
+      for (const [paramKey, field] of Object.entries(schema)) {
+        if (!field?.scaleWithZ) continue;
+        const raw = Number(params[paramKey] ?? field.default);
+        if (!Number.isFinite(raw)) continue;
+        let nextVal = raw * fZ;
+        if (Number.isFinite(Number(field.min))) nextVal = Math.max(Number(field.min), nextVal);
+        if (Number.isFinite(Number(field.max))) nextVal = Math.min(Number(field.max), nextVal);
+        params[paramKey] = field.type === 'int' ? Math.round(nextVal) : Number(nextVal.toFixed(4));
+      }
+    }
+    if (heightChanged) {
+      params.reference_z = Number(safeNewH.toFixed(2));
     }
   }
 }
@@ -1538,72 +1607,821 @@ class PolygonBaseStage extends DeformationStage {
     return{value:raw.value/denominator,dTheta:raw.dTheta/denominator,dZ:(raw.dZ*denominator-raw.value*denominatorZ)/(denominator*denominator)};
   }
   shapeFactor(theta,z) { return this.shapeFactorWithDerivatives(theta,z).value; }
+  exportFoundationSnapshot(zSamples = null, nAngular = null) {
+    const preset = this.params.preset_profile || 'Circle';
+    const sides = Math.max(3, Math.round(Number(this.params.sides) || (preset === 'Square' ? 4 : 6)));
+    const sampleCount = nAngular || (preset === 'Circle' ? 8 : Math.max(72, sides * 12));
+    const rPts = this.params.radius_profile?.points;
+    const effectiveZSamples = (Array.isArray(zSamples) && zSamples.length >= 2)
+      ? zSamples
+      : (Array.isArray(rPts) && rPts.length >= 2 ? rPts.map(pt => Number(pt.z)) : [0, 240]);
+    const base_radii = [];
+    const sections = effectiveZSamples.map(zVal => {
+      const zNum = Number(zVal);
+      const nodeR = Math.max(1.0, Number(this.eval('radius_profile', zNum, 60)) || 60);
+      base_radii.push(Number(nodeR.toFixed(3)));
+      const pts = [];
+      for (let i = 0; i < sampleCount; i++) {
+        const theta = (2 * Math.PI * i) / sampleCount;
+        const sf = this.shapeFactor(theta, zNum);
+        pts.push({ theta: Number(theta.toFixed(6)), r: Number(Math.max(1.0, Math.min(500.0, sf * nodeR)).toFixed(3)) });
+      }
+      return pts;
+    });
+    const portable = {};
+    for (const key of ['radius_profile', 'torsion_profile', 'foundation_radius']) {
+      if (this.params[key] !== undefined) portable[key] = deepCopy(this.params[key]);
+    }
+    return { z_heights: effectiveZSamples.slice(), base_radii, sections, portable_params: portable };
+  }
+  static importFoundationSnapshot(snapshot, zMax = 240) {
+    const defaults = this.getDefaultParams(zMax);
+    const portable = snapshot?.portable_params || {};
+    for (const key of ['radius_profile', 'torsion_profile', 'foundation_radius']) {
+      if (portable[key] !== undefined) defaults[key] = deepCopy(portable[key]);
+    }
+    return defaults;
+  }
 }
 
 class FlexShapeStage extends PolygonBaseStage {
-  constructor(stageDef,splines,globalParams={}){
-    super(stageDef,splines,globalParams);
-    this.sectionCurves=(this.params.sections||[]).map(section=>{
-      const pts=(section.points||[]).slice().sort((a,b)=>a.theta-b.theta);
-      return {z_norm:Number(section.z_norm)||0,eval:pts.length<2?()=>pts[0]?.r??1:buildPeriodicPCHIP(pts.map(p=>p.theta),pts.map(p=>p.r))};
-    }).sort((a,b)=>a.z_norm-b.z_norm);
+  constructor(stageDef, splines, globalParams = {}) {
+    super(stageDef, splines, globalParams);
+    const [zMin, zMax] = globalParams.zBounds || [0, 240];
+    const spanZ = (zMax - zMin) || 240;
+    const rawSections = this.params.sections || [];
+    const rProfilePts = this.params.radius_profile?.points || [];
+    const legacyRefR = Math.max(1, Number(this.params.reference_radius) || 85);
+    const defaultTension = Number.isFinite(Number(this.params.section_tension)) ? Number(this.params.section_tension) : 1.0;
+    const zSplineKind = this.params.cp_profile_kind || this.params.radius_profile?.kind || 'pchip';
+
+    const prepared = rawSections.map((section, idx) => {
+      const zNorm = Number(section.z_norm) || 0;
+      const zAbs = (rProfilePts.length === rawSections.length && rProfilePts[idx])
+        ? Number(rProfilePts[idx].z)
+        : zMin + zNorm * spanZ;
+      const rawPts = (section.points || []).slice().sort((a, b) => a.theta - b.theta);
+      let baseR = Number(section.base_r);
+      if (!(baseR > 0)) {
+        if (this.params._sections_direct_mm) {
+          const matchedNode = rProfilePts.length === rawSections.length ? rProfilePts[idx] : null;
+          baseR = matchedNode ? Number(matchedNode.value) : this.eval('radius_profile', zAbs, 0);
+          if (!(baseR > 0)) baseR = FlexShapeStage.computeSectionMeanRadius(section, legacyRefR);
+        } else {
+          baseR = legacyRefR;
+        }
+      }
+      const maxVal = rawPts.reduce((m, p) => Math.max(m, Number(p.r) || 0), 0);
+      const scaleNorm = (maxVal > 0 && maxVal <= 5.0) ? baseR : 1.0;
+      const invBaseR = 1 / Math.max(1e-3, baseR);
+      const normPts = rawPts.map(p => ({
+        theta: Number(p.theta),
+        r: Math.max(0.01, Math.min(20.0, Number(p.r) * scaleNorm * invBaseR))
+      }));
+      const secTension = Number.isFinite(Number(section.tension)) ? Number(section.tension) : defaultTension;
+      return {
+        z_norm: zNorm,
+        z_abs: zAbs,
+        base_r: baseR,
+        normPts,
+        tension: secTension,
+        eval: normPts.length < 2
+          ? () => normPts[0]?.r ?? 1
+          : buildPeriodicPCHIP(normPts.map(p => p.theta), normPts.map(p => p.r), secTension)
+      };
+    }).sort((a, b) => a.z_abs - b.z_abs);
+
+    this.sectionCurves = prepared;
+    this.defaultTension = defaultTension;
+    this.zSplineKind = zSplineKind;
+    this.isoThetas = null;
+    this.cpZCurves = null;
+
+    if (prepared.length >= 2) {
+      const mCount = prepared[0].normPts.length;
+      const isIso = mCount >= 2 && prepared.every(sec =>
+        sec.normPts.length === mCount &&
+        sec.normPts.every((pt, j) => Math.abs(pt.theta - prepared[0].normPts[j].theta) < 1e-4)
+      );
+      if (isIso) {
+        this.isoThetas = prepared[0].normPts.map(pt => pt.theta);
+        this.cpZCurves = Array.from({ length: mCount }, (_, j) => {
+          const pts = prepared.map(sec => ({ z: sec.z_abs, value: sec.normPts[j].r }));
+          return new CurveData(pts, zSplineKind, `cp_sf_${j}`);
+        });
+      }
+    }
+    this._zLayerCache = new Map();
   }
   static getTypeId() { return 'flex_shape'; }
+  static computeSectionMeanRadius(section, fallback = 60) {
+    const pts = section?.points;
+    if (!Array.isArray(pts) || !pts.length) return fallback;
+    let sum = 0, count = 0;
+    for (const p of pts) {
+      const r = Number(p?.r);
+      if (Number.isFinite(r) && r > 0) { sum += r; count++; }
+    }
+    return count > 0 ? sum / count : fallback;
+  }
+  static buildShapePresetFactors(preset = 'Circle', sides = 6) {
+    const nSides = Math.max(3, Math.min(24, Math.round(Number(sides) || (preset === 'Square' ? 4 : preset === 'Star' ? 5 : 6))));
+    let count = 8;
+    if (preset === 'Square') count = 8;
+    else if (preset === 'Polygon' || preset === 'Star' || preset === 'Gear') count = nSides * 2;
+    else if (preset === 'Heart' || preset === 'Teardrop') count = 12;
+    const factors = [];
+    for (let i = 0; i < count; i++) {
+      const theta = Number(((2 * Math.PI * i) / count).toFixed(6));
+      let sf = 1.0;
+      if (preset === 'Square' || preset === 'Polygon') {
+        const polySides = preset === 'Square' ? 4 : nSides;
+        const sector = (2 * Math.PI) / polySides;
+        const local = ((theta + sector / 2) % sector + sector) % sector - sector / 2;
+        sf = Math.cos(Math.PI / polySides) / Math.max(0.2, Math.cos(local));
+      } else if (preset === 'Star') {
+        sf = (i % 2 === 0) ? 1.18 : 0.62;
+      } else if (preset === 'Gear') {
+        sf = (i % 2 === 0) ? 1.12 : 0.88;
+      } else if (preset === 'Heart') {
+        sf = Math.max(0.25, 0.62 * (1 - Math.sin(theta)) * (1 + 0.16 * Math.cos(theta)));
+      } else if (preset === 'Teardrop') {
+        sf = Math.max(0.25, 1 + 0.35 * Math.sin(theta));
+      }
+      factors.push({ theta, sf });
+    }
+    return factors;
+  }
+  static applyShapePreset(params, preset = 'Circle', { scope = 'section', sectionIndex = 0, sides = null, zMax = 240 } = {}) {
+    if (!params) return;
+    const safeMax = Math.max(1, Number(zMax) || 240);
+    this.syncSectionsWithRadiusProfile(params, safeMax);
+    if (sides !== null && Number.isFinite(Number(sides))) {
+      params.shape_sides = Math.max(3, Math.min(24, Math.round(Number(sides))));
+    }
+    const nSides = Math.max(3, Math.min(24, Math.round(Number(params.shape_sides) || (preset === 'Square' ? 4 : preset === 'Star' ? 5 : 6))));
+    params.shape_preset = preset;
+    if (preset === 'Square' || preset === 'Polygon') {
+      params.section_tension = 0.25;
+    } else if (preset === 'Star' || preset === 'Gear') {
+      params.section_tension = 0.35;
+    } else {
+      params.section_tension = 1.0;
+    }
+
+    const template = this.buildShapePresetFactors(preset, nSides);
+    const sections = params.sections || [];
+    const rPts = params.radius_profile?.points || [];
+
+    if (scope === 'all' || sections[sectionIndex]?.points?.length !== template.length) {
+      // Topologia iso-paramétrica: garante o mesmo número M de CPs em todas as seções Z
+      sections.forEach((sec, idx) => {
+        const nodeR = Math.max(1.0, Number(rPts[idx]?.value) || Number(sec.base_r) || 60);
+        if (scope === 'all' || idx === sectionIndex) {
+          sec.points = template.map(item => ({
+            theta: item.theta,
+            r: Number(Math.max(1.0, Math.min(500.0, item.sf * nodeR)).toFixed(3))
+          }));
+          const meanR = this.computeSectionMeanRadius(sec, nodeR);
+          sec.base_r = Number(meanR.toFixed(3));
+        } else {
+          // Reamostrar a seção existente nos mesmos ângulos theta do template para preservar M CPs fixos
+          const oldPts = (sec.points || []).slice().sort((a, b) => a.theta - b.theta);
+          const ev = oldPts.length < 2
+            ? () => oldPts[0]?.r ?? nodeR
+            : buildPeriodicPCHIP(oldPts.map(p => p.theta), oldPts.map(p => p.r), params.section_tension ?? 1.0);
+          sec.points = template.map(item => ({
+            theta: item.theta,
+            r: Number(Math.max(1.0, Math.min(500.0, ev(item.theta))).toFixed(3))
+          }));
+        }
+      });
+    } else if (sections[sectionIndex]) {
+      const sec = sections[sectionIndex];
+      const nodeR = Math.max(1.0, Number(rPts[sectionIndex]?.value) || Number(sec.base_r) || 60);
+      sec.points = template.map(item => ({
+        theta: item.theta,
+        r: Number(Math.max(1.0, Math.min(500.0, item.sf * nodeR)).toFixed(3))
+      }));
+      const meanR = this.computeSectionMeanRadius(sec, nodeR);
+      sec.base_r = Number(meanR.toFixed(3));
+    }
+  }
+  static syncSectionsWithRadiusProfile(params, zMax = 240) {
+    if (!params || typeof params !== 'object') return;
+    let safeMax = Math.max(1, Number(zMax) || 240);
+    if (!params.radius_profile || !Array.isArray(params.radius_profile.points) || params.radius_profile.points.length < 2) {
+      params.radius_profile = { points: [{ z: 0, value: 85 }, { z: safeMax, value: 85 }], kind: 'pchip' };
+    }
+    const rPts = params.radius_profile.points;
+    for (let i = 0; i < rPts.length; i++) {
+      rPts[i].z = Number(rPts[i].z) || 0;
+      rPts[i].value = Math.max(1.0, Number(rPts[i].value) || 60);
+    }
+    rPts.sort((a, b) => a.z - b.z);
+    safeMax = Math.max(1, Number(rPts[rPts.length - 1].z) || safeMax);
+
+    const rawSections = Array.isArray(params.sections) ? params.sections : [];
+    const defaultThetas = Array.from({ length: 8 }, (_, i) => Number(((2 * Math.PI * i) / 8).toFixed(6)));
+    const legacyRefR = Math.max(1, Number(params.reference_radius) || 85);
+
+    if (params._sections_direct_mm && rawSections.length === rPts.length) {
+      // Garantir topologia iso-paramétrica (mesmo número M de CPs em todas as seções)
+      const refPts = (rawSections[0]?.points?.length >= 3)
+        ? rawSections[0].points.slice().sort((a, b) => a.theta - b.theta)
+        : defaultThetas.map(theta => ({ theta, r: Number(rPts[0]?.value) || 60 }));
+      const targetCount = refPts.length;
+      const refThetas = refPts.map(p => ((Number(p.theta) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI));
+
+      for (let idx = 0; idx < rawSections.length; idx++) {
+        const sec = rawSections[idx];
+        const nodeR = Math.max(1.0, Number(rPts[idx].value) || 60);
+        sec.z_norm = Math.max(0, Math.min(1, Number((rPts[idx].z / safeMax).toFixed(4))));
+        sec.base_r = Number((Number(sec.base_r) > 0 ? Number(sec.base_r) : nodeR).toFixed(3));
+        if (Array.isArray(sec.points) && sec.points.length === targetCount) {
+          for (let j = 0; j < sec.points.length; j++) {
+            sec.points[j].theta = ((Number(sec.points[j].theta) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+            sec.points[j].r = Math.max(1.0, Math.min(500.0, Number(sec.points[j].r) || nodeR));
+          }
+          sec.points.sort((a, b) => a.theta - b.theta);
+        } else if (Array.isArray(sec.points) && sec.points.length >= 2) {
+          const sortedPts = sec.points.slice().sort((a, b) => a.theta - b.theta);
+          const ev = buildPeriodicPCHIP(sortedPts.map(p => p.theta), sortedPts.map(p => p.r), params.section_tension ?? 1.0);
+          sec.points = refThetas.map(theta => ({
+            theta: Number(theta.toFixed(6)),
+            r: Number(Math.max(1.0, Math.min(500.0, ev(theta))).toFixed(3))
+          }));
+        } else {
+          sec.points = refThetas.map(theta => ({ theta: Number(theta.toFixed(6)), r: Number(nodeR.toFixed(3)) }));
+        }
+      }
+      return;
+    }
+
+    const preparedOld = rawSections
+      .filter(s => s && Array.isArray(s.points) && s.points.length >= 2)
+      .map(s => {
+        const zNorm = Math.max(0, Math.min(1, Number(s.z_norm) || 0));
+        const sortedPts = s.points.map(p => ({
+          theta: ((Number(p.theta) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI),
+          r: Math.max(0.05, Number(p.r) || legacyRefR)
+        })).sort((a, b) => a.theta - b.theta);
+        const maxVal = sortedPts.reduce((m, p) => Math.max(m, p.r), 0);
+        const promote = (maxVal > 0 && maxVal <= 5.0) ? legacyRefR : 1.0;
+        const refR = params._sections_direct_mm
+          ? (Number(s.base_r) > 0 ? Number(s.base_r) : this.computeSectionMeanRadius({ points: sortedPts }, legacyRefR))
+          : legacyRefR;
+        const sfPts = sortedPts.map(p => ({ theta: p.theta, sf: (p.r * promote) / Math.max(1e-3, refR) }));
+        return {
+          z_norm: zNorm,
+          thetas: sfPts.map(p => p.theta),
+          evalSf: buildPeriodicPCHIP(sfPts.map(p => p.theta), sfPts.map(p => p.sf), params.section_tension ?? 1.0)
+        };
+      }).sort((a, b) => a.z_norm - b.z_norm);
+
+    const masterThetas = preparedOld[0]?.thetas?.length >= 3 ? preparedOld[0].thetas : defaultThetas;
+    params.sections = rPts.map(pt => {
+      const zNorm = Math.max(0, Math.min(1, Number((pt.z / safeMax).toFixed(4))));
+      const nodeR = Math.max(1.0, Number(pt.value) || 60);
+      if (!preparedOld.length) {
+        return {
+          z_norm: zNorm,
+          base_r: Number(nodeR.toFixed(3)),
+          points: masterThetas.map(theta => ({ theta, r: Number(nodeR.toFixed(3)) }))
+        };
+      }
+      let lo = preparedOld[0], hi = preparedOld[preparedOld.length - 1];
+      for (let i = 0; i < preparedOld.length - 1; i++) {
+        if (zNorm >= preparedOld[i].z_norm && zNorm <= preparedOld[i + 1].z_norm) {
+          lo = preparedOld[i];
+          hi = preparedOld[i + 1];
+          break;
+        }
+      }
+      const mix = lo === hi ? 0 : (zNorm - lo.z_norm) / (hi.z_norm - lo.z_norm || 1);
+      const points = masterThetas.map(theta => {
+        const sf = (1 - mix) * lo.evalSf(theta) + mix * hi.evalSf(theta);
+        return {
+          theta: Number(theta.toFixed(6)),
+          r: Number(Math.max(1.0, Math.min(500.0, sf * nodeR)).toFixed(3))
+        };
+      });
+      return {
+        z_norm: zNorm,
+        base_r: Number(nodeR.toFixed(3)),
+        points
+      };
+    });
+    params._sections_direct_mm = true;
+  }
+  static getCpCount(params) {
+    return params?.sections?.[0]?.points?.length || 0;
+  }
+  static getCpProfileCurve(params, cpIndex, zMax = 240) {
+    const safeMax = Math.max(1, Number(zMax) || 240);
+    this.syncSectionsWithRadiusProfile(params, safeMax);
+    const sections = params?.sections || [];
+    const rPts = params?.radius_profile?.points || [];
+    const pts = sections.map((sec, sIdx) => {
+      const z = rPts[sIdx] ? Number(rPts[sIdx].z) : Number((sec.z_norm * safeMax).toFixed(2));
+      const cpPt = sec.points?.[cpIndex] || sec.points?.[0];
+      const val = Number(cpPt?.r ?? rPts[sIdx]?.value ?? 60);
+      return { z, value: Number(val.toFixed(3)) };
+    });
+    return {
+      points: pts,
+      kind: params?.cp_profile_kind || params?.radius_profile?.kind || 'pchip'
+    };
+  }
+  static syncSectionFromCpNodeEdit(params, sectionIndex, cpIndex, newVal, newZ, zMax = 240, baseSectionSnapshot = null, baseNodeValSnapshot = null) {
+    if (!params || !Array.isArray(params.sections)) return;
+    const safeMax = Math.max(1, Number(zMax) || 240);
+    if (params.sections.length !== (params.radius_profile?.points?.length || 0)) {
+      this.syncSectionsWithRadiusProfile(params, safeMax);
+    }
+    const sec = params.sections[sectionIndex];
+    const rPts = params.radius_profile?.points || [];
+    if (!sec || !sec.points?.[cpIndex]) return;
+    if (Number.isFinite(Number(newZ)) && rPts[sectionIndex]) {
+      rPts[sectionIndex].z = Number(newZ);
+      sec.z_norm = Math.max(0, Math.min(1, Number((Number(newZ) / safeMax).toFixed(4))));
+    }
+    const basePts = baseSectionSnapshot?.points || sec.points;
+    const handles = this.getHandlesForSection({ points: basePts }, params);
+    const hInfo = handles.find(h => h.idx === cpIndex);
+    const groupId = hInfo ? hInfo.groupId : 'g_none';
+    const theta = basePts[cpIndex]?.theta ?? sec.points[cpIndex].theta;
+    this.apply2dHandleMove(
+      sec,
+      cpIndex,
+      groupId,
+      theta,
+      newVal,
+      params,
+      basePts,
+      false,
+      sectionIndex,
+      baseNodeValSnapshot ?? rPts[sectionIndex]?.value
+    );
+  }
+  static insertCpAcrossAllSections(params, thetaLogical, clickedSectionIdx = -1, clickedR = null, zMax = 240) {
+    if (!params || !Array.isArray(params.sections) || !params.sections.length) return -1;
+    const safeMax = Math.max(1, Number(zMax) || 240);
+    this.syncSectionsWithRadiusProfile(params, safeMax);
+    const normTheta = Number((((Number(thetaLogical) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)).toFixed(5));
+    if (params.sections[0].points.some(p => {
+      const d = Math.abs(p.theta - normTheta);
+      return Math.min(d, 2 * Math.PI - d) < 0.03;
+    })) {
+      return -1;
+    }
+    let insertedIdx = 0;
+    const tension = params.section_tension ?? 1.0;
+    params.sections.forEach((sec, sIdx) => {
+      const pts = (sec.points || []).slice().sort((a, b) => a.theta - b.theta);
+      const ev = pts.length < 2
+        ? () => pts[0]?.r ?? 60
+        : buildPeriodicPCHIP(pts.map(p => p.theta), pts.map(p => p.r), tension);
+      const rVal = (sIdx === clickedSectionIdx && Number.isFinite(Number(clickedR)))
+        ? Math.max(1.0, Math.min(500.0, Number(clickedR)))
+        : Math.max(1.0, Math.min(500.0, Number(ev(normTheta))));
+      const newPt = { theta: normTheta, r: Number(rVal.toFixed(3)) };
+      sec.points.push(newPt);
+      sec.points.sort((a, b) => a.theta - b.theta);
+      if (sIdx === 0 || sIdx === clickedSectionIdx) insertedIdx = sec.points.indexOf(newPt);
+      const newMeanR = this.computeSectionMeanRadius(sec, rVal);
+      sec.base_r = Number(newMeanR.toFixed(3));
+      if (params.radius_profile?.points?.[sIdx]) {
+        params.radius_profile.points[sIdx].value = Number(newMeanR.toFixed(3));
+      }
+    });
+    return insertedIdx;
+  }
+  static removeCpAcrossAllSections(params, cpIndex, zMax = 240) {
+    if (!params || !Array.isArray(params.sections) || !params.sections.length) return false;
+    const safeMax = Math.max(1, Number(zMax) || 240);
+    this.syncSectionsWithRadiusProfile(params, safeMax);
+    if ((params.sections[0]?.points?.length || 0) <= 3) return false;
+    params.sections.forEach((sec, sIdx) => {
+      if (sec.points && sec.points.length > cpIndex) {
+        sec.points.splice(cpIndex, 1);
+        const newMeanR = this.computeSectionMeanRadius(sec, 60);
+        sec.base_r = Number(newMeanR.toFixed(3));
+        if (params.radius_profile?.points?.[sIdx]) {
+          params.radius_profile.points[sIdx].value = Number(newMeanR.toFixed(3));
+        }
+      }
+    });
+    return true;
+  }
+  static syncSectionFromNodeEdit(params, index, newVal, newZ, zMax = 240, baseSectionSnapshot = null, baseNodeValSnapshot = null) {
+    if (!params || !Array.isArray(params.sections)) return;
+    const safeMax = Math.max(1, Number(zMax) || 240);
+    if (params.sections.length !== (params.radius_profile?.points?.length || 0)) {
+      this.syncSectionsWithRadiusProfile(params, safeMax);
+    }
+    const sec = params.sections[index];
+    if (!sec) return;
+    const clampedVal = Math.max(1.0, Math.min(500.0, Number(newVal) || 60));
+    if (Number.isFinite(Number(newZ))) {
+      sec.z_norm = Math.max(0, Math.min(1, Number((Number(newZ) / safeMax).toFixed(4))));
+    }
+    const sourcePts = baseSectionSnapshot?.points || sec.points || [];
+    const oldRefR = Number(baseNodeValSnapshot) > 0
+      ? Number(baseNodeValSnapshot)
+      : (Number(sec.base_r) > 0 ? Number(sec.base_r) : this.computeSectionMeanRadius(sec, clampedVal));
+    const scale = clampedVal / Math.max(1e-3, oldRefR);
+    sec.points = sourcePts.map(p => ({
+      theta: Number(p.theta),
+      r: Number(Math.max(1.0, Math.min(500.0, Number(p.r) * scale)).toFixed(3))
+    }));
+    sec.base_r = Number(clampedVal.toFixed(3));
+  }
+  static insertSectionAndNodeAtZ(params, zAbs, explicitValue = null, zMax = 240) {
+    if (!params) return -1;
+    const safeMax = Math.max(1, Number(zMax) || 240);
+    this.syncSectionsWithRadiusProfile(params, safeMax);
+    const rPts = params.radius_profile.points;
+    const sections = params.sections;
+    const zClamped = Math.max(0, Math.min(safeMax, Number(zAbs) || 0));
+    const zNorm = Math.max(0, Math.min(1, Number((zClamped / safeMax).toFixed(4))));
+
+    let insertAt = rPts.findIndex(p => p.z > zClamped);
+    if (insertAt < 0) insertAt = rPts.length;
+    const lowZ = rPts[insertAt - 1]?.z ?? -Infinity;
+    const highZ = rPts[insertAt]?.z ?? Infinity;
+    if (zClamped - lowZ < 0.5 || highZ - zClamped < 0.5) return -1;
+
+    const rCurve = CurveData.fromJSON(params.radius_profile, 'radius_profile', safeMax);
+    const interpNodeR = Number.isFinite(Number(explicitValue)) && Number(explicitValue) > 0
+      ? Math.max(1.0, Math.min(500.0, Number(explicitValue)))
+      : Math.max(1.0, Math.min(500.0, Number(rCurve.getInterpolator()(zClamped)) || 60));
+
+    const loIdx = Math.max(0, insertAt - 1);
+    const hiIdx = Math.min(sections.length - 1, insertAt);
+    const lo = sections[loIdx], hi = sections[hiIdx];
+    const mix = lo === hi ? 0 : (zNorm - lo.z_norm) / (hi.z_norm - lo.z_norm || 1);
+    const loBaseR = Math.max(1e-3, Number(lo.base_r) || Number(rPts[loIdx]?.value) || this.computeSectionMeanRadius(lo, 60));
+    const hiBaseR = Math.max(1e-3, Number(hi.base_r) || Number(rPts[hiIdx]?.value) || this.computeSectionMeanRadius(hi, 60));
+    const loPts = (lo.points || []).slice().sort((a, b) => a.theta - b.theta);
+    const hiPts = (hi.points || []).slice().sort((a, b) => a.theta - b.theta);
+    const hiEvalNorm = hiPts.length < 2
+      ? () => (hiPts[0]?.r ?? hiBaseR) / hiBaseR
+      : buildPeriodicPCHIP(hiPts.map(p => p.theta), hiPts.map(p => p.r / hiBaseR), params.section_tension ?? 1.0);
+
+    const interpPoints = loPts.map((p, idx) => {
+      const sfLo = p.r / loBaseR;
+      const sfHi = hiPts.length === loPts.length ? (hiPts[idx].r / hiBaseR) : hiEvalNorm(p.theta);
+      const sf = (1 - mix) * sfLo + mix * sfHi;
+      return {
+        theta: p.theta,
+        r: Number(Math.max(1.0, Math.min(500.0, sf * interpNodeR)).toFixed(3))
+      };
+    });
+
+    rPts.splice(insertAt, 0, { z: Number(zClamped.toFixed(2)), value: Number(interpNodeR.toFixed(3)) });
+    sections.splice(insertAt, 0, {
+      z_norm: zNorm,
+      base_r: Number(interpNodeR.toFixed(3)),
+      points: interpPoints
+    });
+    return insertAt;
+  }
+  static getColorForGroup(groupId) {
+    if (!groupId || groupId === 'g_none') return '#FFFFFF';
+    let hash = 2166136261;
+    const str = String(groupId);
+    for (let i = 0; i < str.length; i++) {
+      hash ^= str.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+    const palette = ['#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF', '#E8BAFF', '#FFB3E6'];
+    return palette[(hash >>> 0) % palette.length];
+  }
+  static findKeypoints(points, tolerance = 0.5) {
+    const n = Array.isArray(points) ? points.length : 0;
+    if (!n) return [];
+    const rVals = points.map(pt => Number(pt.r) || 60);
+    let allKeypoints;
+    if (n <= 24) {
+      allKeypoints = Array.from({ length: n }, (_, i) => i);
+    } else {
+      const pad = Math.min(10, n);
+      const rPad = new Float64Array(n + 2 * pad);
+      const negRPad = new Float64Array(n + 2 * pad);
+      const xPad = new Float64Array(n + 2 * pad);
+      const yPad = new Float64Array(n + 2 * pad);
+      for (let i = 0; i < n + 2 * pad; i++) {
+        const pt = points[(i - pad + n * 10) % n];
+        const r = Number(pt.r) || 60;
+        rPad[i] = r;
+        negRPad[i] = -r;
+        xPad[i] = r * Math.cos(pt.theta);
+        yPad[i] = r * Math.sin(pt.theta);
+      }
+      const minDistance = Math.max(2, Math.floor(n / 36));
+      const peaks = findPeaks(rPad, { distance: minDistance });
+      const valleys = findPeaks(negRPad, { distance: minDistance });
+
+      const angles = new Float64Array(xPad.length - 1);
+      for (let i = 0; i < angles.length; i++) {
+        angles[i] = Math.atan2(yPad[i + 1] - yPad[i], xPad[i + 1] - xPad[i]);
+      }
+      const angleDiff = new Float64Array(xPad.length);
+      for (let i = 0; i < angles.length - 1; i++) {
+        const diff = Math.abs(angles[i + 1] - angles[i]);
+        angleDiff[i + 1] = Math.min(diff, 2 * Math.PI - diff);
+      }
+      const corners = findPeaks(angleDiff, { height: 0.17, distance: minDistance });
+      const keySet = new Set([0]);
+      for (const rawIdx of [...peaks, ...valleys, ...corners]) {
+        if (rawIdx >= pad && rawIdx < n + pad) keySet.add((rawIdx - pad + n) % n);
+      }
+      allKeypoints = Array.from(keySet).sort((a, b) => a - b);
+    }
+
+    const tol = Math.max(0, Number(tolerance) ?? 0.5);
+    const groups = [];
+    for (const kp of allKeypoints) {
+      const r = rVals[kp];
+      let g = groups.find(item => Math.abs(item.refR - r) <= tol);
+      if (!g) {
+        g = { refR: r, indices: [], id: `g_r${Math.round(r * 10)}` };
+        groups.push(g);
+      }
+      g.indices.push(kp);
+    }
+    return allKeypoints.map(kp => {
+      const g = groups.find(item => item.indices.includes(kp));
+      const groupId = g ? g.id : 'g_none';
+      return { idx: kp, groupId, color: this.getColorForGroup(groupId) };
+    });
+  }
+  static getHandlesForSection(section, params = {}) {
+    const pts = section?.points || [];
+    if (!pts.length) return [];
+    const symMode = params.symmetry_mode !== undefined ? !!params.symmetry_mode : (params.symmetry_enabled !== undefined ? !!params.symmetry_enabled : true);
+    if (!symMode) {
+      return pts.map((pt, idx) => ({ idx, groupId: 'g_none', color: '#FFFFFF', theta: pt.theta, r: pt.r }));
+    }
+    const tol = Number(params.symmetry_tolerance ?? 0.5);
+    return this.findKeypoints(pts, tol).map(kp => ({
+      ...kp,
+      theta: pts[kp.idx].theta,
+      r: pts[kp.idx].r
+    }));
+  }
+  static apply2dHandleMove(section, ptIdx, groupId, newTheta, newR, params = {}, basePointsSnapshot = null, allowAngleMove = false, sectionIndex = -1, baseNodeRSnapshot = null) {
+    const pts = section?.points;
+    if (!Array.isArray(pts) || !pts[ptIdx]) return;
+    const nPoints = pts.length;
+    const sourcePts = basePointsSnapshot || pts.map(p => ({ theta: Number(p.theta), r: Number(p.r) }));
+    const oldMeanR = this.computeSectionMeanRadius({ points: sourcePts }, 60);
+    const startNodeR = Number(baseNodeRSnapshot) > 0
+      ? Number(baseNodeRSnapshot)
+      : (Number(section.base_r) > 0 ? Number(section.base_r) : oldMeanR);
+
+    const symMode = params.symmetry_mode !== undefined ? !!params.symmetry_mode : (params.symmetry_enabled !== undefined ? !!params.symmetry_enabled : true);
+    const tol = Number(params.symmetry_tolerance ?? 0.5);
+
+    let targets = [ptIdx];
+    if (symMode && groupId && groupId !== 'g_none') {
+      const kps = this.findKeypoints(sourcePts, tol);
+      const symTargets = kps.filter(k => k.groupId === groupId).map(k => k.idx);
+      targets = Array.from(new Set([...symTargets, ptIdx]));
+    }
+
+    const origR = Number(sourcePts[ptIdx].r) || 60;
+    const clampedNewR = Math.max(1.0, Math.min(500.0, Number(newR) || origR));
+    const deltaR = clampedNewR - origR;
+
+    for (let i = 0; i < nPoints; i++) {
+      pts[i].r = sourcePts[i].r;
+      pts[i].theta = sourcePts[i].theta;
+    }
+
+    // Quando nPoints <= 24, cada ponto da seção já é um CP explícito (como vértices e meios de aresta).
+    // Para listas densas (> 24 pontos), aplica-se o falloff Gaussiano suave aos pontos vizinhos.
+    if (nPoints > 24) {
+      const sigma = Math.PI / 6.0;
+      for (const tIdx of targets) {
+        const baseTheta = sourcePts[tIdx].theta;
+        for (let i = 0; i < nPoints; i++) {
+          const rawDist = Math.abs(sourcePts[i].theta - baseTheta);
+          const dist = Math.min(rawDist, 2 * Math.PI - rawDist);
+          const influence = Math.exp(-0.5 * (dist / sigma) ** 2);
+          if (influence < 0.01) continue;
+          pts[i].r = Math.max(1.0, Math.min(500.0, pts[i].r + deltaR * influence));
+        }
+      }
+    }
+
+    for (const tIdx of targets) {
+      pts[tIdx].r = Math.max(1.0, Math.min(500.0, Number((sourcePts[tIdx].r + deltaR).toFixed(3))));
+    }
+    for (let i = 0; i < nPoints; i++) {
+      pts[i].r = Number(pts[i].r.toFixed(3));
+    }
+
+    if (allowAngleMove && Number.isFinite(newTheta) && targets.length === 1 && nPoints >= 3) {
+      const prevTheta = sourcePts[(ptIdx - 1 + nPoints) % nPoints].theta;
+      const nextTheta = sourcePts[(ptIdx + 1) % nPoints].theta;
+      const minGap = 0.03;
+      let normTheta = ((Number(newTheta) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+      if (ptIdx > 0 && ptIdx < nPoints - 1) {
+        normTheta = Math.max(prevTheta + minGap, Math.min(nextTheta - minGap, normTheta));
+      }
+      pts[ptIdx].theta = Number(normTheta.toFixed(5));
+    }
+
+    const newMeanR = this.computeSectionMeanRadius(section, oldMeanR);
+    const updatedNodeR = Number(Math.max(1.0, Math.min(500.0, startNodeR * (newMeanR / Math.max(1e-3, oldMeanR)))).toFixed(3));
+    section.base_r = updatedNodeR;
+    const secIdx = sectionIndex >= 0 ? sectionIndex : (params.sections ? params.sections.indexOf(section) : -1);
+    if (secIdx >= 0 && params.radius_profile?.points?.[secIdx]) {
+      params.radius_profile.points[secIdx].value = updatedNodeR;
+    }
+  }
   static scaleStageParams(params, oldH, newH, options = {}) {
     super.scaleStageParams(params, oldH, newH, options);
-    if (options.modeZ !== 'add_node' || !Array.isArray(params?.sections) || !params.sections.length) return;
     const safeOldH = Math.max(1e-6, Number(oldH) || 240);
     const safeNewH = Math.max(10, Number(newH) || safeOldH);
-    const sorted = params.sections.map(s => ({
-      ...s,
-      z_abs: (Number(s.z_norm) || 0) * safeOldH,
-      points: (s.points || []).map(p => ({ ...p }))
-    })).sort((a, b) => a.z_abs - b.z_abs);
+    const fR = Number.isFinite(Number(options.fR)) && Number(options.fR) > 0 ? Number(options.fR) : 1;
+    const radiusChanged = Math.abs(fR - 1) > 1e-6;
 
-    if (safeNewH >= safeOldH) {
-      const topClone = deepCopy(sorted[sorted.length - 1].points || []);
-      const remapped = sorted.map(s => ({ z_norm: Math.max(0, Math.min(1, s.z_abs / safeNewH)), points: s.points }));
-      if (1 - remapped[remapped.length - 1].z_norm > 0.01) {
-        remapped.push({ z_norm: 1, points: topClone });
-      } else {
-        remapped[remapped.length - 1].z_norm = 1;
+    if (Array.isArray(params?.sections) && params.sections.length) {
+      if (radiusChanged) {
+        for (const sec of params.sections) {
+          if (Number(sec.base_r) > 0) sec.base_r = Number((Number(sec.base_r) * fR).toFixed(3));
+          for (const pt of sec.points || []) {
+            pt.r = Number(Math.max(1.0, Math.min(500.0, Number(pt.r) * fR)).toFixed(3));
+          }
+        }
       }
-      params.sections = remapped;
-    } else {
-      const kept = sorted.filter(s => s.z_abs < safeNewH - 0.5);
-      const topSource = sorted.reduce((best, s) => Math.abs(s.z_abs - safeNewH) < Math.abs(best.z_abs - safeNewH) ? s : best, sorted[0]);
-      if (!kept.length) kept.push({ z_abs: 0, points: deepCopy(sorted[0].points || []) });
-      const remapped = kept.map(s => ({ z_norm: Math.max(0, Math.min(1, s.z_abs / safeNewH)), points: s.points }));
-      remapped.push({ z_norm: 1, points: deepCopy(topSource.points || []) });
-      params.sections = remapped;
+      if (Math.abs(safeNewH - safeOldH) > 1e-4 && options.modeZ === 'add_node') {
+        const sorted = params.sections.map(s => ({
+          ...s,
+          z_abs: (Number(s.z_norm) || 0) * safeOldH,
+          points: (s.points || []).map(p => ({ ...p }))
+        })).sort((a, b) => a.z_abs - b.z_abs);
+
+        if (safeNewH >= safeOldH) {
+          const topSec = sorted[sorted.length - 1];
+          const remapped = sorted.map(s => ({ z_norm: Math.max(0, Math.min(1, Number((s.z_abs / safeNewH).toFixed(4)))), base_r: s.base_r, points: s.points }));
+          if (1 - remapped[remapped.length - 1].z_norm > 0.01) {
+            remapped.push({ z_norm: 1, base_r: topSec.base_r, points: deepCopy(topSec.points || []) });
+          } else {
+            remapped[remapped.length - 1].z_norm = 1;
+          }
+          params.sections = remapped;
+        } else {
+          const kept = sorted.filter(s => s.z_abs <= safeNewH - 0.5);
+          const topSource = sorted.reduce((best, s) => Math.abs(s.z_abs - safeNewH) < Math.abs(best.z_abs - safeNewH) ? s : best, sorted[0]);
+          if (!kept.length) kept.push({ z_abs: 0, base_r: sorted[0].base_r, points: deepCopy(sorted[0].points || []) });
+          const remapped = kept.map(s => ({ z_norm: Math.max(0, Math.min(1, Number((s.z_abs / safeNewH).toFixed(4)))), base_r: s.base_r, points: s.points }));
+          remapped.push({ z_norm: 1, base_r: topSource.base_r, points: deepCopy(topSource.points || []) });
+          params.sections = remapped;
+        }
+      }
     }
+    this.syncSectionsWithRadiusProfile(params, safeNewH);
   }
   static getSplineContracts() { return { radius_profile:new SplineContract({ splineId:'radius_profile', uiDomain:'mm', uiRole:SplineRole.BASE_PROFILE, jsonBinding:'radius_profile' }), torsion_profile:new SplineContract({ splineId:'torsion_profile', uiDomain:'turns', uiRole:SplineRole.TORSION, jsonBinding:'torsion_profile' }) }; }
   static getFixedParamsSchema() { return {
     foundation_radius:{type:'float',label:'Escala radial',min:0.2,max:2.5,step:0.05,default:1},
-    symmetry_enabled:{type:'bool',label:'Propagar por raio simétrico',default:false,refreshShape:true}
+    symmetry_mode:{type:'bool',label:'Edição simétrica',default:true,refreshShape:true},
+    symmetry_tolerance:{type:'float',label:'Tolerância de simetria (mm)',min:0,max:10,step:0.1,default:0.5,refreshShape:true},
+    section_tension:{type:'float',label:'Curvatura entre CPs',min:0,max:1,step:0.05,default:1,refreshShape:true}
   }; }
   static getDefaultParams(h = 240) {
-    const theta=Array.from({length:8},(_,i)=>2*Math.PI*i/8);
-    const profile=(value)=>({points:[{z:0,value},{z:h,value}],kind:'pchip'});
-    return { preset_profile:'FlexShape', foundation_radius:1, reference_radius:85, symmetry_enabled:false, radius_profile:profile(85), torsion_profile:profile(0), sections:[{z_norm:0,points:theta.map(t=>({theta:t,r:85}))},{z_norm:1,points:theta.map(t=>({theta:t,r:85}))}] };
+    const theta = Array.from({ length: 8 }, (_, i) => Number(((2 * Math.PI * i) / 8).toFixed(6)));
+    const profile = (value) => ({ points: [{ z: 0, value }, { z: h, value }], kind: 'pchip' });
+    return {
+      preset_profile: 'FlexShape',
+      shape_preset: 'Circle',
+      shape_sides: 6,
+      section_tension: 1.0,
+      cp_profile_kind: 'pchip',
+      foundation_radius: 1,
+      reference_radius: 85,
+      _sections_direct_mm: true,
+      symmetry_mode: true,
+      symmetry_tolerance: 0.5,
+      radius_profile: profile(85),
+      torsion_profile: profile(0),
+      sections: [
+        { z_norm: 0, base_r: 85, points: theta.map(t => ({ theta: t, r: 85 })) },
+        { z_norm: 1, base_r: 85, points: theta.map(t => ({ theta: t, r: 85 })) }
+      ]
+    };
   }
-  shapeFactor(theta,z) {
-    return this.shapeFactorWithDerivatives(theta,z).value;
+  exportFoundationSnapshot(zSamples = null, nAngular = 64) {
+    const rPts = this.params.radius_profile?.points;
+    const effectiveZSamples = (Array.isArray(zSamples) && zSamples.length >= 2)
+      ? zSamples
+      : (Array.isArray(rPts) && rPts.length >= 2 ? rPts.map(pt => Number(pt.z)) : [0, 240]);
+    const base_radii = [];
+    const sections = effectiveZSamples.map(zVal => {
+      const zNum = Number(zVal);
+      const nodeR = Math.max(1.0, Number(this.eval('radius_profile', zNum, 85)) || 85);
+      base_radii.push(Number(nodeR.toFixed(3)));
+      const pts = [];
+      for (let i = 0; i < nAngular; i++) {
+        const theta = (2 * Math.PI * i) / nAngular;
+        const sf = this.shapeFactor(theta, zNum);
+        pts.push({ theta: Number(theta.toFixed(6)), r: Number(Math.max(1.0, Math.min(500.0, sf * nodeR)).toFixed(3)) });
+      }
+      return pts;
+    });
+    const portable = {};
+    for (const key of ['radius_profile', 'torsion_profile', 'foundation_radius']) {
+      if (this.params[key] !== undefined) portable[key] = deepCopy(this.params[key]);
+    }
+    return { z_heights: effectiveZSamples.slice(), base_radii, sections, portable_params: portable };
   }
-  shapeFactorWithDerivatives(theta,z) {
-    const sections=this.sectionCurves;
-    if (!sections.length) return{value:1,dTheta:0,dZ:0};
-    const [zMin,zMax]=this.globalParams.zBounds||[0,240],rawZn=(z-zMin)/(zMax-zMin||1),zn=Math.max(0,Math.min(1,rawZn));
-    let lo=sections[0], hi=sections[sections.length-1];
-    for (let i=0;i<sections.length-1;i++) if (zn>=sections[i].z_norm&&zn<=sections[i+1].z_norm) { lo=sections[i];hi=sections[i+1];break; }
-    const a=lo.eval(theta),b=hi.eval(theta),mix=lo===hi?0:(zn-lo.z_norm)/(hi.z_norm-lo.z_norm||1),aTheta=lo.eval.derivative?.(theta)??0,bTheta=hi.eval.derivative?.(theta)??0;
-    const r=(1-mix)*a+mix*b;
-    const referenceRadius=Math.max(1,Number(this.params.reference_radius)||85);
-    const factor=r>10?r/referenceRadius:r;
-    const value=Math.max(0.01,Math.min(20,factor)),clamped=value!==factor,scale=r>10?1/referenceRadius:1;
-    const dTheta=clamped?0:scale*((1-mix)*aTheta+mix*bTheta),dZ=clamped||lo===hi||rawZn<=0||rawZn>=1?0:scale*(b-a)/(hi.z_norm-lo.z_norm||1)/(zMax-zMin||1);
-    return{value,dTheta,dZ};
+  static importFoundationSnapshot(snapshot, zMax = 240) {
+    const safeMax = Math.max(1, Number(zMax) || 240);
+    const params = this.getDefaultParams(safeMax);
+    const portable = snapshot?.portable_params || {};
+    for (const key of ['radius_profile', 'torsion_profile', 'foundation_radius']) {
+      if (portable[key] !== undefined) params[key] = deepCopy(portable[key]);
+    }
+    if (Array.isArray(snapshot?.sections) && snapshot.sections.length && Array.isArray(snapshot?.z_heights)) {
+      const rCurve = CurveData.fromJSON(params.radius_profile, 'radius_profile', safeMax).getInterpolator();
+      params.sections = snapshot.sections.map((pts, i) => {
+        const zAbs = Number(snapshot.z_heights[i] || 0);
+        const baseR = Number(snapshot.base_radii?.[i]) > 0
+          ? Number(snapshot.base_radii[i])
+          : Math.max(1.0, Number(rCurve(zAbs)) || 60);
+        return {
+          z_norm: Math.max(0, Math.min(1, Number((zAbs / safeMax).toFixed(4)))),
+          base_r: Number(baseR.toFixed(3)),
+          points: pts.map(p => ({ theta: Number(p.theta), r: Math.max(1.0, Math.min(500.0, Number(p.r) || baseR)) }))
+        };
+      }).sort((a, b) => a.z_norm - b.z_norm);
+      params._sections_direct_mm = true;
+    }
+    this.syncSectionsWithRadiusProfile(params, safeMax);
+    return params;
+  }
+  shapeFactor(theta, z) {
+    return this.shapeFactorWithDerivatives(theta, z).value;
+  }
+  _getPolarEvaluatorsAtZ(z) {
+    const key = Number(z).toFixed(4);
+    let cached = this._zLayerCache.get(key);
+    if (cached) return cached;
+    const thetas = this.isoThetas;
+    const m = thetas.length;
+    const sfVals = new Float64Array(m);
+    const dSfDzVals = new Float64Array(m);
+    for (let j = 0; j < m; j++) {
+      const c = this.cpZCurves[j];
+      sfVals[j] = c.getInterpolator()(z);
+      dSfDzVals[j] = c.getDerivative(z);
+    }
+    const evalSf = buildPeriodicPCHIP(thetas, sfVals, this.defaultTension);
+    const evalDSfDz = buildPeriodicPCHIP(thetas, dSfDzVals, this.defaultTension);
+    cached = { evalSf, evalDSfDz };
+    if (this._zLayerCache.size > 64) {
+      this._zLayerCache.delete(this._zLayerCache.keys().next().value);
+    }
+    this._zLayerCache.set(key, cached);
+    return cached;
+  }
+  shapeFactorWithDerivatives(theta, z) {
+    const sections = this.sectionCurves;
+    if (!sections.length) return { value: 1, dTheta: 0, dZ: 0 };
+    if (sections.length === 1) {
+      const factor = sections[0].eval(theta);
+      const value = Math.max(0.01, Math.min(20, factor));
+      const clamped = value !== factor;
+      return {
+        value,
+        dTheta: clamped ? 0 : (sections[0].eval.derivative?.(theta) ?? 0),
+        dZ: 0
+      };
+    }
+    if (this.cpZCurves && this.isoThetas) {
+      const { evalSf, evalDSfDz } = this._getPolarEvaluatorsAtZ(z);
+      const factor = evalSf(theta);
+      const value = Math.max(0.01, Math.min(20, factor));
+      const clamped = value !== factor;
+      const dTheta = clamped ? 0 : (evalSf.derivative?.(theta) ?? 0);
+      const dZ = clamped ? 0 : evalDSfDz(theta);
+      return { value, dTheta, dZ };
+    }
+    // Fallback suave C1/C2 por spline longitudinal em Z para o ângulo theta
+    const zPts = sections.map(sec => ({ z: sec.z_abs, value: sec.eval(theta) }));
+    const zCurve = new CurveData(zPts, this.zSplineKind || 'pchip', 'sf_z');
+    const factor = zCurve.getInterpolator()(z);
+    const value = Math.max(0.01, Math.min(20, factor));
+    const clamped = value !== factor;
+    const zThetaPts = sections.map(sec => ({ z: sec.z_abs, value: sec.eval.derivative?.(theta) ?? 0 }));
+    const zThetaCurve = new CurveData(zThetaPts, this.zSplineKind || 'pchip', 'dsfdtheta_z');
+    const dTheta = clamped ? 0 : zThetaCurve.getInterpolator()(z);
+    const dZ = clamped ? 0 : zCurve.getDerivative(z);
+    return { value, dTheta, dZ };
   }
 }
 
@@ -1688,8 +2506,8 @@ class ReactionDiffusionStage extends DeformationStage {
     grid_resolution:{type:'int',label:'Resolução da textura',min:64,max:512,step:32,default:128},
     n_iterations:{type:'int',label:'Iterações',min:1000,max:15000,step:500,default:3000},
     contrast:{type:'float',label:'Contraste',min:1,max:20,step:0.5,default:8},
-    scale_theta:{type:'float',label:'Escala angular',min:0.25,max:4,step:0.05,default:1},
-    scale_z:{type:'float',label:'Escala vertical',min:0.25,max:4,step:0.05,default:1},
+    scale_theta:{type:'float',label:'Escala angular',min:0.25,max:8,step:0.05,default:1},
+    scale_z:{type:'float',label:'Escala vertical',min:0.25,max:8,step:0.05,default:1,scaleWithZ:true},
     amplitude_profile:{type:'profile-float',label:'Amplitude',min:0,max:20,step:0.1,default:3},
     seed:{type:'int',label:'Seed',min:1,max:10000,step:1,default:42},
     seed_count:{type:'int',label:'Pontos iniciais',min:1,max:200,step:1,default:10},
@@ -1709,7 +2527,7 @@ class ReactionDiffusionStage extends DeformationStage {
   static getDefaultParams(h=240){const prof=v=>({points:[{z:0,value:v},{z:h,value:v}],kind:'pchip'});return {rd_preset:'Labyrinth',feed_rate:0.029,kill_rate:0.057,grid_resolution:128,n_iterations:3000,seed:42,seed_count:10,seed_radius:5,contrast:8,scale_theta:1,scale_z:1,invert:false,amplitude_profile:prof(3),torsion_profile:prof(0)};}
   deltaAt(z,theta,zBounds){return this.deltaAndDerivativesAt(z,theta,zBounds).value;}
   deltaAndDerivativesAt(z,theta,zBounds){
-    const p=this.params,{rows,cols,field}=this.rdField,span=zBounds[1]-zBounds[0]||1,scaleZ=Number(p.scale_z||1),scaleTheta=Number(p.scale_theta||1),rawV=(z-zBounds[0])/span*(rows-1)*scaleZ,vv=Math.max(0,Math.min(rows-1,rawV)),torsion=this.eval('torsion_profile',z,0),uu=((theta+torsion*2*Math.PI)/(2*Math.PI)*cols*scaleTheta%cols+cols)%cols,sampled=mapCoordinates2DWithDerivatives(field,[vv],[uu],3,{v:'nearest',u:'wrap'}),texture=sampled.values[0],amplitude=this.eval('amplitude_profile',z,0),amplitudeZ=this.evalDerivative('amplitude_profile',z),dVdz=rawV>0&&rawV<rows-1?(rows-1)*scaleZ/span:0,dUdTheta=cols*scaleTheta/(2*Math.PI),dUdz=cols*scaleTheta*this.evalDerivative('torsion_profile',z);
+    const p=this.params,{rows,cols,field}=this.rdField,span=zBounds[1]-zBounds[0]||1,scaleZ=Number(p.scale_z||1),scaleTheta=Number(p.scale_theta||1),rawV=(z-zBounds[0])/span*(rows-1)*scaleZ,vv=((rawV%rows)+rows)%rows,torsion=this.eval('torsion_profile',z,0),uu=((theta+torsion*2*Math.PI)/(2*Math.PI)*cols*scaleTheta%cols+cols)%cols,sampled=mapCoordinates2DWithDerivatives(field,[vv],[uu],3,{v:'wrap',u:'wrap'}),texture=sampled.values[0],amplitude=this.eval('amplitude_profile',z,0),amplitudeZ=this.evalDerivative('amplitude_profile',z),dVdz=(rows-1)*scaleZ/span,dUdTheta=cols*scaleTheta/(2*Math.PI),dUdz=cols*scaleTheta*this.evalDerivative('torsion_profile',z);
     return{value:texture*amplitude,dTheta:sampled.dU[0]*dUdTheta*amplitude,dZ:(sampled.dV[0]*dVdz+sampled.dU[0]*dUdz)*amplitude+texture*amplitudeZ};
   }
 }
@@ -1773,17 +2591,37 @@ class ProjectAuditor {
       if(mode==='polygon_base'||mode==='flex_shape'){
         clampNumber('foundation_radius',0.2,2.5,1);clampNumber('sides',3,24,6);
         if(!['Multiplier','Inner','Outer'].includes(stage.params.normalization_mode))stage.params.normalization_mode='Multiplier';
-        if(mode==='flex_shape')stage.params.symmetry_enabled=!!stage.params.symmetry_enabled;
-        if(mode==='flex_shape'&&Array.isArray(stage.params.sections))stage.params.sections=stage.params.sections.filter(section=>section&&Array.isArray(section.points)).map(section=>({
-          ...section,z_norm:Math.max(0,Math.min(1,Number(section.z_norm)||0)),
-          points:section.points.filter(point=>point&&Number.isFinite(Number(point.theta))&&Number.isFinite(Number(point.r))).map(point=>({theta:((Number(point.theta)%(2*Math.PI))+2*Math.PI)%(2*Math.PI),r:Math.max(0.05,Math.min(20,Number(point.r)))})).sort((a,b)=>a.theta-b.theta)
-        })).sort((a,b)=>a.z_norm-b.z_norm);
+        if(mode==='flex_shape'){
+          if(stage.params.symmetry_mode===undefined){
+            stage.params.symmetry_mode=stage.params.symmetry_enabled!==undefined?!!stage.params.symmetry_enabled:true;
+          }else{
+            stage.params.symmetry_mode=!!stage.params.symmetry_mode;
+          }
+          clampNumber('symmetry_tolerance',0,10,0.5);
+          const refR=Math.max(1,Number(stage.params.reference_radius)||85);
+          if(Array.isArray(stage.params.sections)){
+            stage.params.sections=stage.params.sections.filter(section=>section&&Array.isArray(section.points)).map(section=>{
+              const validPts=section.points.filter(point=>point&&Number.isFinite(Number(point.theta))&&Number.isFinite(Number(point.r)));
+              const maxR=validPts.reduce((m,p)=>Math.max(m,Number(p.r)||0),0);
+              const promoteFactor=(maxR>0&&maxR<=5.0)?refR:1.0;
+              return {
+                ...section,
+                z_norm:Math.max(0,Math.min(1,Number(section.z_norm)||0)),
+                points:validPts.map(point=>({
+                  theta:((Number(point.theta)%(2*Math.PI))+2*Math.PI)%(2*Math.PI),
+                  r:Math.max(1.0,Math.min(500.0,Number(point.r)*promoteFactor))
+                })).sort((a,b)=>a.theta-b.theta)
+              };
+            }).sort((a,b)=>a.z_norm-b.z_norm);
+          }
+          FlexShapeStage.syncSectionsWithRadiusProfile(stage.params, projectHeight);
+        }
       }
       if(mode==='reaction_diffusion'){
         clampNumber('feed_rate',0.01,0.08,0.029);clampNumber('kill_rate',0.03,0.08,0.057);
         clampNumber('grid_resolution',64,512,128);stage.params.grid_resolution=Math.max(64,Math.round(stage.params.grid_resolution/32)*32);
         clampNumber('n_iterations',1000,15000,3000);stage.params.n_iterations=Math.round(stage.params.n_iterations/500)*500;
-        clampNumber('contrast',1,20,8);clampNumber('scale_theta',0.25,4,1);clampNumber('scale_z',0.25,4,1);
+        clampNumber('contrast',1,20,8);clampNumber('scale_theta',0.25,8,1);clampNumber('scale_z',0.25,8,1);
         clampNumber('seed',1,10000,42);stage.params.seed=Math.round(stage.params.seed);
         if(!['Labyrinth','Spots','Coral','Worms','Mitosis'].includes(stage.params.rd_preset))stage.params.rd_preset='Labyrinth';
         stage.params.invert=!!stage.params.invert;
@@ -2323,7 +3161,7 @@ function createMeshWorkerSource() {
     }
   }
   const coreDefinitions = [
-    linearInterp, buildPCHIP, buildNaturalCubic, buildPeriodicPCHIP, gaussianFilter1d, findPeaks, cubicWeight, cubicWeightDerivative,
+    deepCopy, linearInterp, buildPCHIP, buildNaturalCubic, buildPeriodicPCHIP, gaussianFilter1d, findPeaks, cubicWeight, cubicWeightDerivative,
     mapCoordinates2D, mapCoordinates2DWithDerivatives, CurveData, buildAllSplines, SplineContract, StagePolicy, generateWaveWithDerivatives, evaluateWaveAtPhase, evaluateWaveAndDerivativeAtPhase,
     DeformationStage, generateReactionDiffusion, StageRegistry, ParametricSurface,
     distributeLayersAdaptively, buildFeatureAlignedTheta, solidifyMeshData, triangulateSimplePolygon2D,
@@ -2709,15 +3547,41 @@ const meshWorkerClient=new MeshWorkerClient(
 window.addEventListener('pagehide',()=>meshWorkerClient.dispose());
 logDebug('Viewport 3D pronta.', 'ok');
 
-let zScaleConfig = {
+let envelopeScaleConfig = {
   modeZ: 'proportional',
-  scaleZValues: true
+  scaleZValues: true,
+  scaleRadialModifiers: true
 };
 
 function getMaxH(stateObj = currentParams) {
   const f = (stateObj?.design_pipeline || []).find(s => ['polygon_base','flex_shape'].includes(s.mode));
   const pts = f?.params?.radius_profile?.points;
   return (pts && pts.length > 0) ? pts[pts.length - 1].z : 240;
+}
+
+function getMaxBaseR(stateObj = currentParams) {
+  const f = (stateObj?.design_pipeline || []).find(s => ['polygon_base','flex_shape'].includes(s.mode));
+  const pts = f?.params?.radius_profile?.points;
+  if (!pts || !pts.length) return 60;
+  let maxR = 0;
+  for (const pt of pts) {
+    const val = Number(pt.value);
+    if (Number.isFinite(val) && val > maxR) maxR = val;
+  }
+  return maxR > 0 ? maxR : 60;
+}
+
+function getFoundationMaxSpanXY(stateObj = currentParams) {
+  const f = (stateObj?.design_pipeline || []).find(s => ['polygon_base','flex_shape'].includes(s.mode));
+  const radialMult = Number(f?.params?.foundation_radius ?? 1) || 1;
+  return getMaxBaseR(stateObj) * 2 * radialMult;
+}
+
+function getCurrentMaxWidth(stateObj = currentParams) {
+  if (stateObj === currentParams && viewport?.lastBounds?.maxSpanXY > 0) {
+    return viewport.lastBounds.maxSpanXY;
+  }
+  return getFoundationMaxSpanXY(stateObj);
 }
 
 function getActiveZScaleContracts(stateObj = currentParams) {
@@ -2729,35 +3593,116 @@ function getActiveZScaleContracts(stateObj = currentParams) {
     const contracts = Stage.getSplineContracts?.() || {};
     for (const [id, contract] of Object.entries(contracts)) {
       if (contract?.inheritsZScale) {
-        matches.push({ stageId: st.id, stageMode: st.mode, splineId: contract.jsonBinding || id, contract });
+        matches.push({ stageId: st.id, stageMode: st.mode, splineId: contract.jsonBinding || id });
+      }
+    }
+    const schema = Stage.getFixedParamsSchema?.() || {};
+    for (const [key, field] of Object.entries(schema)) {
+      if (field?.scaleWithZ) {
+        matches.push({ stageId: st.id, stageMode: st.mode, paramId: key });
       }
     }
   }
   return matches;
 }
 
-function applyGeometricHeightScale(targetHeight, { baseSnapshot = null, isLod = false, options = zScaleConfig } = {}) {
-  const clampedH = Math.max(10, Math.min(1000, Number(targetHeight)));
-  if (!Number.isFinite(clampedH)) return;
+function getActiveRadialModifierContracts(stateObj = currentParams) {
+  const matches = [];
+  for (const st of stateObj?.design_pipeline || []) {
+    if (st.enabled === false) continue;
+    const Stage = StageRegistry.getClass(st.mode);
+    if (!Stage) continue;
+    const contracts = Stage.getSplineContracts?.() || {};
+    for (const [id, contract] of Object.entries(contracts)) {
+      if (contract?.inheritsRadialScale && contract.uiRole !== SplineRole.BASE_PROFILE) {
+        matches.push({ stageId: st.id, stageMode: st.mode, splineId: contract.jsonBinding || id });
+      }
+    }
+  }
+  return matches;
+}
+
+function applyGeometricEnvelopeScale({ targetHeight = null, targetWidth = null, baseSnapshot = null, baseBounds = null, isLod = false, options = envelopeScaleConfig } = {}) {
   const sourceState = baseSnapshot ? JSON.parse(baseSnapshot) : deepCopy(currentParams);
   const oldH = getMaxH(sourceState);
-  if (Math.abs(clampedH - oldH) < 1e-4 && !baseSnapshot) return;
+  const oldW = (baseBounds?.maxSpanXY > 0) ? baseBounds.maxSpanXY : getCurrentMaxWidth(sourceState);
+  const newH = targetHeight !== null && targetHeight !== undefined ? Math.max(10, Math.min(1000, Number(targetHeight))) : oldH;
+  const newW = targetWidth !== null && targetWidth !== undefined ? Math.max(4, Math.min(1000, Number(targetWidth))) : oldW;
+  if (!Number.isFinite(newH) || !Number.isFinite(newW)) return;
 
+  let fR = 1;
+  if (targetWidth !== null && targetWidth !== undefined && oldW > 0) {
+    if (options.scaleRadialModifiers !== false) {
+      fR = newW / oldW;
+    } else {
+      const oldBaseSpan = getFoundationMaxSpanXY(sourceState);
+      const modifierSpan = oldW - oldBaseSpan;
+      const desiredBaseSpan = Math.max(2, newW - modifierSpan);
+      fR = oldBaseSpan > 0 ? desiredBaseSpan / oldBaseSpan : newW / oldW;
+    }
+  }
+
+  if (Math.abs(newH - oldH) < 1e-4 && Math.abs(fR - 1) < 1e-5 && !baseSnapshot) return;
+
+  const scaleOpts = { ...options, fR };
   for (const stage of sourceState.design_pipeline || []) {
     const Stage = StageRegistry.getClass(stage.mode);
     if (Stage && typeof Stage.scaleStageParams === 'function') {
-      Stage.scaleStageParams(stage.params, oldH, clampedH, options);
+      Stage.scaleStageParams(stage.params, oldH, newH, scaleOpts);
     }
   }
 
   currentParams = sourceState;
-  if (options.modeZ === 'proportional' && oldH > 0) {
-    seekerZ = Math.max(0, Math.min(clampedH, Number(((seekerZ / oldH) * clampedH).toFixed(1))));
-  } else {
-    seekerZ = Math.max(0, Math.min(clampedH, seekerZ));
+  if (Math.abs(newH - oldH) > 1e-4) {
+    if (options.modeZ === 'proportional' && oldH > 0) {
+      seekerZ = Math.max(0, Math.min(newH, Number(((seekerZ / oldH) * newH).toFixed(1))));
+    } else {
+      seekerZ = Math.max(0, Math.min(newH, seekerZ));
+    }
   }
   renderEditor2D();
   requestMeshUpdate(isLod);
+}
+
+function computeMeshBoundingMetrics(vertices) {
+  if (!vertices || vertices.length < 3) {
+    return { minX: 0, maxX: 0, minY: 0, maxY: 0, minZ: 0, maxZ: 0, widthX: 0, depthY: 0, heightZ: 0, maxSpanXY: 0 };
+  }
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity, minZ = Infinity, maxZ = -Infinity;
+  for (let i = 0; i < vertices.length; i += 3) {
+    const x = vertices[i], y = vertices[i + 1], z = vertices[i + 2];
+    if (x < minX) minX = x;
+    if (x > maxX) maxX = x;
+    if (y < minY) minY = y;
+    if (y > maxY) maxY = y;
+    if (z < minZ) minZ = z;
+    if (z > maxZ) maxZ = z;
+  }
+  const widthX = Number.isFinite(maxX - minX) ? maxX - minX : 0;
+  const depthY = Number.isFinite(maxY - minY) ? maxY - minY : 0;
+  const heightZ = Number.isFinite(maxZ - minZ) ? maxZ - minZ : 0;
+  const maxSpanXY = Math.max(widthX, depthY);
+  return { minX, maxX, minY, maxY, minZ, maxZ, widthX, depthY, heightZ, maxSpanXY };
+}
+
+function syncEnvelopeDimensionInputs(bounds) {
+  if (!bounds) return;
+  const widthCtrl = document.querySelector('[data-envelope-control="max-width"]');
+  if (widthCtrl && !widthCtrl.dataset.editing && !widthCtrl.matches(':focus-within') && bounds.maxSpanXY > 0) {
+    const formattedW = Number(bounds.maxSpanXY.toFixed(1));
+    const rng = widthCtrl.querySelector('input[type="range"]');
+    const num = widthCtrl.querySelector('input[type="number"]');
+    if (rng) rng.value = String(formattedW);
+    if (num) num.value = String(formattedW);
+  }
+  const heightCtrl = document.querySelector('[data-envelope-control="max-height"]');
+  if (heightCtrl && !heightCtrl.dataset.editing && !heightCtrl.matches(':focus-within') && bounds.heightZ > 0) {
+    const formattedH = Number(bounds.heightZ.toFixed(1));
+    const rng = heightCtrl.querySelector('input[type="range"]');
+    const num = heightCtrl.querySelector('input[type="number"]');
+    if (rng) rng.value = String(formattedH);
+    if (num) num.value = String(formattedH);
+  }
 }
 
 const PROFILE_PLOT = { left:55, right:286, top:24, bottom:290 };
@@ -2784,10 +3729,80 @@ function getNiceAxis(min, max, targetTicks = 5) {
   return { min:axisMin, max:axisMax, step:niceStep, ticks };
 }
 
+let polarEditorMapping = null, shapeDrag = null, selectedFlexSectionIndex = null, selectedFlexCpIndex = null;
+
+function parseCpSplineIndex(splineId) {
+  const m = String(splineId || '').match(/^cp_profile_(\d+)$/);
+  return m ? Number(m[1]) : -1;
+}
+
+function getEffectiveSplineInfo(stage = null) {
+  const st = stage || currentParams.design_pipeline.find(s => s.id === activeStageId) || currentParams.design_pipeline[0];
+  const maxH = getMaxH();
+  const cpIdx = parseCpSplineIndex(activeSpline);
+  if (st?.mode === 'flex_shape' && cpIdx >= 0) {
+    FlexShapeStage.syncSectionsWithRadiusProfile(st.params, maxH);
+    const cpCount = FlexShapeStage.getCpCount(st.params);
+    if (cpIdx < cpCount) {
+      const cpData = FlexShapeStage.getCpProfileCurve(st.params, cpIdx, maxH);
+      return {
+        isCpSpline: true,
+        cpIndex: cpIdx,
+        stage: st,
+        data: cpData,
+        curve: CurveData.fromJSON(cpData, activeSpline, maxH),
+        contract: { splineId: activeSpline, uiDomain: 'mm', uiRole: SplineRole.BASE_PROFILE }
+      };
+    }
+  }
+  const Stage = StageRegistry.getClass(st?.mode);
+  const contract = Stage?.getSplineContracts?.()?.[activeSpline] || {};
+  const data = st?.params?.[activeSpline];
+  return {
+    isCpSpline: false,
+    cpIndex: -1,
+    stage: st,
+    data,
+    curve: CurveData.fromJSON(data, activeSpline, maxH),
+    contract
+  };
+}
+
+function populateSplineSelect(stage = null) {
+  const st = stage || currentParams.design_pipeline.find(s => s.id === activeStageId) || currentParams.design_pipeline[0];
+  const sel = document.getElementById('select-spline');
+  if (!sel || !st) return;
+  sel.innerHTML = '';
+  const keys = Object.keys(st.params || {}).filter(k => k.endsWith('_profile'));
+  keys.forEach(k => {
+    const o = document.createElement('option');
+    o.value = k;
+    o.textContent = getSplineDisplayName(k, st);
+    sel.appendChild(o);
+  });
+  if (st.mode === 'flex_shape') {
+    FlexShapeStage.syncSectionsWithRadiusProfile(st.params, getMaxH());
+    const cpCount = FlexShapeStage.getCpCount(st.params);
+    for (let i = 0; i < cpCount; i++) {
+      const cpKey = `cp_profile_${i}`;
+      keys.push(cpKey);
+      const o = document.createElement('option');
+      o.value = cpKey;
+      o.textContent = getSplineDisplayName(cpKey, st);
+      sel.appendChild(o);
+    }
+  }
+  if (!keys.includes(activeSpline)) activeSpline = keys[0] || 'radius_profile';
+  sel.value = activeSpline;
+  const info = getEffectiveSplineInfo(st);
+  const kindSel = document.getElementById('select-spline-kind');
+  if (kindSel) kindSel.value = info.data?.kind || 'pchip';
+}
+
 function getProfileValueAxis(stage, curve, maxH, fixedAxis = null) {
   if (fixedAxis) return fixedAxis;
-  const Stage = StageRegistry.getClass(stage?.mode);
-  const contract = Stage?.getSplineContracts?.()?.[activeSpline] || {};
+  const info = getEffectiveSplineInfo(stage);
+  const contract = info.contract || {};
   const domain = contract.uiDomain || 'ratio';
   const interp = curve.getInterpolator();
   const values = curve.points.map(point => point.value).filter(Number.isFinite);
@@ -2811,6 +3826,10 @@ function getProfileValueAxis(stage, curve, maxH, fixedAxis = null) {
 }
 
 function getProfileSplineName(compact = false) {
+  const cpIdx = parseCpSplineIndex(activeSpline);
+  if (cpIdx >= 0) {
+    return compact ? `CP ${cpIdx + 1}` : `${appT('Raio')} — CP ${cpIdx + 1}`;
+  }
   const labels = {
     radius_profile:'Raio', torsion_profile:'Torção', phase_profile:'Fase',
     m_profile:'m', n1_profile:'n₁', n2_profile:'n₂', n3_profile:'n₃',
@@ -2820,7 +3839,14 @@ function getProfileSplineName(compact = false) {
   return appT(labels[activeSpline] || labels[activeSpline.replace(/_profile$/, '')] || activeSpline.replace(/_profile$/, '').replaceAll('_', ' '));
 }
 
-function getSplineDisplayName(splineId) {
+function getSplineDisplayName(splineId, stage = null) {
+  const cpIdx = parseCpSplineIndex(splineId);
+  if (cpIdx >= 0) {
+    const st = stage || currentParams.design_pipeline.find(s => s.id === activeStageId) || currentParams.design_pipeline[0];
+    const theta = st?.params?.sections?.[0]?.points?.[cpIdx]?.theta;
+    const deg = Number.isFinite(Number(theta)) ? ` (${Math.round((Number(theta) * 180) / Math.PI)}°)` : '';
+    return `${appT('Raio')} — CP ${cpIdx + 1}${deg}`;
+  }
   const labels = {
     radius_profile:'Radius profile', torsion_profile:'Torsion profile', phase_profile:'Phase profile',
     m_profile:'m', n1_profile:'n₁', n2_profile:'n₂', n3_profile:'n₃',
@@ -2834,8 +3860,8 @@ function getLocalizedStageName(name) {
 }
 
 function getProfileAxisLabel(stage) {
-  const Stage = StageRegistry.getClass(stage?.mode);
-  const contract = Stage?.getSplineContracts?.()?.[activeSpline] || {};
+  const info = getEffectiveSplineInfo(stage);
+  const contract = info.contract || {};
   const name = getProfileSplineName();
   const unit = contract.uiDomain === 'mm' ? 'mm' : contract.uiDomain === 'turns' ? appT('voltas') : '';
   return unit ? `${name} (${unit})` : `${name} (${appT('adimensional')})`;
@@ -2844,10 +3870,9 @@ function getProfileAxisLabel(stage) {
 function updateSeekerZLabel() {
   const label = document.getElementById('seeker-z-label');
   const stage = currentParams.design_pipeline.find(s => s.id === activeStageId) || currentParams.design_pipeline[0];
-  const Stage = StageRegistry.getClass(stage?.mode);
-  const contract = Stage?.getSplineContracts?.()?.[activeSpline] || {};
-  const curve = CurveData.fromJSON(stage?.params?.[activeSpline], activeSpline, getMaxH());
-  const value = curve.getInterpolator()(seekerZ);
+  const info = getEffectiveSplineInfo(stage);
+  const contract = info.contract || {};
+  const value = info.curve.getInterpolator()(seekerZ);
   const formattedValue = Number.isFinite(value) ? value.toFixed(2) : '—';
   const unit = contract.uiDomain === 'mm' ? ' mm' : contract.uiDomain === 'turns' ? ` ${appT('voltas')}` : ` ${appT('adimensional')}`;
   label.textContent = `Z: ${seekerZ.toFixed(1)} mm | ${getProfileSplineName(true)}: ${formattedValue}${unit}`;
@@ -2855,13 +3880,14 @@ function updateSeekerZLabel() {
 
 function renderEditor2D() {
   seekerZ = Math.min(getMaxH(), Math.max(0, seekerZ));
+  populateSplineSelect();
   updateSeekerZLabel();
   viewport?.updateZRingRadius?.(seekerZ);
   const visibleViews = [mainViewId, smallViewId];
   if (visibleViews.includes('profile')) renderProfileEditor2D();
   else profileEditorMapping = null;
   if (visibleViews.includes('polar')) renderPolarEditor2D();
-  refreshShapeEditor();
+  else polarEditorMapping = null;
 }
 
 function renderProfileEditor2D() {
@@ -2877,7 +3903,8 @@ function renderProfileEditor2D() {
   seekerZ = Math.min(maxH, Math.max(0, seekerZ));
 
   const st = currentParams.design_pipeline.find(s => s.id === activeStageId) || currentParams.design_pipeline[0];
-  const curve = CurveData.fromJSON(st.params[activeSpline], activeSpline, maxH);
+  const info = getEffectiveSplineInfo(st);
+  const curve = info.curve;
   const valueAxis = getProfileValueAxis(st, curve, maxH, profileDrag?.type === 'point' ? profileDrag.valueAxis : null);
   const { left, right, top, bottom } = PROFILE_PLOT;
   const v2x = v => left + ((v - valueAxis.min) / (valueAxis.max - valueAxis.min || 1)) * (right - left);
@@ -2915,6 +3942,25 @@ function renderProfileEditor2D() {
   addSvgElement('text', { x:(left + right) / 2, y:329, fill:'var(--fg-muted)', 'font-size':9, 'text-anchor':'middle' }, getProfileAxisLabel(st));
   addSvgElement('text', { x:10, y:(top + bottom) / 2, fill:'var(--fg-muted)', 'font-size':9, 'text-anchor':'middle', transform:`rotate(-90 10 ${(top + bottom) / 2})` }, 'Z (mm)');
 
+  // Se estiver editando o spline de um CP específico, mostra o radius_profile base tracejado como referência
+  if (info.isCpSpline && st?.params?.radius_profile) {
+    const baseCurve = CurveData.fromJSON(st.params.radius_profile, 'radius_profile', maxH);
+    const baseInterp = baseCurve.getInterpolator();
+    const refPts = [];
+    for (let i = 0; i <= 120; i++) {
+      const z = (maxH * i) / 120;
+      const bx = Math.max(left, Math.min(right, v2x(baseInterp(z))));
+      refPts.push(`${bx.toFixed(1)},${z2y(z).toFixed(1)}`);
+    }
+    addSvgElement('polyline', {
+      fill: 'none',
+      stroke: 'rgba(180,190,210,0.35)',
+      'stroke-width': '1.4',
+      'stroke-dasharray': '3,3',
+      points: refPts.join(' ')
+    });
+  }
+
   const interp = curve.getInterpolator();
   const polyPts = [];
   for (let i = 0; i <= 160; i++) {
@@ -2928,14 +3974,14 @@ function renderProfileEditor2D() {
   svg.appendChild(sLine);
 
   const pl = document.createElementNS(svgNS, 'polyline');
-  pl.setAttribute('fill', 'none'); pl.setAttribute('stroke', 'var(--curve-main)');
+  pl.setAttribute('fill', 'none'); pl.setAttribute('stroke', info.isCpSpline ? '#38bdf8' : 'var(--curve-main)');
   pl.setAttribute('stroke-width', '2.5'); pl.setAttribute('points', polyPts.join(' '));
   svg.appendChild(pl);
 
   curve.points.forEach((pt, idx) => {
     const c = document.createElementNS(svgNS, 'circle');
     c.setAttribute('cx', v2x(pt.value)); c.setAttribute('cy', z2y(pt.z)); c.setAttribute('r', 6);
-    c.setAttribute('fill', 'var(--bg-panel)'); c.setAttribute('stroke', 'var(--curve-peak)');
+    c.setAttribute('fill', 'var(--bg-panel)'); c.setAttribute('stroke', info.isCpSpline ? '#38bdf8' : 'var(--curve-peak)');
     c.setAttribute('stroke-width', '2.5'); c.style.cursor = 'grab';
     c.setAttribute('data-point-index', idx);
     c.setAttribute('tabindex','0');c.setAttribute('role','slider');
@@ -2946,32 +3992,203 @@ function renderProfileEditor2D() {
 
 function renderPolarEditor2D() {
   const container = document.getElementById('polar-svg-container');
+  const toolbar = document.getElementById('polar-toolbar');
+  const hint = document.getElementById('polar-hint');
+  if (!container) return;
   container.innerHTML = '';
+  polarEditorMapping = null;
+
   const svgNS = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(svgNS, 'svg');
-  svg.setAttribute('viewBox', '0 0 300 340');
+  svg.setAttribute('viewBox', '0 0 300 300');
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', appT('Seção transversal editável'));
   container.appendChild(svg);
+
+  const h = getMaxH();
+  seekerZ = Math.min(h, Math.max(0, seekerZ));
+  const zNorm = Math.max(0, Math.min(1, seekerZ / (h || 1)));
+  const flexStage = currentParams.design_pipeline.find(s => s.mode === 'flex_shape' && s.enabled !== false);
 
   const splines = buildAllSplines(currentParams);
   const surf = new ParametricSurface(currentParams, splines);
+  const cx = 150, cy = 150, plotR = 114;
+
+  if (flexStage) {
+    FlexShapeStage.syncSectionsWithRadiusProfile(flexStage.params, h);
+    const sections = flexStage.params.sections || [];
+    const rPts = flexStage.params.radius_profile?.points || [];
+    const activeFlexIdx = (Number.isInteger(selectedFlexSectionIndex) && selectedFlexSectionIndex >= 0 && selectedFlexSectionIndex < sections.length)
+      ? selectedFlexSectionIndex
+      : getClosestFlexSectionIndex(sections, zNorm);
+    const sectionIndex = shapeDrag ? shapeDrag.sectionIndex : activeFlexIdx;
+    const section = sections[sectionIndex];
+    section.points = (section.points || []).slice().sort((a, b) => a.theta - b.theta);
+    const points = section.points;
+    const nodePt = rPts[sectionIndex];
+    const secZ = nodePt ? Number(nodePt.z) : section.z_norm * h;
+    const secNodeR = nodePt ? Number(nodePt.value) : FlexShapeStage.computeSectionMeanRadius(section, 60);
+    const canRemoveSection = sections.length > 2 && sectionIndex > 0 && sectionIndex < sections.length - 1;
+    const symActive = flexStage.params.symmetry_mode !== false;
+    const curPreset = flexStage.params.shape_preset || 'Circle';
+    const curSides = Math.max(3, Math.min(24, Math.round(Number(flexStage.params.shape_sides) || 6)));
+    const curTension = Number.isFinite(Number(flexStage.params.section_tension)) ? Number(flexStage.params.section_tension) : 1.0;
+    const showSides = ['Polygon', 'Star', 'Gear'].includes(curPreset);
+    const cpFromSpline = parseCpSplineIndex(activeSpline);
+    if (cpFromSpline >= 0) selectedFlexCpIndex = cpFromSpline;
+
+    if (toolbar && !shapeDrag) {
+      toolbar.hidden = false;
+      const sectionOptions = sections.map((sec, idx) => {
+        const zVal = rPts[idx] ? Number(rPts[idx].z) : sec.z_norm * h;
+        const rVal = rPts[idx] ? Number(rPts[idx].value) : FlexShapeStage.computeSectionMeanRadius(sec, 60);
+        return `<option value="${idx}" ${idx === sectionIndex ? 'selected' : ''}>${appT('Seção')} ${idx + 1}/${sections.length} (Z ${zVal.toFixed(1)} · R ${rVal.toFixed(1)})</option>`;
+      }).join('');
+      const presetList = [
+        ['Circle', appT('Círculo')],
+        ['Square', appT('Quadrado')],
+        ['Polygon', appT('Polígono')],
+        ['Star', appT('Estrela')],
+        ['Heart', appT('Coração')],
+        ['Teardrop', appT('Gota')],
+        ['Gear', appT('Engrenagem')]
+      ];
+      const presetOpts = presetList.map(([val, lbl]) => `<option value="${val}" ${val === curPreset ? 'selected' : ''}>${lbl}</option>`).join('');
+      const cpOpts = [
+        `<option value="-1" ${cpFromSpline < 0 ? 'selected' : ''}>📈 ${appT('Radius profile')} (Global)</option>`,
+        ...points.map((pt, i) => `<option value="${i}" ${cpFromSpline === i ? 'selected' : ''}>🎯 CP ${i + 1} (${Math.round((pt.theta * 180) / Math.PI)}° · ${pt.r.toFixed(1)} mm)</option>`)
+      ].join('');
+
+      toolbar.innerHTML = `
+        <div style="display:flex;gap:4px;width:100%;align-items:center;">
+          <select data-select-section style="width:auto;flex:1;min-width:110px;font-size:11px;padding:2px 4px;" aria-label="${appT('Seção')}">${sectionOptions}</select>
+          <button type="button" data-toggle-symmetry class="${symActive ? 'primary' : ''}" style="padding:2px 7px;font-size:11px;" title="${appT('Edição simétrica')}">🔗 ${symActive ? 'Simetria ON' : 'Simetria OFF'}</button>
+          <button type="button" data-add-section style="padding:2px 6px;" title="${appT('Adicionar seção em Z atual')}">＋</button>
+          <button type="button" data-delete-section style="padding:2px 6px;" title="${appT('Remover seção')}" ${canRemoveSection ? '' : 'disabled'}>−</button>
+          <button type="button" data-reset-section style="padding:2px 6px;" title="${appT('Redefinir seção circular')}">↺</button>
+        </div>
+        <div style="display:flex;gap:4px;width:100%;align-items:center;">
+          <select data-select-shape-preset style="width:auto;flex:1;min-width:85px;font-size:11px;padding:2px 4px;" title="${appT('Forma da fundação')}">${presetOpts}</select>
+          ${showSides ? `<input type="number" data-input-shape-sides min="3" max="24" step="1" value="${curSides}" style="width:46px;padding:2px 4px;font-size:11px;" title="${appT('Lados / dentes')}">` : ''}
+          <button type="button" data-apply-preset-sec style="padding:2px 6px;font-size:10.5px;" title="Aplicar forma na seção Z atual">Nesta Z</button>
+          <button type="button" data-apply-preset-all style="padding:2px 6px;font-size:10.5px;" title="Aplicar forma em todas as seções Z">Todas Z</button>
+        </div>
+        <div style="display:flex;gap:6px;width:100%;align-items:center;font-size:10.5px;">
+          <select data-select-cp-focus style="width:auto;flex:1;min-width:120px;font-size:11px;padding:2px 4px;" title="Selecionar curva exibida no Editor de Perfil Vertical (Z)">${cpOpts}</select>
+          <label style="display:flex;align-items:center;gap:4px;white-space:nowrap;" title="Controla a curvatura entre CPs sucessivos (0 = reto/facetado, 1 = curva suave)">
+            <span>Curv.:</span>
+            <input type="range" data-input-tension min="0" max="1" step="0.05" value="${curTension}" style="width:58px;">
+          </label>
+        </div>`;
+    }
+    if (hint) {
+      hint.innerHTML = `• <b>Clique no CP:</b> Foca spline do CP no Perfil (Z) • <b>🔗 Simetria:</b> Move grupo ou CP isolado<br>• <b>Duplo clique:</b> Novo CP em todas as seções Z • <b>Botão direito no CP:</b> Excluir CP`;
+    }
+
+    const sectionEval = points.length < 2
+      ? () => points[0]?.r ?? secNodeR
+      : buildPeriodicPCHIP(points.map(p => p.theta), points.map(p => p.r), curTension);
+    const nSamples = 240;
+    const sampleThetas = Float64Array.from({ length: nSamples }, (_, i) => (2 * Math.PI * i) / nSamples);
+    const sampleRadii = Float64Array.from(sampleThetas, t => Math.max(1, sectionEval(t)));
+
+    let globalMaxR = Math.max(20, secNodeR, ...points.map(p => Number(p.r) || 0), ...sampleRadii);
+    for (let sIdx = 0; sIdx < sections.length; sIdx++) {
+      for (const p of sections[sIdx].points || []) if (Number(p.r) > globalMaxR) globalMaxR = Number(p.r);
+    }
+    const maxR = shapeDrag ? shapeDrag.maxR : globalMaxR * 1.18;
+    const scale = plotR / (maxR || 100);
+    const torsionPhi = getStageTorsionRadAtZ(flexStage, secZ);
+    const toXY = (theta, r, rot = torsionPhi) => [
+      cx + Number(r) * scale * Math.cos(theta + rot),
+      cy - Number(r) * scale * Math.sin(theta + rot)
+    ];
+    polarEditorMapping = { cx, cy, plotR, maxR, scale, sectionIndex, stageId: flexStage.id, torsionPhi };
+
+    const ghostPolygons = [];
+    for (let sIdx = 0; sIdx < sections.length; sIdx++) {
+      if (sIdx === sectionIndex) continue;
+      const sec = sections[sIdx];
+      const secPts = (sec.points || []).slice().sort((a, b) => a.theta - b.theta);
+      if (secPts.length < 2) continue;
+      const ev = buildPeriodicPCHIP(secPts.map(p => p.theta), secPts.map(p => p.r), curTension);
+      const secRot = getStageTorsionRadAtZ(flexStage, (rPts[sIdx] ? Number(rPts[sIdx].z) : sec.z_norm * h));
+      const gPts = [];
+      for (let i = 0; i < 96; i++) {
+        const th = (2 * Math.PI * i) / 96;
+        const [gx, gy] = toXY(th, Math.max(1, ev(th)), secRot);
+        gPts.push(`${gx.toFixed(1)},${gy.toFixed(1)}`);
+      }
+      ghostPolygons.push(`<polygon points="${gPts.join(' ')}" fill="none" stroke="rgba(150,160,180,0.28)" stroke-width="1" stroke-dasharray="2,2"/>`);
+    }
+
+    let modifierOverlay = '';
+    if (surf.modifierInstances.length > 0) {
+      const radialMult = Number(flexStage.params.foundation_radius ?? 1) || 1;
+      const { radii: modRadii } = surf.evaluateCrossSectionAtZ(secZ, sampleThetas);
+      const modPts = Array.from(sampleThetas, (th, i) => toXY(th, modRadii[i] / radialMult).map(v => v.toFixed(1)).join(',')).join(' ');
+      modifierOverlay = `<polygon points="${modPts}" fill="none" stroke="var(--curve-valley)" stroke-width="1.2" stroke-opacity="0.5" pointer-events="none"/>`;
+    }
+
+    const smoothPoly = Array.from(sampleThetas, (th, i) => toXY(th, sampleRadii[i]).map(v => v.toFixed(2)).join(',')).join(' ');
+    const northR = Math.max(1, sectionEval(Math.PI / 2));
+    const [nx, ny] = toXY(Math.PI / 2, northR);
+    const handles = FlexShapeStage.getHandlesForSection(section, flexStage.params);
+
+    svg.innerHTML = `
+      <circle cx="${cx}" cy="${cy}" r="${plotR}" fill="none" stroke="var(--plot-grid)"/>
+      <circle cx="${cx}" cy="${cy}" r="${(plotR * 0.75).toFixed(1)}" fill="none" stroke="var(--plot-grid)" stroke-dasharray="2,3" opacity="0.6"/>
+      <circle cx="${cx}" cy="${cy}" r="${(plotR * 0.5).toFixed(1)}" fill="none" stroke="var(--plot-grid)" stroke-dasharray="2,3"/>
+      <circle cx="${cx}" cy="${cy}" r="${(plotR * 0.25).toFixed(1)}" fill="none" stroke="var(--plot-grid)" stroke-dasharray="2,3" opacity="0.6"/>
+      <line x1="${cx}" y1="${cy - plotR - 10}" x2="${cx}" y2="${cy + plotR + 10}" stroke="var(--plot-grid)"/>
+      <line x1="${cx - plotR - 10}" y1="${cy}" x2="${cx + plotR + 10}" y2="${cy}" stroke="var(--plot-grid)"/>
+      <text x="${cx + 4}" y="${(cy - plotR * 0.5 + 9).toFixed(1)}" fill="var(--fg-muted)" font-size="8.5">${(maxR * 0.5).toFixed(0)} mm</text>
+      <text x="${cx + 4}" y="${(cy - plotR + 9).toFixed(1)}" fill="var(--fg-muted)" font-size="8.5">${maxR.toFixed(0)} mm</text>
+      <text x="10" y="15" fill="var(--fg-muted)" font-size="9.5">${appT('Seção')} ${sectionIndex + 1}/${sections.length} · Z: ${secZ.toFixed(1)} mm</text>
+      <text x="290" y="15" fill="var(--curve-peak)" font-size="9.5" text-anchor="end">${cpFromSpline >= 0 && points[cpFromSpline] ? `CP ${cpFromSpline + 1}: ${points[cpFromSpline].r.toFixed(1)} mm` : `${appT('Nó')}: ${secNodeR.toFixed(1)} mm`}</text>
+      ${ghostPolygons.join('')}
+      ${modifierOverlay}
+      <polygon points="${smoothPoly}" fill="rgba(59,130,246,.20)" stroke="var(--curve-main)" stroke-width="2.2"/>
+      <line x1="${cx}" y1="${cy}" x2="${nx.toFixed(2)}" y2="${ny.toFixed(2)}" stroke="rgba(0,255,120,0.7)" stroke-width="1.6" stroke-dasharray="4,3"/>
+      ${handles.map(hItem => {
+        const [x, y] = toXY(hItem.theta, hItem.r);
+        const isFocused = hItem.idx === selectedFlexCpIndex;
+        return `
+          ${isFocused ? `<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="10" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="2,2" pointer-events="none"/>` : ''}
+          <circle data-shape-index="${hItem.idx}" data-group-id="${hItem.groupId}" tabindex="0" role="slider" aria-label="${appT('Ponto polar')} ${hItem.idx + 1} (${hItem.r.toFixed(1)} mm)" aria-valuemin="1" aria-valuemax="500" aria-valuenow="${Number(hItem.r).toFixed(1)}" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${isFocused ? '7' : '6'}" fill="${isFocused ? '#38bdf8' : 'var(--bg-panel)'}" stroke="${hItem.color}" stroke-width="2.5"><title>CP ${hItem.idx + 1}: r=${hItem.r.toFixed(1)} mm, θ=${(hItem.theta * 180 / Math.PI).toFixed(0)}°</title></circle>
+          <text x="${(x + 8).toFixed(1)}" y="${(y - 6).toFixed(1)}" fill="${isFocused ? '#38bdf8' : 'var(--fg-muted)'}" font-size="8.5" font-weight="${isFocused ? '700' : '400'}" pointer-events="none">CP${hItem.idx + 1}</text>
+        `;
+      }).join('')}
+    `;
+    return;
+  }
+
+  if (toolbar) toolbar.hidden = true;
+  if (hint) {
+    hint.innerHTML = `• Seção transversal em <b>Z = ${seekerZ.toFixed(1)} mm</b> (para edição interativa de alças polares, use a fundação <b>Flex Shape</b>).`;
+  }
   const nS = 600, th = new Float64Array(nS);
   for (let i = 0; i < nS; i++) th[i] = (2 * Math.PI * i) / nS;
   const { radii, baseR } = surf.evaluateCrossSectionAtZ(seekerZ, th);
   let maxR = baseR;
   for (let i = 0; i < nS; i++) if (radii[i] > maxR) maxR = radii[i];
-  maxR = Math.max(20, maxR * 1.15);
-  const cx = 150, cy = 170, sc = 130;
+  maxR = Math.max(20, maxR * 1.18);
   const pts = [];
   for (let i = 0; i < nS; i++) {
-    const r = (radii[i] / maxR) * sc;
+    const r = (radii[i] / maxR) * plotR;
     pts.push((cx + r * Math.cos(th[i])).toFixed(1) + ',' + (cy - r * Math.sin(th[i])).toFixed(1));
   }
-  const poly = document.createElementNS(svgNS, 'polygon');
-  poly.setAttribute('points', pts.join(' '));
-  poly.setAttribute('fill', 'rgba(59,130,246,0.2)');
-  poly.setAttribute('stroke', 'var(--curve-valley)');
-  poly.setAttribute('stroke-width', '2');
-  svg.appendChild(poly);
+  svg.innerHTML = `
+    <circle cx="${cx}" cy="${cy}" r="${plotR}" fill="none" stroke="var(--plot-grid)"/>
+    <circle cx="${cx}" cy="${cy}" r="${(plotR * 0.5).toFixed(1)}" fill="none" stroke="var(--plot-grid)" stroke-dasharray="2,3"/>
+    <line x1="${cx}" y1="${cy - plotR - 10}" x2="${cx}" y2="${cy + plotR + 10}" stroke="var(--plot-grid)"/>
+    <line x1="${cx - plotR - 10}" y1="${cy}" x2="${cx + plotR + 10}" y2="${cy}" stroke="var(--plot-grid)"/>
+    <text x="${cx + 4}" y="${(cy - plotR * 0.5 + 9).toFixed(1)}" fill="var(--fg-muted)" font-size="8.5">${(maxR * 0.5).toFixed(0)} mm</text>
+    <text x="${cx + 4}" y="${(cy - plotR + 9).toFixed(1)}" fill="var(--fg-muted)" font-size="8.5">${maxR.toFixed(0)} mm</text>
+    <text x="10" y="15" fill="var(--fg-muted)" font-size="9.5">Z: ${seekerZ.toFixed(1)} mm</text>
+    <text x="290" y="15" fill="var(--curve-peak)" font-size="9.5" text-anchor="end">${appT('Raio')}: ${baseR.toFixed(1)} mm</text>
+    <polygon points="${pts.join(' ')}" fill="rgba(59,130,246,0.2)" stroke="var(--curve-valley)" stroke-width="2"/>
+  `;
 }
 
 const VIEW_LABELS = { mesh3d:'Mesh 3D', profile:'Perfil Vertical (Z)', polar:'Seção Polar 2D (Z)' };
@@ -3039,15 +4256,16 @@ function closeProfileContextMenu() {
 function showProfileContextMenu(event, pointIndex) {
   const menu = document.getElementById('profile-context-menu');
   const st = currentParams.design_pipeline.find(s => s.id === activeStageId) || currentParams.design_pipeline[0];
-  const points = st?.params?.[activeSpline]?.points;
+  const info = getEffectiveSplineInfo(st);
+  const points = info.data?.points;
   if (!Array.isArray(points)) return;
-  profileContextTarget = { stageId: st.id, spline: activeSpline, points, pointIndex };
+  profileContextTarget = { stageId: st.id, spline: activeSpline, isCpSpline: info.isCpSpline, cpIndex: info.cpIndex, points, pointIndex };
   const editZBtn = menu.querySelector('[data-action="edit-z"]');
   const isTopNode = pointIndex === points.length - 1 && points.length >= 2;
   editZBtn.textContent = appT(isTopNode ? 'Alterar altura total Z…' : 'Editar altura Z…');
   menu.querySelector('[data-action="edit-value"]').disabled = pointIndex < 0;
   editZBtn.disabled = pointIndex <= 0;
-  menu.querySelector('[data-action="smooth"]').disabled = pointIndex < 0 || pointIndex === 0 || pointIndex === points.length - 1;
+  menu.querySelector('[data-action="smooth"]').disabled = info.isCpSpline || pointIndex < 0 || pointIndex === 0 || pointIndex === points.length - 1;
   menu.querySelector('[data-action="delete"]').disabled = pointIndex < 0 || points.length <= 2;
   const x = Math.min(event.clientX, window.innerWidth - 190);
   const y = Math.min(event.clientY, window.innerHeight - 205);
@@ -3124,18 +4342,39 @@ function openCustomDialog({ title, fields = [], message = '', onConfirm }) {
 function applyProfileContextAction(action) {
   const target = profileContextTarget;
   if (!target) return;
-  const points = target.points, index = target.pointIndex;
+  const st = currentParams.design_pipeline.find(s => s.id === target.stageId) || currentParams.design_pipeline[0];
+  const isCpSpline = !!target.isCpSpline && st?.mode === 'flex_shape';
+  const isFlexRadius = st?.mode === 'flex_shape' && (target.spline === 'radius_profile' || isCpSpline);
+  const h = getMaxH();
+  if (isFlexRadius) FlexShapeStage.syncSectionsWithRadiusProfile(st.params, h);
+  const info = getEffectiveSplineInfo(st);
+  const points = isCpSpline ? info.data.points : (st?.params?.[target.spline]?.points || target.points);
+  const index = target.pointIndex;
   closeProfileContextMenu();
+
   if (action === 'add-manual') {
-    const h = getMaxH();
+    const seekerVal = Number(info.curve.getInterpolator()(seekerZ).toFixed(2));
     openCustomDialog({
       title: appT('Inserir nó com valores…'),
       fields: [
         { key: 'z', label: appT('Altura Z do novo nó (mm):'), value: Number(seekerZ.toFixed(1)), step: '0.1' },
-        { key: 'value', label: `${appT('Valor de')} ${getSplineDisplayName(target.spline)}:`, value: points[Math.max(0, index)]?.value ?? 0, step: '0.01' }
+        { key: 'value', label: `${appT('Valor de')} ${getSplineDisplayName(target.spline, st)}:`, value: Number.isFinite(seekerVal) ? seekerVal : (points[Math.max(0, index)]?.value ?? 0), step: '0.01' }
       ],
       onConfirm: ({ z, value }) => {
         if (!Number.isFinite(z) || !Number.isFinite(value)) return appT('Informe valores numéricos válidos.');
+        if (isFlexRadius) {
+          recordUndoSnapshot();
+          const inserted = FlexShapeStage.insertSectionAndNodeAtZ(st.params, z, isCpSpline ? null : value, h);
+          if (inserted < 0) return appT('O novo nó precisa estar dentro do perfil e a pelo menos 0,5 mm dos nós vizinhos.');
+          if (isCpSpline) {
+            FlexShapeStage.syncSectionFromCpNodeEdit(st.params, inserted, target.cpIndex, Math.max(1.0, value), z, h);
+          }
+          selectedFlexSectionIndex = inserted;
+          seekerZ = Number(z.toFixed(2));
+          renderEditor2D();
+          requestMeshUpdate(false);
+          return;
+        }
         const ordered = points.slice().sort((a, b) => a.z - b.z);
         const insertAt = ordered.findIndex(p => p.z > z);
         const at = insertAt < 0 ? ordered.length : insertAt;
@@ -3153,11 +4392,19 @@ function applyProfileContextAction(action) {
   if (action === 'edit-value') {
     openCustomDialog({
       title: appT('Editar valor…'),
-      fields: [{ key: 'value', label: `${appT('Valor de')} ${getSplineDisplayName(target.spline)}:`, value: points[index].value, step: '0.01' }],
+      fields: [{ key: 'value', label: `${appT('Valor de')} ${getSplineDisplayName(target.spline, st)}:`, value: points[index].value, step: '0.01' }],
       onConfirm: ({ value }) => {
         if (!Number.isFinite(value)) return appT('Informe um valor numérico válido.');
         recordUndoSnapshot();
-        points[index].value = Number(value.toFixed(3));
+        if (isCpSpline) {
+          FlexShapeStage.syncSectionFromCpNodeEdit(st.params, index, target.cpIndex, Math.max(1.0, value), points[index].z, h);
+        } else {
+          const oldVal = points[index].value;
+          points[index].value = Number((isFlexRadius ? Math.max(1.0, value) : value).toFixed(3));
+          if (isFlexRadius) {
+            FlexShapeStage.syncSectionFromNodeEdit(st.params, index, points[index].value, points[index].z, h, null, oldVal);
+          }
+        }
         renderEditor2D();
         requestMeshUpdate(false);
       }
@@ -3166,11 +4413,11 @@ function applyProfileContextAction(action) {
     if (index === points.length - 1) {
       openCustomDialog({
         title: appT('Alterar altura total Z…'),
-        fields: [{ key: 'z', label: appT('Nova altura total Z (mm):'), value: getMaxH(), step: '1' }],
+        fields: [{ key: 'z', label: appT('Nova altura total Z (mm):'), value: h, step: '1' }],
         onConfirm: ({ z }) => {
           if (!Number.isFinite(z) || z < 10 || z > 1000) return appT('A altura total precisa estar entre 10 mm e 1000 mm.');
           recordUndoSnapshot();
-          applyGeometricHeightScale(z, { isLod: false, options: zScaleConfig });
+          applyGeometricEnvelopeScale({ targetHeight: z, isLod: false, options: envelopeScaleConfig });
           syncUI();
         }
       });
@@ -3181,139 +4428,393 @@ function applyProfileContextAction(action) {
         onConfirm: ({ z }) => {
           if (!Number.isFinite(z) || z <= points[index - 1].z + 0.5 || z >= points[index + 1].z - 0.5) return appT('A altura precisa ficar entre os nós vizinhos, com espaçamento mínimo de 0,5 mm.');
           recordUndoSnapshot();
-          points[index].z = Number(z.toFixed(2));
+          const newZ = Number(z.toFixed(2));
+          if (isCpSpline) {
+            FlexShapeStage.syncSectionFromCpNodeEdit(st.params, index, target.cpIndex, points[index].value, newZ, h);
+            seekerZ = newZ;
+          } else {
+            points[index].z = newZ;
+            if (isFlexRadius) {
+              FlexShapeStage.syncSectionFromNodeEdit(st.params, index, points[index].value, newZ, h);
+              seekerZ = newZ;
+            }
+          }
           renderEditor2D();
           requestMeshUpdate(false);
         }
       });
     }
-  } else if (action === 'smooth' && index > 0 && index < points.length - 1) {
+  } else if (action === 'smooth' && !isCpSpline && index > 0 && index < points.length - 1) {
     recordUndoSnapshot();
     const slope = (points[index + 1].value - points[index - 1].value) / (points[index + 1].z - points[index - 1].z);
     points[index].tangent_in = slope;
     points[index].tangent_out = slope;
-    currentParams.design_pipeline.find(s => s.id === target.stageId).params[target.spline].kind = 'pchip';
+    st.params[target.spline].kind = 'pchip';
     renderEditor2D();
     requestMeshUpdate(false);
   } else if (action === 'delete' && points.length > 2 && index > 0 && index < points.length - 1) {
     recordUndoSnapshot();
-    points.splice(index, 1);
+    if (isFlexRadius) {
+      if (st.params.radius_profile?.points?.[index]) st.params.radius_profile.points.splice(index, 1);
+      if (Array.isArray(st.params.sections) && st.params.sections[index]) st.params.sections.splice(index, 1);
+    } else {
+      points.splice(index, 1);
+    }
     renderEditor2D();
     requestMeshUpdate(false);
   }
 }
 
-function refreshShapeEditor() {
-  const container=document.getElementById('shape-editor-container');
-  if(!container)return;
-  const stage=currentParams.design_pipeline.find(s=>s.mode==='flex_shape'&&s.enabled!==false);
-  container.hidden=!stage;
-  if(stage)renderShapeEditor(container,stage);
-}
-
-function renderShapeEditor(container,stage) {
-  if(!container||!stage)return;
-  const sections=stage.params.sections||[];
-  if(!sections.length){container.innerHTML='<div class="profile-hint">Adicione uma seção para começar a editar a forma polar.</div><button type="button" data-add-section>Adicionar seção em Z atual</button>';return;}
-  const h=getMaxH(),zNorm=Math.max(0,Math.min(1,seekerZ/(h||1)));
-  let sectionIndex=0;
-  for(let i=1;i<sections.length;i++)if(Math.abs(sections[i].z_norm-zNorm)<Math.abs(sections[sectionIndex].z_norm-zNorm))sectionIndex=i;
-  const section=sections[sectionIndex],points=(section.points||[]).slice().sort((a,b)=>a.theta-b.theta);
-  const canRemoveSection=sections.length>2&&sectionIndex>0&&sectionIndex<sections.length-1;
-  const maxR=Math.max(2,...points.map(p=>Number(p.r)||0))*1.15,cx=110,cy=110,scale=86/maxR;
-  const toXY=p=>[cx+Number(p.r)*scale*Math.cos(p.theta),cy-Number(p.r)*scale*Math.sin(p.theta)];
-  const polygon=points.map(p=>toXY(p).map(v=>v.toFixed(2)).join(',')).join(' ');
-  container.innerHTML=`<div class="shape-editor-toolbar"><span>Seção Z ${(section.z_norm*h).toFixed(1)} mm</span><div><button type="button" data-add-section>＋ Seção em Z atual</button> <button type="button" data-delete-section ${canRemoveSection?'':'disabled'}>− Remover seção</button></div></div><svg viewBox="0 0 220 220" role="img" aria-label="Seção transversal editável"><circle cx="110" cy="110" r="86" fill="none" stroke="var(--plot-grid)"/><line x1="110" y1="12" x2="110" y2="208" stroke="var(--plot-grid)"/><line x1="12" y1="110" x2="208" y2="110" stroke="var(--plot-grid)"/><polygon points="${polygon}" fill="rgba(59,130,246,.20)" stroke="var(--curve-main)" stroke-width="2"/>${points.map((p,i)=>{const [x,y]=toXY(p);const hue=(Math.round(Number(p.r)*2)*137.508)%360;return `<circle data-shape-index="${i}" tabindex="0" role="slider" aria-label="Ponto polar ${i+1}" aria-valuemin="0.05" aria-valuemax="20" aria-valuenow="${Number(p.r).toFixed(2)}" cx="${x}" cy="${y}" r="5" fill="var(--bg-panel)" stroke="hsl(${hue} 75% 55%)" stroke-width="2"/>`;}).join('')}</svg>`;
-}
-
-const shapeEditorContainer=document.getElementById('shape-editor-container');
-let shapeDrag=null;
-shapeEditorContainer.addEventListener('click',e=>{
-  if(!e.target.closest?.('[data-add-section]')&&!e.target.closest?.('[data-delete-section]'))return;
-  const stage=currentParams.design_pipeline.find(s=>s.mode==='flex_shape'&&s.enabled!==false);if(!stage)return;
-  const sections=stage.params.sections||(stage.params.sections=[]),h=getMaxH(),zNorm=Math.max(0,Math.min(1,seekerZ/(h||1)));
-  if(e.target.closest?.('[data-delete-section]')){
-    let index=0;for(let i=1;i<sections.length;i++)if(Math.abs(sections[i].z_norm-zNorm)<Math.abs(sections[index].z_norm-zNorm))index=i;
-    if(sections.length<=2||index===0||index===sections.length-1)return;
-    recordUndoSnapshot();sections.splice(index,1);renderShapeEditor(shapeEditorContainer,stage);requestMeshUpdate(false);return;
+function getClosestFlexSectionIndex(sections, zNorm) {
+  let idx = 0;
+  for (let i = 1; i < sections.length; i++) {
+    if (Math.abs(sections[i].z_norm - zNorm) < Math.abs(sections[idx].z_norm - zNorm)) idx = i;
   }
-  if(sections.some(s=>Math.abs(s.z_norm-zNorm)<0.005)){logDebug('Já existe uma seção próxima desta altura Z.','warn');return;}
-  const source=sections.length?sections.reduce((best,s)=>Math.abs(s.z_norm-zNorm)<Math.abs(best.z_norm-zNorm)?s:best,sections[0]):{points:Array.from({length:8},(_,i)=>({theta:i*Math.PI/4,r:85}))};
-  recordUndoSnapshot();sections.push({z_norm:zNorm,points:deepCopy(source.points||[])});sections.sort((a,b)=>a.z_norm-b.z_norm);renderShapeEditor(shapeEditorContainer,stage);requestMeshUpdate(false);
+  return idx;
+}
+
+function getStageTorsionRadAtZ(stage, z) {
+  if (!stage?.params?.torsion_profile) return 0;
+  const curve = CurveData.fromJSON(stage.params.torsion_profile, 'torsion_profile', getMaxH());
+  return (Number(curve.getInterpolator()(z)) || 0) * 2 * Math.PI;
+}
+
+const polarWrapper = document.getElementById('polar-2d-wrapper');
+const polarEditorContainer = document.getElementById('polar-svg-container');
+
+polarWrapper.addEventListener('change', e => {
+  const stage = currentParams.design_pipeline.find(s => s.mode === 'flex_shape' && s.enabled !== false);
+  if (!stage) return;
+  const selSec = e.target.closest?.('[data-select-section]');
+  if (selSec) {
+    const idx = Number(selSec.value);
+    const sec = stage.params.sections?.[idx];
+    if (!sec) return;
+    selectedFlexSectionIndex = idx;
+    const rPt = stage.params.radius_profile?.points?.[idx];
+    seekerZ = Number((rPt ? Number(rPt.z) : sec.z_norm * getMaxH()).toFixed(1));
+    renderEditor2D();
+    return;
+  }
+  const selPreset = e.target.closest?.('[data-select-shape-preset]');
+  if (selPreset) {
+    recordUndoSnapshot();
+    const h = getMaxH();
+    const zNorm = Math.max(0, Math.min(1, seekerZ / (h || 1)));
+    const secIdx = Number.isInteger(selectedFlexSectionIndex) ? selectedFlexSectionIndex : getClosestFlexSectionIndex(stage.params.sections || [], zNorm);
+    FlexShapeStage.applyShapePreset(stage.params, selPreset.value, { scope: 'section', sectionIndex: secIdx, zMax: h });
+    syncUI();
+    requestMeshUpdate(false);
+    return;
+  }
+  const inputSides = e.target.closest?.('[data-input-shape-sides]');
+  if (inputSides) {
+    recordUndoSnapshot();
+    const h = getMaxH();
+    const zNorm = Math.max(0, Math.min(1, seekerZ / (h || 1)));
+    const secIdx = Number.isInteger(selectedFlexSectionIndex) ? selectedFlexSectionIndex : getClosestFlexSectionIndex(stage.params.sections || [], zNorm);
+    FlexShapeStage.applyShapePreset(stage.params, stage.params.shape_preset || 'Polygon', {
+      scope: 'all',
+      sectionIndex: secIdx,
+      sides: Number(inputSides.value),
+      zMax: h
+    });
+    syncUI();
+    requestMeshUpdate(false);
+    return;
+  }
+  const selCpFocus = e.target.closest?.('[data-select-cp-focus]');
+  if (selCpFocus) {
+    const cpIdx = Number(selCpFocus.value);
+    activeStageId = stage.id;
+    if (cpIdx >= 0) {
+      selectedFlexCpIndex = cpIdx;
+      activeSpline = `cp_profile_${cpIdx}`;
+    } else {
+      selectedFlexCpIndex = null;
+      activeSpline = 'radius_profile';
+    }
+    syncUI();
+    return;
+  }
+  const tensionRange = e.target.closest?.('[data-input-tension]');
+  if (tensionRange) {
+    recordUndoSnapshot();
+    stage.params.section_tension = Number(tensionRange.value);
+    syncUI();
+    requestMeshUpdate(false);
+  }
 });
-shapeEditorContainer.addEventListener('dblclick',e=>{
-  if(e.target.closest?.('circle[data-shape-index]')||e.target.closest?.('[data-add-section],[data-delete-section]'))return;
-  const stage=currentParams.design_pipeline.find(s=>s.mode==='flex_shape'&&s.enabled!==false),svg=shapeEditorContainer.querySelector('svg');if(!stage||!svg)return;
-  const sections=stage.params.sections||[],h=getMaxH(),zNorm=seekerZ/(h||1);let si=0;
-  for(let i=1;i<sections.length;i++)if(Math.abs(sections[i].z_norm-zNorm)<Math.abs(sections[si].z_norm-zNorm))si=i;
-  const section=sections[si],rect=svg.getBoundingClientRect(),x=(e.clientX-rect.left)/rect.width*220,y=(e.clientY-rect.top)/rect.height*220,dx=x-110,dy=110-y;
-  if(Math.hypot(dx,dy)>92)return;
-  const maxR=Math.max(2,...section.points.map(p=>Number(p.r)||0))*1.15,point={theta:(Math.atan2(dy,dx)+2*Math.PI)%(2*Math.PI),r:Math.max(0.05,Math.min(20,Math.hypot(dx,dy)/86*maxR))};
-  recordUndoSnapshot();section.points.push(point);section.points.sort((a,b)=>a.theta-b.theta);renderShapeEditor(shapeEditorContainer,stage);
-  shapeEditorContainer.querySelector(`circle[data-shape-index="${section.points.indexOf(point)}"]`)?.focus();requestMeshUpdate(false);
+
+polarWrapper.addEventListener('input', e => {
+  const tensionRange = e.target.closest?.('[data-input-tension]');
+  if (!tensionRange) return;
+  const stage = currentParams.design_pipeline.find(s => s.mode === 'flex_shape' && s.enabled !== false);
+  if (!stage) return;
+  stage.params.section_tension = Number(tensionRange.value);
+  renderEditor2D();
+  requestMeshUpdate(true);
 });
-shapeEditorContainer.addEventListener('contextmenu',e=>{
-  const handle=e.target.closest?.('circle[data-shape-index]');if(!handle)return;
-  e.preventDefault();const stage=currentParams.design_pipeline.find(s=>s.mode==='flex_shape'&&s.enabled!==false);if(!stage)return;
-  const sections=stage.params.sections||[],h=getMaxH(),zNorm=seekerZ/(h||1);let si=0;
-  for(let i=1;i<sections.length;i++)if(Math.abs(sections[i].z_norm-zNorm)<Math.abs(sections[si].z_norm-zNorm))si=i;
-  const points=sections[si]?.points,index=Number(handle.getAttribute('data-shape-index'));
-  if(!points||points.length<=3)return;
+
+polarWrapper.addEventListener('click', e => {
+  const symBtn = e.target.closest?.('[data-toggle-symmetry]');
+  const presetSecBtn = e.target.closest?.('[data-apply-preset-sec]');
+  const presetAllBtn = e.target.closest?.('[data-apply-preset-all]');
+  const addBtn = e.target.closest?.('[data-add-section]');
+  const delBtn = e.target.closest?.('[data-delete-section]');
+  const rstBtn = e.target.closest?.('[data-reset-section]');
+  if (!symBtn && !presetSecBtn && !presetAllBtn && !addBtn && !delBtn && !rstBtn) return;
+
+  const stage = currentParams.design_pipeline.find(s => s.mode === 'flex_shape' && s.enabled !== false);
+  if (!stage) return;
+  const h = getMaxH();
+  FlexShapeStage.syncSectionsWithRadiusProfile(stage.params, h);
+  const sections = stage.params.sections;
+  const rPts = stage.params.radius_profile.points;
+  const zNorm = Math.max(0, Math.min(1, seekerZ / (h || 1)));
+  const index = (Number.isInteger(selectedFlexSectionIndex) && selectedFlexSectionIndex >= 0 && selectedFlexSectionIndex < sections.length)
+    ? selectedFlexSectionIndex
+    : getClosestFlexSectionIndex(sections, zNorm);
+
+  if (symBtn) {
+    recordUndoSnapshot();
+    stage.params.symmetry_mode = !(stage.params.symmetry_mode !== false);
+    syncUI();
+    return;
+  }
+  if (presetSecBtn || presetAllBtn) {
+    recordUndoSnapshot();
+    const presetSel = polarWrapper.querySelector('[data-select-shape-preset]');
+    const sidesInp = polarWrapper.querySelector('[data-input-shape-sides]');
+    const presetName = presetSel ? presetSel.value : (stage.params.shape_preset || 'Circle');
+    const sidesVal = sidesInp ? Number(sidesInp.value) : (stage.params.shape_sides || 6);
+    FlexShapeStage.applyShapePreset(stage.params, presetName, {
+      scope: presetAllBtn ? 'all' : 'section',
+      sectionIndex: index,
+      sides: sidesVal,
+      zMax: h
+    });
+    syncUI();
+    requestMeshUpdate(false);
+    return;
+  }
+  if (rstBtn) {
+    recordUndoSnapshot();
+    const nodeR = Math.max(1, Number(rPts[index]?.value) || Number(sections[index]?.base_r) || 60);
+    const cpCount = sections[index].points?.length || 8;
+    sections[index].points = Array.from({ length: cpCount }, (_, i) => ({
+      theta: Number(((2 * Math.PI * i) / cpCount).toFixed(6)),
+      r: Number(nodeR.toFixed(3))
+    }));
+    sections[index].base_r = Number(nodeR.toFixed(3));
+    renderEditor2D();
+    requestMeshUpdate(false);
+    return;
+  }
+  if (delBtn) {
+    if (sections.length <= 2 || index === 0 || index === sections.length - 1) return;
+    recordUndoSnapshot();
+    sections.splice(index, 1);
+    if (rPts.length > index) rPts.splice(index, 1);
+    const nextIdx = Math.min(index, sections.length - 1);
+    selectedFlexSectionIndex = nextIdx;
+    seekerZ = Number((rPts[nextIdx]?.z ?? sections[nextIdx].z_norm * h).toFixed(1));
+    renderEditor2D();
+    requestMeshUpdate(false);
+    return;
+  }
+  if (sections.some(s => Math.abs(s.z_norm * h - seekerZ) < 0.5)) {
+    logDebug('Já existe uma seção próxima desta altura Z.', 'warn');
+    return;
+  }
+  recordUndoSnapshot();
+  const insertedIdx = FlexShapeStage.insertSectionAndNodeAtZ(stage.params, seekerZ, null, h);
+  if (insertedIdx < 0) {
+    logDebug('Já existe uma seção próxima desta altura Z.', 'warn');
+    return;
+  }
+  selectedFlexSectionIndex = insertedIdx;
+  renderEditor2D();
+  requestMeshUpdate(false);
+});
+
+polarEditorContainer.addEventListener('pointerover', e => {
+  const handle = e.target.closest?.('circle[data-shape-index]');
+  if (!handle) return;
+  const gid = handle.getAttribute('data-group-id');
+  if (!gid || gid === 'g_none') {
+    handle.setAttribute('r', '7.5');
+    handle.style.filter = 'drop-shadow(0 0 4px #38bdf8)';
+    return;
+  }
+  polarEditorContainer.querySelectorAll(`circle[data-group-id="${gid}"]`).forEach(el => {
+    el.setAttribute('r', '7.5');
+    el.style.filter = 'drop-shadow(0 0 4px #ffff66)';
+  });
+});
+
+polarEditorContainer.addEventListener('pointerout', e => {
+  const handle = e.target.closest?.('circle[data-shape-index]');
+  if (!handle) return;
+  polarEditorContainer.querySelectorAll('circle[data-shape-index]').forEach(el => {
+    const idx = Number(el.getAttribute('data-shape-index'));
+    el.setAttribute('r', idx === selectedFlexCpIndex ? '7' : '6');
+    el.style.filter = '';
+  });
+});
+
+polarEditorContainer.addEventListener('dblclick', e => {
+  if (e.target.closest?.('circle[data-shape-index]')) return;
+  const stage = currentParams.design_pipeline.find(s => s.mode === 'flex_shape' && s.enabled !== false);
+  const svg = polarEditorContainer.querySelector('svg');
+  if (!stage || !svg || !polarEditorMapping) return;
+  const { cx, cy, plotR, maxR, sectionIndex, torsionPhi } = polarEditorMapping;
+  const ptSvg = getSvgViewPoint(svg, e.clientX, e.clientY);
+  const dx = ptSvg.x - cx, dy = cy - ptSvg.y;
+  if (Math.hypot(dx, dy) > plotR + 14) return;
+  const thetaRaw = Math.atan2(dy, dx);
+  const thetaLogical = ((thetaRaw - torsionPhi) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+  const rLogical = Math.max(1.0, Math.min(500.0, Number(((Math.hypot(dx, dy) / plotR) * maxR).toFixed(3))));
+  recordUndoSnapshot();
+  const insertedCpIdx = FlexShapeStage.insertCpAcrossAllSections(stage.params, thetaLogical, sectionIndex, rLogical, getMaxH());
+  if (insertedCpIdx < 0) return;
+  selectedFlexCpIndex = insertedCpIdx;
+  activeStageId = stage.id;
+  activeSpline = `cp_profile_${insertedCpIdx}`;
+  renderEditor2D();
+  polarEditorContainer.querySelector(`circle[data-shape-index="${insertedCpIdx}"]`)?.focus();
+  requestMeshUpdate(false);
+});
+
+polarEditorContainer.addEventListener('contextmenu', e => {
+  const handle = e.target.closest?.('circle[data-shape-index]');
+  if (!handle) return;
+  e.preventDefault();
+  const stage = currentParams.design_pipeline.find(s => s.mode === 'flex_shape' && s.enabled !== false);
+  if (!stage || !polarEditorMapping) return;
+  const index = Number(handle.getAttribute('data-shape-index'));
+  if (FlexShapeStage.getCpCount(stage.params) <= 3) return;
   openCustomDialog({
     title: appT('Excluir nó'),
     message: appT('Excluir este ponto do perfil polar?'),
     onConfirm: () => {
-      recordUndoSnapshot();points.splice(index,1);renderShapeEditor(shapeEditorContainer,stage);requestMeshUpdate(false);
+      recordUndoSnapshot();
+      FlexShapeStage.removeCpAcrossAllSections(stage.params, index, getMaxH());
+      if (selectedFlexCpIndex === index) {
+        selectedFlexCpIndex = null;
+        if (parseCpSplineIndex(activeSpline) >= 0) activeSpline = 'radius_profile';
+      } else if (selectedFlexCpIndex !== null && selectedFlexCpIndex > index) {
+        selectedFlexCpIndex--;
+        if (parseCpSplineIndex(activeSpline) >= 0) activeSpline = `cp_profile_${selectedFlexCpIndex}`;
+      }
+      renderEditor2D();
+      requestMeshUpdate(false);
     }
   });
 });
-shapeEditorContainer.addEventListener('pointerdown',e=>{
-  const handle=e.target.closest?.('circle[data-shape-index]');if(!handle||e.button!==0)return;
-  const stage=currentParams.design_pipeline.find(s=>s.mode==='flex_shape'&&s.enabled!==false);if(!stage)return;
-  const svg=shapeEditorContainer.querySelector('svg');if(!svg)return;
-  const sections=stage.params.sections||[],h=getMaxH(),zNorm=seekerZ/(h||1);
-  let si=0;for(let i=1;i<sections.length;i++)if(Math.abs(sections[i].z_norm-zNorm)<Math.abs(sections[si].z_norm-zNorm))si=i;
-  const index=Number(handle.getAttribute('data-shape-index'));if(!sections[si]?.points?.[index])return;
-  const maxR=Math.max(2,...sections[si].points.map(p=>Number(p.r)||0))*1.15;
-  const point=sections[si].points[index],originalPoints=new Map(sections[si].points.map(p=>[p,{theta:Number(p.theta),r:Number(p.r)}]));
-  recordUndoSnapshot();shapeDrag={pointerId:e.pointerId,stageId:stage.id,sectionIndex:si,index,maxR,point,originalPoints};shapeEditorContainer.setPointerCapture(e.pointerId);e.preventDefault();
+
+polarEditorContainer.addEventListener('pointerdown', e => {
+  const handle = e.target.closest?.('circle[data-shape-index]');
+  if (!handle || e.button !== 0 || !polarEditorMapping) return;
+  const stage = currentParams.design_pipeline.find(s => s.mode === 'flex_shape' && s.enabled !== false);
+  if (!stage) return;
+  const si = polarEditorMapping.sectionIndex;
+  const section = stage.params.sections?.[si];
+  const index = Number(handle.getAttribute('data-shape-index'));
+  const groupId = handle.getAttribute('data-group-id') || 'g_none';
+  if (!section?.points?.[index]) return;
+  selectedFlexCpIndex = index;
+  activeStageId = stage.id;
+  activeSpline = `cp_profile_${index}`;
+  const rPt = stage.params.radius_profile?.points?.[si];
+  seekerZ = Number((rPt ? Number(rPt.z) : section.z_norm * getMaxH()).toFixed(1));
+  const basePointsSnapshot = section.points.map(p => ({ theta: Number(p.theta), r: Number(p.r) }));
+  const baseNodeRSnapshot = Number(rPt?.value) || Number(section.base_r) || FlexShapeStage.computeSectionMeanRadius(section, 60);
+  recordUndoSnapshot();
+  shapeDrag = {
+    pointerId: e.pointerId,
+    stageId: stage.id,
+    sectionIndex: si,
+    index,
+    groupId,
+    maxR: polarEditorMapping.maxR,
+    basePointsSnapshot,
+    baseNodeRSnapshot
+  };
+  polarEditorContainer.setPointerCapture(e.pointerId);
+  if ([mainViewId, smallViewId].includes('profile')) renderProfileEditor2D();
+  populateSplineSelect(stage);
+  updateSeekerZLabel();
+  e.preventDefault();
 });
-shapeEditorContainer.addEventListener('keydown',e=>{
-  const handle=e.target.closest?.('circle[data-shape-index]');if(!handle||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;
-  const stage=currentParams.design_pipeline.find(s=>s.mode==='flex_shape'&&s.enabled!==false);if(!stage)return;
-  const sections=stage.params.sections||[],h=getMaxH(),zNorm=seekerZ/(h||1);let si=0;
-  for(let i=1;i<sections.length;i++)if(Math.abs(sections[i].z_norm-zNorm)<Math.abs(sections[si].z_norm-zNorm))si=i;
-  const section=sections[si],index=Number(handle.getAttribute('data-shape-index')),point=section?.points?.[index];if(!point)return;
-  recordUndoSnapshot();e.preventDefault();const step=e.shiftKey?0.1:1;
-  if(e.key==='ArrowUp')point.r=Math.min(20,point.r+step);
-  if(e.key==='ArrowDown')point.r=Math.max(0.05,point.r-step);
-  if(e.key==='ArrowRight')point.theta=(point.theta+Math.PI/36)%(2*Math.PI);
-  if(e.key==='ArrowLeft')point.theta=(point.theta+2*Math.PI-Math.PI/36)%(2*Math.PI);
-  section.points.sort((a,b)=>a.theta-b.theta);const nextIndex=section.points.indexOf(point);
-  renderShapeEditor(shapeEditorContainer,stage);shapeEditorContainer.querySelector(`circle[data-shape-index="${nextIndex}"]`)?.focus();requestMeshUpdate(false);
+
+polarEditorContainer.addEventListener('keydown', e => {
+  const handle = e.target.closest?.('circle[data-shape-index]');
+  if (!handle || !['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key) || !polarEditorMapping) return;
+  const stage = currentParams.design_pipeline.find(s => s.mode === 'flex_shape' && s.enabled !== false);
+  if (!stage) return;
+  const si = polarEditorMapping.sectionIndex;
+  const section = stage.params.sections?.[si];
+  const index = Number(handle.getAttribute('data-shape-index'));
+  const point = section?.points?.[index];
+  const groupId = handle.getAttribute('data-group-id') || 'g_none';
+  if (!point) return;
+  recordUndoSnapshot();
+  e.preventDefault();
+  const step = e.shiftKey ? 0.5 : 2.0;
+  let nextR = point.r, nextTheta = point.theta, allowAngle = false;
+  if (e.key === 'ArrowUp') nextR = Math.min(500, point.r + step);
+  if (e.key === 'ArrowDown') nextR = Math.max(1.0, point.r - step);
+  if (e.key === 'ArrowRight') { nextTheta = (point.theta + Math.PI / 36) % (2 * Math.PI); allowAngle = true; }
+  if (e.key === 'ArrowLeft') { nextTheta = (point.theta + 2 * Math.PI - Math.PI / 36) % (2 * Math.PI); allowAngle = true; }
+  FlexShapeStage.apply2dHandleMove(section, index, groupId, nextTheta, nextR, stage.params, null, allowAngle, si);
+  renderEditor2D();
+  polarEditorContainer.querySelector(`circle[data-shape-index="${index}"]`)?.focus();
+  requestMeshUpdate(false);
 });
-shapeEditorContainer.addEventListener('pointermove',e=>{
-  if(!shapeDrag||e.pointerId!==shapeDrag.pointerId)return;
-  const stage=currentParams.design_pipeline.find(s=>s.id===shapeDrag.stageId),svg=shapeEditorContainer.querySelector('svg');if(!stage||!svg)return;
-  const rect=svg.getBoundingClientRect(),x=((e.clientX-rect.left)/rect.width)*220-110,y=110-((e.clientY-rect.top)/rect.height)*220;
-  const section=stage.params.sections[shapeDrag.sectionIndex],point=shapeDrag.point,original=shapeDrag.originalPoints.get(point);
-  const targetR=Math.max(0.05,Math.min(20,Math.hypot(x,y)/86*shapeDrag.maxR)),deltaR=targetR-original.r;
-  point.theta=(Math.atan2(y,x)+2*Math.PI)%(2*Math.PI);point.r=targetR;
-  for(const [neighbor,base] of shapeDrag.originalPoints){
-    if(neighbor===point)continue;
-    const raw=Math.abs(base.theta-original.theta),dist=Math.min(raw,2*Math.PI-raw),influence=Math.exp(-0.5*(dist/(Math.PI/6))**2);
-    neighbor.r=Math.max(1,Math.min(20,base.r+deltaR*influence));
-  }
-  if(stage.params.symmetry_enabled){
-    for(const [neighbor,base] of shapeDrag.originalPoints)if(Math.abs(base.r-original.r)<=0.5)neighbor.r=Math.max(1,Math.min(20,base.r+deltaR));
-  }
-  section.points.sort((a,b)=>a.theta-b.theta);shapeDrag.index=section.points.indexOf(point);
-  renderShapeEditor(shapeEditorContainer,stage);requestMeshUpdate(true);
+
+polarEditorContainer.addEventListener('pointermove', e => {
+  if (!shapeDrag || e.pointerId !== shapeDrag.pointerId) return;
+  const stage = currentParams.design_pipeline.find(s => s.id === shapeDrag.stageId);
+  const svg = polarEditorContainer.querySelector('svg');
+  if (!stage || !svg) return;
+  const ptSvg = getSvgViewPoint(svg, e.clientX, e.clientY);
+  const cx = 150, cy = 150, plotR = 114;
+  const dx = ptSvg.x - cx, dy = cy - ptSvg.y;
+  const section = stage.params.sections[shapeDrag.sectionIndex];
+  const rPt = stage.params.radius_profile?.points?.[shapeDrag.sectionIndex];
+  const secZ = rPt ? Number(rPt.z) : section.z_norm * getMaxH();
+  const torsionPhi = getStageTorsionRadAtZ(stage, secZ);
+  const targetR = Math.max(1.0, Math.min(500.0, (Math.hypot(dx, dy) / plotR) * shapeDrag.maxR));
+  const rawTheta = Math.atan2(dy, dx);
+  const logicalTheta = ((rawTheta - torsionPhi) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+  FlexShapeStage.apply2dHandleMove(
+    section,
+    shapeDrag.index,
+    shapeDrag.groupId,
+    logicalTheta,
+    targetR,
+    stage.params,
+    shapeDrag.basePointsSnapshot,
+    e.altKey,
+    shapeDrag.sectionIndex,
+    shapeDrag.baseNodeRSnapshot
+  );
+  renderEditor2D();
+  requestMeshUpdate(true);
 });
-function finishShapeDrag(e){if(!shapeDrag||(e&&e.pointerId!==shapeDrag.pointerId))return;const id=shapeDrag.pointerId;shapeDrag=null;if(shapeEditorContainer.hasPointerCapture(id))shapeEditorContainer.releasePointerCapture(id);requestMeshUpdate(false);}
-shapeEditorContainer.addEventListener('pointerup',finishShapeDrag);
-shapeEditorContainer.addEventListener('pointercancel',finishShapeDrag);
-shapeEditorContainer.addEventListener('lostpointercapture',finishShapeDrag);
+
+function finishShapeDrag(e) {
+  if (!shapeDrag || (e && e.pointerId !== shapeDrag.pointerId)) return;
+  const id = shapeDrag.pointerId;
+  shapeDrag = null;
+  if (polarEditorContainer.hasPointerCapture(id)) polarEditorContainer.releasePointerCapture(id);
+  renderEditor2D();
+  requestMeshUpdate(false);
+}
+polarEditorContainer.addEventListener('pointerup', finishShapeDrag);
+polarEditorContainer.addEventListener('pointercancel', finishShapeDrag);
+polarEditorContainer.addEventListener('lostpointercapture', finishShapeDrag);
 
 const profileEditorContainer = document.getElementById('profile-svg-container');
 profileEditorContainer.addEventListener('pointerdown', e => {
@@ -3328,13 +4829,37 @@ profileEditorContainer.addEventListener('pointerdown', e => {
 
   if (pointTarget) {
     const st = currentParams.design_pipeline.find(s => s.id === activeStageId) || currentParams.design_pipeline[0];
-    const points = st?.params?.[activeSpline]?.points;
+    const info = getEffectiveSplineInfo(st);
+    const isCpSpline = info.isCpSpline;
+    const isFlexRadius = st?.mode === 'flex_shape' && (activeSpline === 'radius_profile' || isCpSpline);
+    if (isFlexRadius) FlexShapeStage.syncSectionsWithRadiusProfile(st.params, getMaxH());
+    const points = isCpSpline ? info.data.points : st?.params?.[activeSpline]?.points;
     const index = Number(pointTarget.getAttribute('data-point-index'));
     if (!points || !Number.isInteger(index) || !points[index]) return;
     recordUndoSnapshot();
-    profileDrag = { pointerId: e.pointerId, type: 'point', index, points, mapping:profileEditorMapping, valueAxis:profileEditorMapping.valueAxis };
+    if (isFlexRadius) selectedFlexSectionIndex = index;
+    profileDrag = {
+      pointerId: e.pointerId,
+      type: 'point',
+      stageId: st.id,
+      spline: activeSpline,
+      isCpSpline,
+      cpIndex: info.cpIndex,
+      isFlexRadius,
+      index,
+      points,
+      basePointSnapshot: { ...points[index] },
+      baseNodeValSnapshot: st?.params?.radius_profile?.points?.[index]?.value,
+      baseSectionSnapshot: isFlexRadius && st.params.sections?.[index] ? deepCopy(st.params.sections[index]) : null,
+      mapping: profileEditorMapping,
+      valueAxis: profileEditorMapping.valueAxis
+    };
+    if (isFlexRadius && [mainViewId, smallViewId].includes('polar')) {
+      renderPolarEditor2D();
+    }
   } else if (Math.abs(y - profileEditorMapping.z2y(seekerZ)) < 14) {
-    profileDrag = { pointerId: e.pointerId, type: 'seeker', mapping:profileEditorMapping };
+    selectedFlexSectionIndex = null;
+    profileDrag = { pointerId: e.pointerId, type: 'seeker', mapping: profileEditorMapping };
   } else {
     return;
   }
@@ -3343,40 +4868,90 @@ profileEditorContainer.addEventListener('pointerdown', e => {
   profileEditorContainer.setPointerCapture(e.pointerId);
 });
 
-profileEditorContainer.addEventListener('keydown',e=>{
-  const pointTarget=e.target.closest?.('circle[data-point-index]');if(!pointTarget)return;
-  if(e.key==='ContextMenu'||(e.shiftKey&&e.key==='F10')){
-    e.preventDefault();const rect=pointTarget.getBoundingClientRect();
-    showProfileContextMenu({clientX:rect.left,clientY:rect.bottom},Number(pointTarget.getAttribute('data-point-index')));return;
+profileEditorContainer.addEventListener('keydown', e => {
+  const pointTarget = e.target.closest?.('circle[data-point-index]');
+  if (!pointTarget) return;
+  if (e.key === 'ContextMenu' || (e.shiftKey && e.key === 'F10')) {
+    e.preventDefault();
+    const rect = pointTarget.getBoundingClientRect();
+    showProfileContextMenu({ clientX: rect.left, clientY: rect.bottom }, Number(pointTarget.getAttribute('data-point-index')));
+    return;
   }
-  if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;
-  const stage=currentParams.design_pipeline.find(s=>s.id===activeStageId)||currentParams.design_pipeline[0];
-  const points=stage?.params?.[activeSpline]?.points,index=Number(pointTarget.getAttribute('data-point-index'));
-  if(!points?.[index])return;
-  const valueStep=Math.abs(profileEditorMapping.x2v(PROFILE_PLOT.left + 1)-profileEditorMapping.x2v(PROFILE_PLOT.left))*(e.shiftKey?10:1);
-  const zStep=getMaxH()/295*(e.shiftKey?10:1);recordUndoSnapshot();e.preventDefault();
-  if(e.key==='ArrowUp')points[index].value=Number((points[index].value+valueStep).toFixed(3));
-  if(e.key==='ArrowDown')points[index].value=Number((points[index].value-valueStep).toFixed(3));
-  if(e.key==='ArrowRight'&&index>0&&index<points.length-1)points[index].z=Number(Math.min(points[index+1].z-0.5,points[index].z+zStep).toFixed(2));
-  if(e.key==='ArrowLeft'&&index>0&&index<points.length-1)points[index].z=Number(Math.max(points[index-1].z+0.5,points[index].z-zStep).toFixed(2));
-  renderEditor2D();profileEditorContainer.querySelector(`circle[data-point-index="${index}"]`)?.focus();requestMeshUpdate(false);
+  if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+  const stage = currentParams.design_pipeline.find(s => s.id === activeStageId) || currentParams.design_pipeline[0];
+  const info = getEffectiveSplineInfo(stage);
+  const isCpSpline = info.isCpSpline;
+  const isFlexRadius = stage?.mode === 'flex_shape' && (activeSpline === 'radius_profile' || isCpSpline);
+  if (isFlexRadius) FlexShapeStage.syncSectionsWithRadiusProfile(stage.params, getMaxH());
+  const points = isCpSpline ? info.data.points : stage?.params?.[activeSpline]?.points;
+  const index = Number(pointTarget.getAttribute('data-point-index'));
+  if (!points?.[index]) return;
+  const oldVal = points[index].value;
+  const valueStep = Math.abs(profileEditorMapping.x2v(PROFILE_PLOT.left + 1) - profileEditorMapping.x2v(PROFILE_PLOT.left)) * (e.shiftKey ? 10 : 1);
+  const zStep = getMaxH() / 295 * (e.shiftKey ? 10 : 1);
+  recordUndoSnapshot();
+  e.preventDefault();
+  let nextVal = points[index].value;
+  let nextZ = points[index].z;
+  if (e.key === 'ArrowUp') nextVal = Number((nextVal + valueStep).toFixed(3));
+  if (e.key === 'ArrowDown') nextVal = Number((isFlexRadius ? Math.max(1.0, nextVal - valueStep) : nextVal - valueStep).toFixed(3));
+  if (e.key === 'ArrowRight' && index > 0 && index < points.length - 1) nextZ = Number(Math.min(points[index + 1].z - 0.5, nextZ + zStep).toFixed(2));
+  if (e.key === 'ArrowLeft' && index > 0 && index < points.length - 1) nextZ = Number(Math.max(points[index - 1].z + 0.5, nextZ - zStep).toFixed(2));
+  if (isCpSpline) {
+    FlexShapeStage.syncSectionFromCpNodeEdit(stage.params, index, info.cpIndex, nextVal, nextZ, getMaxH());
+    selectedFlexSectionIndex = index;
+  } else {
+    points[index].value = nextVal;
+    points[index].z = nextZ;
+    if (isFlexRadius) {
+      FlexShapeStage.syncSectionFromNodeEdit(stage.params, index, nextVal, nextZ, getMaxH(), null, oldVal);
+      selectedFlexSectionIndex = index;
+    }
+  }
+  renderEditor2D();
+  profileEditorContainer.querySelector(`circle[data-point-index="${index}"]`)?.focus();
+  requestMeshUpdate(false);
 });
 
 profileEditorContainer.addEventListener('dblclick', e => {
   if (!profileEditorMapping || e.target.closest?.('circle[data-point-index]')) return;
   const svg = profileEditorContainer.querySelector('svg');
   const st = currentParams.design_pipeline.find(s => s.id === activeStageId) || currentParams.design_pipeline[0];
-  const points = st?.params?.[activeSpline]?.points;
+  const info = getEffectiveSplineInfo(st);
+  const points = info.data?.points;
   if (!svg || !Array.isArray(points)) return;
   const rect = svg.getBoundingClientRect();
   if (!rect.width || !rect.height) return;
   const { x, y } = getSvgViewPoint(svg, e.clientX, e.clientY);
   if (x < PROFILE_PLOT.left || x > PROFILE_PLOT.right || y < PROFILE_PLOT.top || y > PROFILE_PLOT.bottom) return;
-  const z = profileEditorMapping.y2z(y), value = profileEditorMapping.x2v(x);
+  const maxH = getMaxH();
+  const z = Math.max(0, Math.min(maxH, Number(seekerZ)));
+  const value = Number(info.curve.getInterpolator()(z));
+  if (!Number.isFinite(value)) return;
+  if (st.mode === 'flex_shape' && (activeSpline === 'radius_profile' || info.isCpSpline)) {
+    const ordered = points.slice().sort((a, b) => a.z - b.z);
+    if (ordered.some(p => Math.abs(Number(p.z) - z) < 0.5)) {
+      logDebug('Já existe uma seção próxima desta altura Z.', 'warn');
+      return;
+    }
+    recordUndoSnapshot();
+    const inserted = FlexShapeStage.insertSectionAndNodeAtZ(st.params, z, info.isCpSpline ? null : Math.max(1.0, value), maxH);
+    if (inserted < 0) return;
+    if (info.isCpSpline) {
+      FlexShapeStage.syncSectionFromCpNodeEdit(st.params, inserted, info.cpIndex, Math.max(1.0, value), z, maxH);
+    }
+    selectedFlexSectionIndex = inserted;
+    renderEditor2D();
+    requestMeshUpdate(false);
+    return;
+  }
   const ordered = points.slice().sort((a, b) => a.z - b.z);
   const at = ordered.findIndex(p => p.z > z);
   const insertAt = at < 0 ? ordered.length : at;
-  if (z - (ordered[insertAt - 1]?.z ?? -Infinity) < 0.5 || (ordered[insertAt]?.z ?? Infinity) - z < 0.5) return;
+  if (z - (ordered[insertAt - 1]?.z ?? -Infinity) < 0.5 || (ordered[insertAt]?.z ?? Infinity) - z < 0.5) {
+    logDebug('Já existe uma seção próxima desta altura Z.', 'warn');
+    return;
+  }
   recordUndoSnapshot();
   points.splice(0, points.length, ...ordered.slice(0, insertAt), { z: Number(z.toFixed(2)), value: Number(value.toFixed(3)) }, ...ordered.slice(insertAt));
   renderEditor2D();
@@ -3419,7 +4994,7 @@ profileEditorContainer.addEventListener('pointermove', e => {
     return;
   }
   if (!profileDrag || e.pointerId !== profileDrag.pointerId || !profileEditorMapping) return;
-  const mapping=profileDrag.mapping;
+  const mapping = profileDrag.mapping;
   const svg = profileEditorContainer.querySelector('svg');
   if (!svg) return;
   const rect = svg.getBoundingClientRect();
@@ -3429,16 +5004,42 @@ profileEditorContainer.addEventListener('pointermove', e => {
   const y = Math.max(PROFILE_PLOT.top, Math.min(PROFILE_PLOT.bottom, point.y));
 
   if (profileDrag.type === 'seeker') {
+    selectedFlexSectionIndex = null;
     seekerZ = mapping.y2z(y);
     viewport.zRing.position.z = seekerZ;
     renderEditor2D();
     return;
   }
 
-  const { points, index } = profileDrag;
-  points[index].value = Number(mapping.x2v(x).toFixed(2));
+  const { index, isCpSpline, cpIndex, isFlexRadius, stageId, spline, baseSectionSnapshot, basePointSnapshot, baseNodeValSnapshot } = profileDrag;
+  const st = currentParams.design_pipeline.find(s => s.id === stageId) || currentParams.design_pipeline[0];
+  if (!st) return;
+  const nextVal = Number(mapping.x2v(x).toFixed(2));
+  const clampedVal = isFlexRadius ? Math.max(1.0, nextVal) : nextVal;
+
+  if (isCpSpline) {
+    const rPts = st.params?.radius_profile?.points;
+    if (!rPts || !rPts[index]) return;
+    let nextZ = rPts[index].z;
+    if (index > 0 && index < rPts.length - 1) {
+      nextZ = Number(Math.max(rPts[index - 1].z + 0.5, Math.min(rPts[index + 1].z - 0.5, mapping.y2z(y))).toFixed(1));
+    }
+    FlexShapeStage.syncSectionFromCpNodeEdit(st.params, index, cpIndex, clampedVal, nextZ, getMaxH(), baseSectionSnapshot, baseNodeValSnapshot);
+    selectedFlexSectionIndex = index;
+    renderEditor2D();
+    requestMeshUpdate(true);
+    return;
+  }
+
+  const points = st?.params?.[spline]?.points || profileDrag.points;
+  if (!points || !points[index]) return;
+  points[index].value = clampedVal;
   if (index > 0 && index < points.length - 1) {
     points[index].z = Number(Math.max(points[index - 1].z + 0.5, Math.min(points[index + 1].z - 0.5, mapping.y2z(y))).toFixed(1));
+  }
+  if (isFlexRadius) {
+    FlexShapeStage.syncSectionFromNodeEdit(st.params, index, points[index].value, points[index].z, getMaxH(), baseSectionSnapshot, basePointSnapshot?.value);
+    selectedFlexSectionIndex = index;
   }
   renderEditor2D();
   requestMeshUpdate(true);
@@ -3474,23 +5075,35 @@ function makeSlider(container, label, min, max, step, val, onChange) {
   rng.setAttribute('aria-label',`${label}, controle deslizante`);
   num.setAttribute('aria-label',`${label}, valor numérico`);
   let beforeEdit = null;
-  const captureBeforeEdit = () => { if (beforeEdit === null) beforeEdit = JSON.stringify(currentParams); };
+  let beforeEditBounds = null;
+  const captureBeforeEdit = () => {
+    div.dataset.editing = 'true';
+    if (beforeEdit === null) {
+      beforeEdit = JSON.stringify(currentParams);
+      beforeEditBounds = viewport?.lastBounds ? { ...viewport.lastBounds } : { maxSpanXY: getCurrentMaxWidth(), heightZ: getMaxH() };
+    }
+  };
   const commitEdit = () => {
+    delete div.dataset.editing;
     if (beforeEdit !== null && beforeEdit !== JSON.stringify(currentParams)) recordUndoSnapshot(beforeEdit);
     beforeEdit = null;
+    beforeEditBounds = null;
   };
   rng.addEventListener('pointerdown', captureBeforeEdit);
   rng.addEventListener('keydown', captureBeforeEdit);
-  rng.addEventListener('input', () => { captureBeforeEdit(); num.value = rng.value; onChange(parseFloat(rng.value), true, beforeEdit); });
-  rng.addEventListener('change', () => { captureBeforeEdit(); onChange(parseFloat(rng.value), false, beforeEdit); commitEdit(); });
+  rng.addEventListener('input', () => { captureBeforeEdit(); num.value = rng.value; onChange(parseFloat(rng.value), true, beforeEdit, beforeEditBounds); });
+  rng.addEventListener('change', () => { captureBeforeEdit(); onChange(parseFloat(rng.value), false, beforeEdit, beforeEditBounds); commitEdit(); });
+  rng.addEventListener('pointerup', () => { delete div.dataset.editing; });
   num.addEventListener('focus', captureBeforeEdit);
+  num.addEventListener('blur', () => { if (beforeEdit === null) delete div.dataset.editing; });
   num.addEventListener('keydown', captureBeforeEdit);
   num.addEventListener('change', () => {
     captureBeforeEdit();const parsed=Number(num.value);
     if(!Number.isFinite(parsed)){num.value=rng.value;commitEdit();return;}
-    const clamped=Math.max(Number(min),Math.min(Number(max),parsed));num.value=String(clamped);rng.value=String(clamped);onChange(clamped,false,beforeEdit);commitEdit();
+    const clamped=Math.max(Number(min),Math.min(Number(max),parsed));num.value=String(clamped);rng.value=String(clamped);onChange(clamped,false,beforeEdit,beforeEditBounds);commitEdit();
   });
   container.appendChild(div);
+  return div;
 }
 
 function makeSelect(container, label, options, value, onChange) {
@@ -3515,7 +5128,9 @@ function buildStageControls(stage,container) {
       const current=field.type==='profile-float'?(stage.params[key]?.points?.[0]?.value??field.default):value;
       makeSlider(container,label,field.min,field.max,field.step,current,(next,lod)=>{
         if(field.type==='profile-float')makeFlatProfile(stage,key,next);else stage.params[key]=field.type==='int'?Math.round(next):next;
-        applySideEffects();requestMeshUpdate(lod);
+        applySideEffects();
+        if(field.refreshShape)renderEditor2D();
+        requestMeshUpdate(lod);
       });
     }else if(field.type==='enum'){
       makeSelect(container,label,field.options||[],value,selected=>{
@@ -3529,7 +5144,7 @@ function buildStageControls(stage,container) {
       input.addEventListener('change',event=>{
         recordUndoSnapshot();stage.params[key]=event.target.checked;applySideEffects();
         if(field.refreshUI)syncUI();
-        if(field.refreshShape){const shapeContainer=document.getElementById('shape-editor-container');if(shapeContainer)renderShapeEditor(shapeContainer,stage);}
+        if(field.refreshShape)renderEditor2D();
         requestMeshUpdate(false);
       });wrapper.append(input,document.createTextNode(` ${label}`));container.appendChild(wrapper);
     }
@@ -3636,29 +5251,24 @@ function syncUI() {
   });
 
   const st = currentParams.design_pipeline.find(s => s.id === activeStageId) || currentParams.design_pipeline[0];
-  const sel = document.getElementById('select-spline');
-  sel.innerHTML = '';
-  const keys = Object.keys(st.params).filter(k => k.endsWith('_profile'));
-  keys.forEach(k => {
-    const o = document.createElement('option'); o.value = k; o.textContent = getSplineDisplayName(k); sel.appendChild(o);
-  });
-  if (!keys.includes(activeSpline)) activeSpline = keys[0];
-  sel.value = activeSpline;
-  document.getElementById('select-spline-kind').value = st.params[activeSpline]?.kind || 'pchip';
+  populateSplineSelect(st);
 
   const dyn = document.getElementById('controls-stage-dynamic');
   dyn.innerHTML = '';
   buildStageControls(st,dyn);
-  if(st.mode==='flex_shape'){
-    const shapeContainer=document.getElementById('shape-editor-container');
-    if(shapeContainer)renderShapeEditor(shapeContainer,st);
-  }
 
   const resC = document.getElementById('controls-resolution');
   resC.innerHTML = '';
-  makeSlider(resC, 'Altura do modelo (mm)', 20, 600, 1, Number(getMaxH().toFixed(1)), (v, lod, baseSnap) => {
-    applyGeometricHeightScale(v, { baseSnapshot: baseSnap, isLod: lod, options: zScaleConfig });
+  const heightSliderDiv = makeSlider(resC, 'Altura do modelo (mm)', 20, 600, 0.5, Number(getMaxH().toFixed(1)), (v, lod, baseSnap, baseBnds) => {
+    applyGeometricEnvelopeScale({ targetHeight: v, baseSnapshot: baseSnap, baseBounds: baseBnds, isLod: lod, options: envelopeScaleConfig });
   });
+  heightSliderDiv.dataset.envelopeControl = 'max-height';
+
+  const widthSliderDiv = makeSlider(resC, 'Largura máx. da peça (mm)', 10, 600, 0.5, Number(getCurrentMaxWidth().toFixed(1)), (v, lod, baseSnap, baseBnds) => {
+    applyGeometricEnvelopeScale({ targetWidth: v, baseSnapshot: baseSnap, baseBounds: baseBnds, isLod: lod, options: envelopeScaleConfig });
+  });
+  widthSliderDiv.dataset.envelopeControl = 'max-width';
+
   const modeSelectDiv = document.createElement('div');
   modeSelectDiv.className = 'slider-spinbox';
   modeSelectDiv.innerHTML = `<label><span>${appT('Modo de ajuste Z')}</span></label>
@@ -3667,22 +5277,36 @@ function syncUI() {
       <option value="add_node">${appT('Adicionar / cortar nó no topo')}</option>
     </select>`;
   const modeSelectEl = modeSelectDiv.querySelector('select');
-  modeSelectEl.value = zScaleConfig.modeZ;
-  modeSelectEl.addEventListener('change', () => { zScaleConfig.modeZ = modeSelectEl.value; });
+  modeSelectEl.value = envelopeScaleConfig.modeZ;
+  modeSelectEl.addEventListener('change', () => { envelopeScaleConfig.modeZ = modeSelectEl.value; });
   resC.appendChild(modeSelectDiv);
 
   const zContracts = getActiveZScaleContracts();
   if (zContracts.length > 0) {
     const zScaleLabel = document.createElement('label');
     zScaleLabel.className = 'checkbox-label';
-    zScaleLabel.style.marginBottom = '8px';
-    zScaleLabel.title = appT('Escala proporcionalmente os valores das curvas marcadas no contrato com inheritsZScale (ex.: Torção, Fase).');
+    zScaleLabel.style.marginBottom = '6px';
+    zScaleLabel.title = appT('Escala proporcionalmente curvas e parâmetros marcados no contrato com inheritsZScale / scaleWithZ (ex.: Torção, Escala vertical).');
     const zScaleChk = document.createElement('input');
     zScaleChk.type = 'checkbox';
-    zScaleChk.checked = !!zScaleConfig.scaleZValues;
-    zScaleChk.addEventListener('change', () => { zScaleConfig.scaleZValues = zScaleChk.checked; });
+    zScaleChk.checked = !!envelopeScaleConfig.scaleZValues;
+    zScaleChk.addEventListener('change', () => { envelopeScaleConfig.scaleZValues = zScaleChk.checked; });
     zScaleLabel.append(zScaleChk, document.createTextNode(' ' + appT('Escalar curvas dependentes de Z')));
     resC.appendChild(zScaleLabel);
+  }
+
+  const radialModContracts = getActiveRadialModifierContracts();
+  if (radialModContracts.length > 0) {
+    const rScaleLabel = document.createElement('label');
+    rScaleLabel.className = 'checkbox-label';
+    rScaleLabel.style.marginBottom = '8px';
+    rScaleLabel.title = appT('Escala as amplitudes dos estágios modificadores marcados no contrato com inheritsRadialScale (ex.: Pico, Vale, Amplitude) junto com a largura da peça.');
+    const rScaleChk = document.createElement('input');
+    rScaleChk.type = 'checkbox';
+    rScaleChk.checked = !!envelopeScaleConfig.scaleRadialModifiers;
+    rScaleChk.addEventListener('change', () => { envelopeScaleConfig.scaleRadialModifiers = rScaleChk.checked; });
+    rScaleLabel.append(rScaleChk, document.createTextNode(' ' + appT('Escalar relevos proporcionalmente à largura')));
+    resC.appendChild(rScaleLabel);
   }
   makeSlider(resC, 'Camadas Z (n_layers)', 30, 1200, 5, currentParams.n_layers || 200, (v, lod) => {
     currentParams.n_layers = v; requestMeshUpdate(lod);
@@ -3716,9 +5340,26 @@ function addPipelineStage(mode) {
   const oldIndex=currentParams.design_pipeline.findIndex(s=>['polygon_base','flex_shape'].includes(s.mode));
   recordUndoSnapshot();
   if(isFoundation){
-    const defaults=Stage.getDefaultParams(height),old=oldIndex>=0?currentParams.design_pipeline[oldIndex]:null;
-    if(old){defaults.radius_profile=deepCopy(old.params.radius_profile||defaults.radius_profile);defaults.torsion_profile=deepCopy(old.params.torsion_profile||defaults.torsion_profile);}
-    const replacement={id:old?.id||'foundation_1',mode,enabled:true,params:defaults};
+    const old=oldIndex>=0?currentParams.design_pipeline[oldIndex]:null;
+    let newParams=Stage.getDefaultParams(height);
+    if(old){
+      const OldStage=StageRegistry.getClass(old.mode);
+      const splines=buildAllSplines(currentParams);
+      const oldInst=OldStage?new OldStage(old,splines,{...currentParams,zBounds:[0,height]}):null;
+      if(oldInst&&typeof oldInst.exportFoundationSnapshot==='function'&&typeof Stage.importFoundationSnapshot==='function'){
+        const oldRPts=old.params?.radius_profile?.points;
+        const zSamples=(Array.isArray(oldRPts)&&oldRPts.length>=2)?oldRPts.map(pt=>Number(pt.z)):[0,height*0.25,height*0.5,height*0.75,height];
+        const snapshot=oldInst.exportFoundationSnapshot(zSamples);
+        newParams=Stage.importFoundationSnapshot(snapshot,height);
+        if(mode==='flex_shape'&&old.mode!=='flex_shape'){
+          logDebug(appT('Trocar fundação preservou a forma transversal em Flex Shape.'),'ok');
+        }
+      }else{
+        newParams.radius_profile=deepCopy(old.params.radius_profile||newParams.radius_profile);
+        newParams.torsion_profile=deepCopy(old.params.torsion_profile||newParams.torsion_profile);
+      }
+    }
+    const replacement={id:old?.id||'foundation_1',mode,enabled:true,params:newParams};
     if(old)currentParams.design_pipeline.splice(oldIndex,1,replacement);else currentParams.design_pipeline.unshift(replacement);
     activeStageId=replacement.id;
   }else{
@@ -3728,6 +5369,10 @@ function addPipelineStage(mode) {
     activeStageId=stage.id;
   }
   activeSpline='radius_profile';
+  if(mode==='flex_shape'&&mainViewId!=='polar'&&smallViewId!=='polar'){
+    smallViewId='polar';
+    updateViewLayout();
+  }
   syncUI();requestMeshUpdate(false);
 }
 
@@ -3768,8 +5413,15 @@ function applyMeshResult(res,{isLod=false,settleDelayMs}={}) {
     }
     const p=Object.assign({},currentParams,{_is_lod_preview:!!isLod});
     viewport.updateMesh(res.vertices,res.faces,res.normals,p,res.faceRoles,res.overhangFaces);
+    const bounds = computeMeshBoundingMetrics(res.vertices);
+    viewport.lastBounds = bounds;
     document.getElementById('stat-verts').textContent=vertexCount.toLocaleString();
     document.getElementById('stat-faces').textContent=faceCount.toLocaleString();
+    const statHeightEl = document.getElementById('stat-height');
+    const statWidthEl = document.getElementById('stat-width');
+    if (statHeightEl) statHeightEl.textContent = `${bounds.heightZ.toFixed(1)} mm`;
+    if (statWidthEl) statWidthEl.textContent = `${bounds.maxSpanXY.toFixed(1)} mm`;
+    syncEnvelopeDimensionInputs(bounds);
     document.getElementById('status-text').textContent=viewport3DAvailable?(isLod?'Preview LOD em tempo real':'Pronto — Modelo 3D Renderizado'):'Malha pronta — visualização 3D indisponível';
     document.getElementById('status-dot').style.backgroundColor=viewport3DAvailable?'var(--status-ok)':'var(--status-warn)';
     document.getElementById('mesh-progress').value=100;
@@ -3785,9 +5437,22 @@ function applyMeshResult(res,{isLod=false,settleDelayMs}={}) {
   }
 }
 
-document.getElementById('select-spline').addEventListener('change', e => { activeSpline = e.target.value; renderEditor2D(); });
+document.getElementById('select-spline').addEventListener('change', e => {
+  activeSpline = e.target.value;
+  const cpIdx = parseCpSplineIndex(activeSpline);
+  selectedFlexCpIndex = cpIdx >= 0 ? cpIdx : null;
+  renderEditor2D();
+});
 document.getElementById('select-spline-kind').addEventListener('change', e => {
   const st = currentParams.design_pipeline.find(s => s.id === activeStageId) || currentParams.design_pipeline[0];
+  if (!st) return;
+  const cpIdx = parseCpSplineIndex(activeSpline);
+  if (st.mode === 'flex_shape' && cpIdx >= 0) {
+    recordUndoSnapshot();
+    st.params.cp_profile_kind = e.target.value;
+    renderEditor2D();
+    return;
+  }
   const data = st?.params?.[activeSpline];
   if (!data || !Array.isArray(data.points)) return;
   recordUndoSnapshot();
@@ -4096,7 +5761,7 @@ document.getElementById('btn-export-json').addEventListener('click',downloadProj
 document.getElementById('btn-export-stl').addEventListener('click',exportStlBinary);
 document.addEventListener('keydown',e=>{
   if(!document.getElementById('profile-context-menu').hidden)return;
-  const target=e.target,editing=target instanceof HTMLElement&&(target.isContentEditable||target.matches('input,textarea,select')||target.closest('#profile-svg-container,#shape-editor-container'));
+  const target=e.target,editing=target instanceof HTMLElement&&(target.isContentEditable||target.matches('input,textarea,select')||target.closest('#profile-svg-container,#polar-svg-container,#polar-toolbar'));
   if(editing)return;
   const key=e.key.toLowerCase(),mod=e.ctrlKey||e.metaKey;
   if(mod&&key==='z'){e.preventDefault();e.shiftKey?redoParams():undoParams();return;}
