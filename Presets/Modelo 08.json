@@ -1,0 +1,585 @@
+{
+  "n_layers": 512,
+  "res_angular": 1024,
+  "n_harmonicos": 20,
+  "samples_per_cycle": 2,
+  "envelope_suave": 0.89,
+  "fechar_base": true,
+  "fechar_topo": false,
+  "auto_res_enabled": true,
+  "auto_res_precision": 1.8,
+  "lagrangian_torsion": true,
+  "mesh_engine": "feature_aligned",
+  "modo_impressao": "solido",
+  "thickness": 2,
+  "design_pipeline": [
+    {
+      "id": "foundation_1",
+      "mode": "flex_shape",
+      "enabled": true,
+      "params": {
+        "preset_profile": "FlexShape",
+        "shape_preset": "Circle",
+        "shape_sides": 6,
+        "section_tension": 1,
+        "cp_profile_kind": "cubic",
+        "foundation_radius": 1,
+        "reference_radius": 85,
+        "_sections_direct_mm": true,
+        "symmetry_mode": false,
+        "symmetry_tolerance": 1.9,
+        "radius_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 37.9885
+            },
+            {
+              "z": 30.1,
+              "value": 53.3933
+            },
+            {
+              "z": 61.5,
+              "value": 57.9795
+            },
+            {
+              "z": 96.9,
+              "value": 55.2025
+            },
+            {
+              "z": 134.7,
+              "value": 43.5144
+            },
+            {
+              "z": 172.1,
+              "value": 27.7454
+            },
+            {
+              "z": 220,
+              "value": 18.0412
+            }
+          ],
+          "kind": "cubic"
+        },
+        "torsion_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 220,
+              "value": 0
+            }
+          ],
+          "kind": "pchip"
+        },
+        "sections": [
+          {
+            "z_norm": 0,
+            "base_r": 37.989,
+            "points": [
+              {
+                "theta": 0,
+                "r": 37.989
+              },
+              {
+                "theta": 0.7853979999999998,
+                "r": 37.989
+              },
+              {
+                "theta": 1.5707959999999996,
+                "r": 37.989
+              },
+              {
+                "theta": 2.3561940000000003,
+                "r": 37.989
+              },
+              {
+                "theta": 3.1415930000000003,
+                "r": 37.989
+              },
+              {
+                "theta": 3.926991000000001,
+                "r": 37.989
+              },
+              {
+                "theta": 4.712389,
+                "r": 37.989
+              },
+              {
+                "theta": 5.497786999999999,
+                "r": 37.989
+              }
+            ]
+          },
+          {
+            "z_norm": 0.1368,
+            "base_r": 53.393,
+            "points": [
+              {
+                "theta": 0,
+                "r": 59.466
+              },
+              {
+                "theta": 0.7853979999999998,
+                "r": 36.165
+              },
+              {
+                "theta": 1.5707959999999996,
+                "r": 59.466
+              },
+              {
+                "theta": 2.3561940000000003,
+                "r": 59.466
+              },
+              {
+                "theta": 3.1415930000000003,
+                "r": 59.466
+              },
+              {
+                "theta": 3.926991000000001,
+                "r": 34.174
+              },
+              {
+                "theta": 4.712389,
+                "r": 59.466
+              },
+              {
+                "theta": 5.497786999999999,
+                "r": 59.466
+              }
+            ]
+          },
+          {
+            "z_norm": 0.2795,
+            "base_r": 57.979,
+            "points": [
+              {
+                "theta": 0,
+                "r": 66.373
+              },
+              {
+                "theta": 0.7853979999999998,
+                "r": 34.174
+              },
+              {
+                "theta": 1.5707959999999996,
+                "r": 66.373
+              },
+              {
+                "theta": 2.3561940000000003,
+                "r": 66.373
+              },
+              {
+                "theta": 3.1415930000000003,
+                "r": 66.373
+              },
+              {
+                "theta": 3.926991000000001,
+                "r": 31.422
+              },
+              {
+                "theta": 4.712389,
+                "r": 66.373
+              },
+              {
+                "theta": 5.497786999999999,
+                "r": 66.373
+              }
+            ]
+          },
+          {
+            "z_norm": 0.4405,
+            "base_r": 55.203,
+            "points": [
+              {
+                "theta": 0,
+                "r": 63.653
+              },
+              {
+                "theta": 0.7853979999999998,
+                "r": 31.172
+              },
+              {
+                "theta": 1.5707959999999996,
+                "r": 63.653
+              },
+              {
+                "theta": 2.3561940000000003,
+                "r": 63.653
+              },
+              {
+                "theta": 3.1415930000000003,
+                "r": 63.653
+              },
+              {
+                "theta": 3.926991000000001,
+                "r": 28.54
+              },
+              {
+                "theta": 4.712389,
+                "r": 63.653
+              },
+              {
+                "theta": 5.497786999999999,
+                "r": 63.653
+              }
+            ]
+          },
+          {
+            "z_norm": 0.6123,
+            "base_r": 43.514,
+            "points": [
+              {
+                "theta": 0,
+                "r": 49.181
+              },
+              {
+                "theta": 0.7853979999999998,
+                "r": 27.729
+              },
+              {
+                "theta": 1.5707959999999996,
+                "r": 49.181
+              },
+              {
+                "theta": 2.3561940000000003,
+                "r": 49.181
+              },
+              {
+                "theta": 3.1415930000000003,
+                "r": 49.181
+              },
+              {
+                "theta": 3.926991000000001,
+                "r": 25.298
+              },
+              {
+                "theta": 4.712389,
+                "r": 49.181
+              },
+              {
+                "theta": 5.497786999999999,
+                "r": 49.181
+              }
+            ]
+          },
+          {
+            "z_norm": 0.7823,
+            "base_r": 27.745,
+            "points": [
+              {
+                "theta": 0,
+                "r": 29.205
+              },
+              {
+                "theta": 0.7853979999999998,
+                "r": 24.127
+              },
+              {
+                "theta": 1.5707959999999996,
+                "r": 29.205
+              },
+              {
+                "theta": 2.3561940000000003,
+                "r": 29.205
+              },
+              {
+                "theta": 3.1415930000000003,
+                "r": 29.205
+              },
+              {
+                "theta": 3.926991000000001,
+                "r": 22.606
+              },
+              {
+                "theta": 4.712389,
+                "r": 29.205
+              },
+              {
+                "theta": 5.497786999999999,
+                "r": 29.205
+              }
+            ]
+          },
+          {
+            "z_norm": 1,
+            "base_r": 18.042,
+            "points": [
+              {
+                "theta": 0,
+                "r": 18.042
+              },
+              {
+                "theta": 0.7853979999999998,
+                "r": 18.042
+              },
+              {
+                "theta": 1.5707959999999996,
+                "r": 18.042
+              },
+              {
+                "theta": 2.3561940000000003,
+                "r": 18.042
+              },
+              {
+                "theta": 3.1415930000000003,
+                "r": 18.042
+              },
+              {
+                "theta": 3.926991000000001,
+                "r": 18.042
+              },
+              {
+                "theta": 4.712389,
+                "r": 18.042
+              },
+              {
+                "theta": 5.497786999999999,
+                "r": 18.042
+              }
+            ]
+          }
+        ],
+        "sides": 6,
+        "normalization_mode": "Multiplier"
+      }
+    },
+    {
+      "id": "stage_radial_pattern_1793468350586",
+      "mode": "radial_pattern",
+      "enabled": true,
+      "params": {
+        "freq": 4,
+        "wave_shape": "Sine",
+        "wave_mode": "Fourier (Suave)",
+        "n_harmonics": 8,
+        "pico_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 14.2798
+            },
+            {
+              "z": 220,
+              "value": 0
+            }
+          ],
+          "kind": "cubic"
+        },
+        "vale_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 14.2798
+            },
+            {
+              "z": 220,
+              "value": 0
+            }
+          ],
+          "kind": "pchip"
+        },
+        "torsion_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 220,
+              "value": 0.55
+            }
+          ],
+          "kind": "pchip"
+        },
+        "reference_z": 220
+      }
+    },
+    {
+      "mode": "radial_pattern",
+      "enabled": true,
+      "id": "stage_radial_1",
+      "params": {
+        "freq": 20,
+        "wave_shape": "Sine",
+        "wave_mode": "Auto",
+        "n_harmonics": 8,
+        "pico_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 26.79,
+              "value": 2.5491
+            },
+            {
+              "z": 64.56,
+              "value": 4.3777
+            },
+            {
+              "z": 109.95,
+              "value": 4.6972
+            },
+            {
+              "z": 152.87,
+              "value": 4.2418
+            },
+            {
+              "z": 187.6,
+              "value": 2.4917
+            },
+            {
+              "z": 220,
+              "value": 0
+            }
+          ],
+          "kind": "cubic"
+        },
+        "vale_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 33.74,
+              "value": 2.25
+            },
+            {
+              "z": 62.21,
+              "value": 3.0523
+            },
+            {
+              "z": 106.92,
+              "value": 3.3309
+            },
+            {
+              "z": 152.6,
+              "value": 2.902
+            },
+            {
+              "z": 190.8,
+              "value": 1.6712
+            },
+            {
+              "z": 220,
+              "value": 0
+            }
+          ],
+          "kind": "pchip"
+        },
+        "torsion_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0.0449
+            },
+            {
+              "z": 220,
+              "value": 0.3138
+            }
+          ],
+          "kind": "pchip"
+        },
+        "reference_z": 220
+      }
+    },
+    {
+      "mode": "radial_pattern",
+      "enabled": false,
+      "id": "stage_radial_2",
+      "params": {
+        "freq": 40,
+        "wave_shape": "Sine",
+        "wave_mode": "Fourier (Suave)",
+        "n_harmonics": 8,
+        "pico_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 35.64,
+              "value": 0.4283
+            },
+            {
+              "z": 67.02,
+              "value": 0.5711
+            },
+            {
+              "z": 115.54,
+              "value": 0.6458
+            },
+            {
+              "z": 161,
+              "value": 0.5504
+            },
+            {
+              "z": 192,
+              "value": 0.3502
+            },
+            {
+              "z": 220,
+              "value": 0
+            }
+          ],
+          "kind": "cubic"
+        },
+        "vale_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": 0
+            },
+            {
+              "z": 39.12,
+              "value": 0.4012
+            },
+            {
+              "z": 64.33,
+              "value": 0.5573
+            },
+            {
+              "z": 113.98,
+              "value": 0.6321
+            },
+            {
+              "z": 153.54,
+              "value": 0.598
+            },
+            {
+              "z": 195.2,
+              "value": 0.3703
+            },
+            {
+              "z": 220,
+              "value": 0
+            }
+          ],
+          "kind": "pchip"
+        },
+        "torsion_profile": {
+          "points": [
+            {
+              "z": 0,
+              "value": -0.0449
+            },
+            {
+              "z": 220,
+              "value": -0.4315
+            }
+          ],
+          "kind": "pchip"
+        },
+        "reference_z": 220
+      }
+    }
+  ],
+  "extrusora_largura": 0.4,
+  "extrusora_altura": 0.2
+}
