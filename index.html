@@ -496,7 +496,9 @@ const APP_TRANSLATIONS = {
   '📂 Selecionar / atualizar pasta…':['📂 Select / refresh folder…','📂 Selecionar / atualizar pasta…','📂 Seleccionar / actualizar carpeta…'], 'A pasta selecionada não contém arquivos JSON.':['The selected folder contains no JSON files.','A pasta selecionada não contém arquivos JSON.','La carpeta seleccionada no contiene archivos JSON.'],
   'Tipo de interpolação da spline':['Spline interpolation type','Tipo de interpolação da spline','Tipo de interpolación de la spline'], 'Logs copiados para a área de transferência!':['Logs copied to clipboard!','Logs copiados para a área de transferência!','¡Registros copiados al portapapeles!'],
   'Erro ao copiar:':['Copy error:','Erro ao copiar:','Error al copiar:'], 'Logger ativo. Verificando Three.js...':['Logger active. Checking Three.js...','Logger ativo. Verificando Three.js...','Registro activo. Comprobando Three.js...'],
-  'Three.js embutido não foi carregado.':['Embedded Three.js failed to load.','Three.js embutido não foi carregado.','No se pudo cargar Three.js integrado.'],
+  'Three.js embutido não foi carregado.':['Three.js failed to load (CDN and local fallback).','Three.js não pôde ser carregado (CDN e fallback local).','No se pudo cargar Three.js (CDN y respaldo local).'],
+  'Fechando tampas para exportação STL…':['Closing caps for STL export…','Fechando tampas para exportação STL…','Cerrando tapas para exportación STL…'],
+  'Solte o arquivo JSON para importar o projeto':['Drop JSON file to import project','Solte o arquivo JSON para importar o projeto','Suelta el archivo JSON para importar el proyecto'],
   'Viewport 3D pronta.':['3D viewport ready.','Viewport 3D pronta.','Vista 3D lista.'],
   'Contexto WebGL restaurado.':['WebGL context restored.','Contexto WebGL restaurado.','Contexto WebGL restaurado.'],
   'Já existe uma seção próxima desta altura Z.':['A section already exists near this Z height.','Já existe uma seção próxima desta altura Z.','Ya existe una sección cerca de esta altura Z.'],
@@ -3288,6 +3290,40 @@ class MeshWorkerClient {
     try{worker.postMessage({id:request.id,params:request.params});}
     catch(error){this._disableWorker();this._runFallback(request,'Não foi possível iniciar o Worker; gerando a malha localmente.');}
   }
+  generateOnce(params, onProgress = () => {}) {
+    return new Promise((resolve, reject) => {
+      if (typeof Worker === 'undefined' || typeof Blob === 'undefined' || !URL.createObjectURL) {
+        try { resolve(generateMeshData(params, onProgress)); } catch (err) { reject(err); }
+        return;
+      }
+      let tempWorker = null;
+      try {
+        if (!this.workerUrl) this.workerUrl = URL.createObjectURL(new Blob([createMeshWorkerSource()], { type: 'text/javascript' }));
+        tempWorker = new Worker(this.workerUrl);
+        tempWorker.onmessage = event => {
+          const data = event.data || {};
+          if (data.type === 'progress') {
+            if (Number.isFinite(data.progress)) onProgress(data.progress);
+            return;
+          }
+          tempWorker.terminate();
+          if (data.type === 'result' && this._hasUsableResult(data.result)) {
+            resolve(data.result);
+          } else {
+            try { resolve(generateMeshData(params, onProgress)); } catch (err) { reject(err); }
+          }
+        };
+        tempWorker.onerror = () => {
+          tempWorker.terminate();
+          try { resolve(generateMeshData(params, onProgress)); } catch (err) { reject(err); }
+        };
+        tempWorker.postMessage({ id: 1, params });
+      } catch (err) {
+        if (tempWorker) tempWorker.terminate();
+        try { resolve(generateMeshData(params, onProgress)); } catch (e) { reject(e); }
+      }
+    });
+  }
   dispose(){this._disableWorker();}
 }
 
@@ -5713,16 +5749,24 @@ function downloadProjectJson() {
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
-function exportStlBinary() {
+async function exportStlBinary() {
   let v = viewport.lastVertices, f = viewport.lastFaces;
   if (!v || !f) return;
-  if (currentParams.modo_impressao === 'vaso' && (!currentParams.fechar_base || !currentParams.fechar_topo)) {
-    const exportParams = { ...deepCopy(currentParams), fechar_base: true, fechar_topo: true, _is_lod_preview: false };
-    const closedMesh = generateMeshData(exportParams);
-    v = closedMesh.vertices;
-    f = closedMesh.faces;
-  }
-  const nF = f.length / 3, buf = new ArrayBuffer(84 + nF * 50), view = new DataView(buf);
+  const btnStl = document.getElementById('btn-export-stl');
+  const progress = document.getElementById('mesh-progress');
+  try {
+    if (btnStl) btnStl.disabled = true;
+    if (currentParams.modo_impressao === 'vaso' && (!currentParams.fechar_base || !currentParams.fechar_topo)) {
+      const exportParams = { ...deepCopy(currentParams), fechar_base: true, fechar_topo: true, _is_lod_preview: false };
+      if (progress) { progress.hidden = false; progress.value = 0; }
+      showStatusToast(appT('Fechando tampas para exportação STL…'));
+      const closedMesh = await meshWorkerClient.generateOnce(exportParams, pct => {
+        if (progress) progress.value = pct;
+      });
+      v = closedMesh.vertices;
+      f = closedMesh.faces;
+    }
+    const nF = f.length / 3, buf = new ArrayBuffer(84 + nF * 50), view = new DataView(buf);
   view.setUint32(80, nF, true);
   let off = 84;
   for (let i = 0; i < nF; i++) {
@@ -5744,8 +5788,41 @@ function exportStlBinary() {
   a.href = url;
   a.download = 'twister_model.stl'; a.click();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
-  logDebug('STL Binário exportado (' + nF.toLocaleString() + ' faces).', 'ok');
+    showStatusToast(appT('Pronto — Modelo 3D Renderizado'));
+    logDebug('STL Binário exportado (' + nF.toLocaleString() + ' faces).', 'ok');
+  } catch (err) {
+    logDebug('Erro ao exportar STL: ' + (err.message || err), 'err');
+  } finally {
+    if (progress) progress.hidden = true;
+    if (btnStl) btnStl.disabled = false;
+  }
 }
+
+// Suporte a Drag-and-Drop de arquivos JSON de projeto na janela
+window.addEventListener('dragover', e => {
+  if (e.dataTransfer?.types?.includes('Files')) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+  }
+});
+window.addEventListener('drop', async e => {
+  if (!e.dataTransfer?.files?.length) return;
+  const file = Array.from(e.dataTransfer.files).find(f => /\.json$/i.test(f.name));
+  if (!file) return;
+  e.preventDefault();
+  try {
+    const audited = ProjectAuditor.audit(JSON.parse(await file.text()));
+    recordUndoSnapshot();
+    stateManager.replace(audited, { reason: 'import' });
+    activeStageId = currentParams.design_pipeline[0]?.id || 'foundation_1';
+    viewport.hasFramedOnce = false;
+    logDebug('JSON importado com sucesso: ' + file.name, 'ok');
+    syncUI();
+    requestMeshUpdate(false);
+  } catch (err) {
+    logDebug('Erro ao ler JSON: ' + err.message, 'err');
+  }
+});
 
 const aboutOverlay=document.getElementById('about-overlay');
 const aboutDialog=aboutOverlay.querySelector('.about-dialog');
