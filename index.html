@@ -18,8 +18,8 @@ FOR A PARTICULAR PURPOSE. See LICENSE for the complete license text.
 <title>TwisterV2 Web v2.1 Full</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
         integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ=="
-        crossorigin="anonymous"
-        onerror="this.onerror=null;this.src='./three.min.js';"></script>
+        crossorigin="anonymous"></script>
+<script>if (typeof THREE === 'undefined') document.write('<script src="./three.min.js"><\/script>');</script>
 <style>
 :root[data-theme="dark"] {
   --bg-main:#1e1f22; --bg-panel:#2b2b2b; --bg-widget:#333333; --bg-hover:#3d3d3d;
@@ -53,6 +53,8 @@ button.primary { background:var(--accent); border-color:var(--accent); color:#ff
 .preset-dropdown .menu-separator { height:1px; background:var(--border); margin:4px 2px; }
 .preset-empty { padding:8px 9px; color:var(--fg-muted); line-height:1.4; }
 .about-overlay { position:fixed; inset:0; z-index:3000; display:grid; place-items:center; padding:20px; background:rgba(7,9,14,.68); backdrop-filter:blur(5px); animation:about-fade-in .18s ease-out; }
+.drop-hint { position:fixed; inset:0; z-index:4000; display:grid; place-items:center; padding:20px; background:rgba(7,9,14,.55); border:3px dashed var(--accent); color:#ffffff; font-size:16px; font-weight:600; pointer-events:none; text-shadow:0 1px 3px rgba(0,0,0,.6); }
+.drop-hint[hidden] { display:none; }
 .about-overlay[hidden] { display:none; }
 .about-dialog { width:min(520px,100%); position:relative; padding:30px; color:var(--fg-main); background:var(--bg-panel); border:1px solid var(--border); border-radius:14px; box-shadow:0 24px 80px rgba(0,0,0,.48); animation:about-pop-in .2s ease-out; }
 .about-close-icon { position:absolute; top:12px; right:12px; width:32px; height:32px; padding:0; justify-content:center; font-size:20px; color:var(--fg-muted); }
@@ -499,6 +501,9 @@ const APP_TRANSLATIONS = {
   'Three.js embutido não foi carregado.':['Three.js failed to load (CDN and local fallback).','Three.js não pôde ser carregado (CDN e fallback local).','No se pudo cargar Three.js (CDN y respaldo local).'],
   'Fechando tampas para exportação STL…':['Closing caps for STL export…','Fechando tampas para exportação STL…','Cerrando tapas para exportación STL…'],
   'Solte o arquivo JSON para importar o projeto':['Drop JSON file to import project','Solte o arquivo JSON para importar o projeto','Suelta el archivo JSON para importar el proyecto'],
+  'STL exportado com sucesso.':['STL exported successfully.','STL exportado com sucesso.','STL exportado correctamente.'],
+  'Formato não suportado: solte um arquivo JSON de projeto.':['Unsupported file: drop a project JSON file.','Formato não suportado: solte um arquivo JSON de projeto.','Formato no admitido: suelta un archivo JSON de proyecto.'],
+  'Exportação STL na thread principal: Worker indisponível; a interface pode ficar lenta por alguns segundos.':['STL export on the main thread: worker unavailable; the UI may be slow for a few seconds.','Exportação STL na thread principal: Worker indisponível; a interface pode ficar lenta por alguns segundos.','Exportación STL en el hilo principal: worker no disponible; la interfaz puede ir lenta unos segundos.'],
   'Viewport 3D pronta.':['3D viewport ready.','Viewport 3D pronta.','Vista 3D lista.'],
   'Contexto WebGL restaurado.':['WebGL context restored.','Contexto WebGL restaurado.','Contexto WebGL restaurado.'],
   'Já existe uma seção próxima desta altura Z.':['A section already exists near this Z height.','Já existe uma seção próxima desta altura Z.','Ya existe una sección cerca de esta altura Z.'],
@@ -3292,8 +3297,16 @@ class MeshWorkerClient {
   }
   generateOnce(params, onProgress = () => {}) {
     return new Promise((resolve, reject) => {
-      if (typeof Worker === 'undefined' || typeof Blob === 'undefined' || !URL.createObjectURL) {
+      let warnedFallback = false;
+      const generateLocally = () => {
+        if (!warnedFallback) {
+          warnedFallback = true;
+          logDebug(appT('Exportação STL na thread principal: Worker indisponível; a interface pode ficar lenta por alguns segundos.'), 'warn');
+        }
         try { resolve(generateMeshData(params, onProgress)); } catch (err) { reject(err); }
+      };
+      if (typeof Worker === 'undefined' || typeof Blob === 'undefined' || !URL.createObjectURL) {
+        generateLocally();
         return;
       }
       let tempWorker = null;
@@ -3310,17 +3323,17 @@ class MeshWorkerClient {
           if (data.type === 'result' && this._hasUsableResult(data.result)) {
             resolve(data.result);
           } else {
-            try { resolve(generateMeshData(params, onProgress)); } catch (err) { reject(err); }
+            generateLocally();
           }
         };
         tempWorker.onerror = () => {
           tempWorker.terminate();
-          try { resolve(generateMeshData(params, onProgress)); } catch (err) { reject(err); }
+          generateLocally();
         };
         tempWorker.postMessage({ id: 1, params });
       } catch (err) {
         if (tempWorker) tempWorker.terminate();
-        try { resolve(generateMeshData(params, onProgress)); } catch (e) { reject(e); }
+        generateLocally();
       }
     });
   }
@@ -5788,7 +5801,7 @@ async function exportStlBinary() {
   a.href = url;
   a.download = 'twister_model.stl'; a.click();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
-    showStatusToast(appT('Pronto — Modelo 3D Renderizado'));
+    showStatusToast(appT('STL exportado com sucesso.'));
     logDebug('STL Binário exportado (' + nF.toLocaleString() + ' faces).', 'ok');
   } catch (err) {
     logDebug('Erro ao exportar STL: ' + (err.message || err), 'err');
@@ -5799,6 +5812,26 @@ async function exportStlBinary() {
 }
 
 // Suporte a Drag-and-Drop de arquivos JSON de projeto na janela
+const dropHint = document.createElement('div');
+dropHint.className = 'drop-hint';
+dropHint.hidden = true;
+dropHint.setAttribute('aria-hidden', 'true');
+document.body.appendChild(dropHint);
+let dropHintDepth = 0;
+function hideDropHint() { dropHintDepth = 0; dropHint.hidden = true; }
+window.addEventListener('dragenter', e => {
+  if (e.dataTransfer?.types?.includes('Files')) {
+    dropHintDepth++;
+    dropHint.textContent = appT('Solte o arquivo JSON para importar o projeto');
+    dropHint.hidden = false;
+  }
+});
+window.addEventListener('dragleave', e => {
+  if (e.dataTransfer?.types?.includes('Files')) {
+    dropHintDepth = Math.max(0, dropHintDepth - 1);
+    if (!dropHintDepth) dropHint.hidden = true;
+  }
+});
 window.addEventListener('dragover', e => {
   if (e.dataTransfer?.types?.includes('Files')) {
     e.preventDefault();
@@ -5807,9 +5840,14 @@ window.addEventListener('dragover', e => {
 });
 window.addEventListener('drop', async e => {
   if (!e.dataTransfer?.files?.length) return;
-  const file = Array.from(e.dataTransfer.files).find(f => /\.json$/i.test(f.name));
-  if (!file) return;
   e.preventDefault();
+  hideDropHint();
+  const file = Array.from(e.dataTransfer.files).find(f => /\.json$/i.test(f.name));
+  if (!file) {
+    logDebug(appT('Formato não suportado: solte um arquivo JSON de projeto.'), 'warn');
+    showStatusToast(appT('Formato não suportado: solte um arquivo JSON de projeto.'), true);
+    return;
+  }
   try {
     const audited = ProjectAuditor.audit(JSON.parse(await file.text()));
     recordUndoSnapshot();
