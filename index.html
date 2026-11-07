@@ -15,7 +15,7 @@ FOR A PARTICULAR PURPOSE. See LICENSE for the complete license text.
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TwisterV2 Web v2.1.1</title>
+<title>TwisterV2 Web v2.1.2</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
         integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ=="
         crossorigin="anonymous"></script>
@@ -72,6 +72,16 @@ button.primary { background:var(--accent); border-color:var(--accent); color:#ff
 .autosave-banner .autosave-text { flex:1 1 auto; }
 .autosave-banner .autosave-time { color:var(--fg-muted); margin-left:4px; }
 .autosave-banner button { padding:3px 10px; font-size:11px; flex:0 0 auto; }
+#tabbar { display:flex; align-items:flex-end; gap:2px; padding:3px 8px 0; background:var(--bg-panel); border-bottom:1px solid var(--border); overflow-x:auto; flex-shrink:0; scrollbar-width:thin; }
+#tabbar .tab { display:flex; align-items:center; gap:6px; flex:0 1 auto; min-width:0; max-width:200px; padding:4px 6px 4px 10px; border:1px solid var(--border); border-bottom:none; border-radius:8px 8px 0 0; background:var(--bg-widget); color:var(--fg-muted); font-size:12px; cursor:pointer; user-select:none; }
+#tabbar .tab:hover { background:var(--bg-hover); }
+#tabbar .tab:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+#tabbar .tab.active { background:var(--bg-main); color:var(--fg-main); font-weight:600; box-shadow:inset 0 2px 0 var(--accent); }
+#tabbar .tab-icon { flex:0 0 auto; font-size:11px; }
+#tabbar .tab-label { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#tabbar .tab-close { flex:0 0 auto; padding:0 5px; border:none; background:transparent; color:inherit; font-size:13px; line-height:1.2; border-radius:4px; }
+#tabbar .tab-close:hover { background:var(--status-error); color:#ffffff; }
+#tabbar #btn-new-tab { flex:0 0 auto; margin:0 2px 3px 6px; padding:1px 8px; font-size:13px; line-height:1.3; }
 .about-overlay { position:fixed; inset:0; z-index:3000; display:grid; place-items:center; padding:20px; background:rgba(7,9,14,.68); backdrop-filter:blur(5px); animation:about-fade-in .18s ease-out; }
 .drop-hint { position:fixed; inset:0; z-index:4000; display:grid; place-items:center; padding:20px; background:rgba(7,9,14,.55); border:3px dashed var(--accent); color:#ffffff; font-size:16px; font-weight:600; pointer-events:none; text-shadow:0 1px 3px rgba(0,0,0,.6); }
 .drop-hint[hidden] { display:none; }
@@ -212,7 +222,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
 <header id="titlebar">
   <div class="brand">
     <span>TwisterV2 Web</span>
-    <span class="brand-badge">v2.1.1</span>
+    <span class="brand-badge">v2.1.2</span>
     <span id="project-name" class="project-name" data-i18n-ignore="true" title="Projeto novo">Projeto novo</span>
   </div>
   <div class="toolbar">
@@ -248,7 +258,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
         <div class="about-kicker">Sobre o aplicativo</div>
         <h1 id="about-title">TwisterV2 Web</h1>
       </div>
-      <span class="brand-badge">v2.1.1</span>
+      <span class="brand-badge">v2.1.2</span>
     </div>
     <p id="about-description" class="about-description">Ferramenta de modelagem paramétrica para criar, visualizar e exportar luminárias Twister em 3D.</p>
     <dl class="about-meta">
@@ -435,7 +445,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
 <footer id="statusbar">
   <div class="status-left">
     <span id="status-dot" class="status-dot"></span>
-    <span id="status-text" role="status" aria-live="polite">Inicializando TwisterV2 v2.1.1...</span>
+    <span id="status-text" role="status" aria-live="polite">Inicializando TwisterV2 v2.1.2...</span>
   </div>
   <progress id="mesh-progress" max="100" value="0" aria-label="Progresso da geração da malha" hidden></progress>
 </footer>
@@ -511,7 +521,7 @@ const APP_TRANSLATIONS = {
   'Wireframe (W)':['Wireframe (W)','Wireframe (W)','Estructura alámbrica (W)'], 'Flat Shading':['Flat shading','Flat Shading','Sombreado plano'], 'Anel Z & Eixos':['Z ring & axes','Anel Z & Eixos','Anillo Z y ejes'], 'Mostrar Mesa':['Show build plate','Mostrar Mesa','Mostrar base de impresión'],
   'Editar valor…':['Edit value…','Editar valor…','Editar valor…'], 'Editar altura Z…':['Edit Z height…','Editar altura Z…','Editar altura Z…'], 'Suavizar neste nó':['Smooth at this node','Suavizar neste nó','Suavizar en este nodo'],
   'Excluir nó':['Delete node','Excluir nó','Eliminar nodo'], 'Inserir nó com valores…':['Insert node with values…','Inserir nó com valores…','Insertar nodo con valores…'],
-  'Inicializando TwisterV2 v2.1.1...':['Initializing TwisterV2 v2.1.1...','Inicializando TwisterV2 v2.1.1...','Iniciando TwisterV2 v2.1.1...'], 'Progresso da geração da malha':['Mesh generation progress','Progresso da geração da malha','Progreso de generación de malla'],
+  'Inicializando TwisterV2 v2.1.2...':['Initializing TwisterV2 v2.1.2...','Inicializando TwisterV2 v2.1.2...','Iniciando TwisterV2 v2.1.2...'], 'Progresso da geração da malha':['Mesh generation progress','Progresso da geração da malha','Progreso de generación de malla'],
   'Escala radial':['Radial scale','Escala radial','Escala radial'], 'Normalização da forma':['Shape normalization','Normalização da forma','Normalización de la forma'], 'Multiplicador':['Multiplier','Multiplicador','Multiplicador'],
   'Raio externo fixo':['Fixed outer radius','Raio externo fixo','Radio exterior fijo'], 'Raio interno fixo':['Fixed inner radius','Raio interno fixo','Radio interior fijo'], 'Forma da fundação':['Foundation shape','Forma da fundação','Forma de la base'],
   'Círculo':['Circle','Círculo','Círculo'], 'Quadrado':['Square','Quadrado','Cuadrado'], 'Polígono':['Polygon','Polígono','Polígono'], 'Estrela':['Star','Estrela','Estrella'], 'Coração':['Heart','Coração','Corazón'], 'Gota':['Teardrop','Gota','Gota'],
@@ -617,9 +627,27 @@ const APP_TRANSLATIONS = {
   'Importar projeto':['Import project','Importar projeto','Importar proyecto'],
   'Carregar preset':['Load preset','Carregar preset','Cargar preajuste'],
   'Substituir o projeto atual pelo preset selecionado?':['Replace the current project with the selected preset?','Substituir o projeto atual pelo preset selecionado?','¿Sustituir el proyecto actual por el preajuste seleccionado?'],
+  'Abrir o preset em uma nova aba ou substituir o projeto atual?':['Open the preset in a new tab or replace the current project?','Abrir o preset em uma nova aba ou substituir o projeto atual?','¿Abrir el preajuste en una pestaña nueva o sustituir el proyecto actual?'],
+  'Abrir em nova aba':['Open in new tab','Abrir em nova aba','Abrir en pestaña nueva'],
+  'Limite de abas atingido; abrir em nova aba não está disponível.':['Tab limit reached; opening in a new tab is unavailable.','Limite de abas atingido; abrir em nova aba não está disponível.','Límite de pestañas alcanzado; no se puede abrir en una pestaña nueva.'],
   'Substituir':['Replace','Substituir','Sustituir'],
   'Projeto compartilhado':['Shared project','Projeto compartilhado','Proyecto compartido'],
-  'Projeto salvo como':['Project saved as','Projeto salvo como','Proyecto guardado como']
+  'Projeto salvo como':['Project saved as','Projeto salvo como','Proyecto guardado como'],
+  'Arquivo baixado. A aba continua aberta: este navegador não confirma a gravação.':['File downloaded. The tab stays open: this browser cannot confirm the save.','Arquivo baixado. A aba continua aberta: este navegador não confirma a gravação.','Archivo descargado. La pestaña sigue abierta: este navegador no confirma la grabación.'],
+  'Nova aba':['New tab','Nova aba','Nueva pestaña'],
+  'Fechar aba':['Close tab','Fechar aba','Cerrar pestaña'],
+  'Fechar a aba':['Close tab','Fechar a aba','Cerrar la pestaña'],
+  'Fechar':['Close','Fechar','Cerrar'],
+  'Abas de projetos':['Project tabs','Abas de projetos','Pestañas de proyectos'],
+  'O conteúdo não salvo em arquivo JSON será descartado.':['Content not saved to a JSON file will be discarded.','O conteúdo não salvo em arquivo JSON será descartado.','El contenido no guardado en un archivo JSON se descartará.'],
+  'Limite de abas atingido. Feche uma aba para abrir outra.':['Tab limit reached. Close a tab to open another.','Limite de abas atingido. Feche uma aba para abrir outra.','Límite de pestañas alcanzado. Cierra una pestaña para abrir otra.'],
+  'Limite de abas atingido':['Tab limit reached','Limite de abas atingido','Límite de pestañas alcanzado'],
+  'Feche uma aba antes de abrir outra.':['Close a tab before opening another.','Feche uma aba antes de abrir outra.','Cierra una pestaña antes de abrir otra.'],
+  'Não foi possível criar o link do projeto.':['Could not create the project link.','Não foi possível criar o link do projeto.','No se pudo crear el enlace del proyecto.'],
+  'Erro ao criar o link do projeto: ':['Error creating the project link: ','Erro ao criar o link do projeto: ','Error al crear el enlace del proyecto: '],
+  'Não foi possível exportar o STL.':['Could not export the STL.','Não foi possível exportar o STL.','No se pudo exportar el STL.'],
+  'Não foi possível salvar o arquivo JSON.':['Could not save the JSON file.','Não foi possível salvar o arquivo JSON.','No se pudo guardar el archivo JSON.'],
+  'Não foi possível restaurar uma das abas da sessão anterior.':['Could not restore one of the tabs from the previous session.','Não foi possível restaurar uma das abas da sessão anterior.','No se pudo restaurar una de las pestañas de la sesión anterior.']
 };
 const APP_TRANSLATION_INDEX = { en:0, 'pt-BR':1, es:2 };
 const APP_TRANSLATION_SOURCE = new Map();
@@ -642,7 +670,7 @@ function projectDisplayName() {
 }
 function updateProjectTitle() {
   const label = projectDisplayName();
-  document.title = `${label} · ${appT('TwisterV2 Web v2.1.1')}`;
+  document.title = `${label} · ${appT('TwisterV2 Web v2.1.2')}`;
   const el = document.getElementById('project-name');
   if (el) { el.textContent = label; el.title = label; }
 }
@@ -651,7 +679,8 @@ function renameProject(name) {
   updateProjectTitle();
   // Só grava o nome no rascunho quando o conteúdo salvo já reflete o estado atual, para
   // não antecipar a gravação de um preset/link recém-carregado sobre o rascunho anterior.
-  if (!autosaveRecordStale && stateManager.snapshot() !== autosaveDefaultSnapshot) autosaveWrite(stateManager.snapshot());
+  if (typeof persistTabsSession === 'function' && !autosaveRecordStale && stateManager.snapshot() !== autosaveDefaultSnapshot) persistTabsSession();
+  if (typeof renderTabBar === 'function') renderTabBar();
 }
 function translateAppText(value) {
   const source = APP_TRANSLATION_SOURCE.get(value) || value;
@@ -751,6 +780,7 @@ languageSelect.addEventListener('change', () => {
   for (const id of ['stat-verts', 'stat-faces']) { const el = document.getElementById(id); if (el && el.dataset.n) el.textContent = Number(el.dataset.n).toLocaleString(appLanguage); }
   if (typeof syncUI === 'function') syncUI();
   if (typeof updateViewLayout === 'function') updateViewLayout();
+  if (typeof renderTabBar === 'function') renderTabBar();
   translateAppTree();
 });
 ['seeker-z-label', 'stat-verts', 'stat-faces', 'stat-height', 'stat-width'].forEach(id => {
@@ -2637,7 +2667,7 @@ StageRegistry.register('harmonics',HarmonicsStage,'Harmonics');
 StageRegistry.register('reaction_diffusion',ReactionDiffusionStage,'Reaction Diffusion');
 const FACE_ROLE_OUTER_WALL=0,FACE_ROLE_INNER_WALL=1,FACE_ROLE_CAP=2,FACE_ROLE_RIM=3;
 
-const APP_VERSION='2.1.1';
+const APP_VERSION='2.1.2';
 const PROJECT_FORMAT_VERSION=1;
 
 class ProjectAuditor {
@@ -5784,24 +5814,40 @@ presetDropdown.addEventListener('click', async event => {
   if (!preset) return;
   try {
     const audited = ProjectAuditor.audit(JSON.parse(preset.text));
-    // Ação destrutiva: carregar preset substitui o projeto atual; pede confirmação
-    // central quando há trabalho em andamento (mesmo padrão da importação de JSON).
-    if (stateManager.snapshot() !== autosaveDefaultSnapshot) {
+    const presetName = preset.label.replace(/\.json$/i, '');
+    // Escolha de preset SEMPRE pede decisão central: abrir em nova aba ou
+    // substituir o projeto atual (mesmo padrão da importação de JSON). No limite
+    // de abas, restam substituir ou cancelar. A aba atual não muda até a escolha.
+    {
       closePresetDropdown();
+      const canOpenTab = tabsState.tabs.length < MAX_TABS;
       const res = await openDecision({
         kind: 'preset',
         title: appT('Carregar preset'),
-        message: appT('Substituir o projeto atual pelo preset selecionado?'),
-        time: preset.label.replace(/\.json$/i, ''),
-        hint: appT('Escolha uma opção para continuar.'),
+        message: appT(canOpenTab
+          ? 'Abrir o preset em uma nova aba ou substituir o projeto atual?'
+          : 'Substituir o projeto atual pelo preset selecionado?'),
+        time: presetName,
+        hint: appT(canOpenTab ? 'Escolha uma opção para continuar.' : 'Limite de abas atingido; abrir em nova aba não está disponível.'),
         allowEscape: true,
-        buttons: [
-          { id: 'cancel', label: appT('Cancelar') },
-          { id: 'replace', label: appT('Substituir'), primary: true }
-        ]
+        buttons: canOpenTab
+          ? [
+              { id: 'cancel', label: appT('Cancelar') },
+              { id: 'replace', label: appT('Substituir') },
+              { id: 'newtab', label: appT('Abrir em nova aba'), primary: true }
+            ]
+          : [
+              { id: 'cancel', label: appT('Cancelar') },
+              { id: 'replace', label: appT('Substituir'), primary: true }
+            ]
       });
-      if (!res || res.button !== 'replace') {
+      if (!res || res.button === 'cancel') {
         logDebug('Carregamento de preset cancelado.', 'info');
+        return;
+      }
+      if (res.button === 'newtab') {
+        if (addProjectTab(audited, presetName)) logDebug('Preset carregado em nova aba: ' + preset.label, 'ok');
+        closePresetDropdown();
         return;
       }
     }
@@ -5816,12 +5862,13 @@ presetDropdown.addEventListener('click', async event => {
     }
     activeStageId = currentParams.design_pipeline[0]?.id || 'foundation_1';
     viewport.hasFramedOnce = false;
-    renameProject(preset.label.replace(/\.json$/i, ''));
+    renameProject(presetName);
     closePresetDropdown();
     logDebug('Preset carregado: ' + preset.label, 'ok');
     syncUI(); requestMeshUpdate(false);
   } catch (err) {
     logDebug('Erro ao carregar preset ' + preset.label + ': ' + err.message, 'err');
+    showStatusToast(appT('Erro ao carregar preset ') + preset.label, true);
   }
 });
 document.addEventListener('click', event => {
@@ -5844,42 +5891,46 @@ let autosaveWarned = false;
 
 function autosaveWrite(snapshot) {
   autosaveRecordStale = false;
-  const record = JSON.stringify({saved_at:new Date().toISOString(), name:currentProjectName, project:{format_version:PROJECT_FORMAT_VERSION, app:'TwisterV2 Web', app_version:APP_VERSION, ...JSON.parse(snapshot)}});
-  // localStorage é síncrono: grava primeiro para não depender de escrita assíncrona ao fechar a aba
-  try {
-    localStorage.setItem(AUTOSAVE_LS_KEY, record);
-  } catch (_) {
-    if (!autosaveWarned) {
-      autosaveWarned = true;
-      logDebug(appT('Não foi possível gravar o salvamento automático neste navegador.'), 'warn');
-    }
+  autosaveBaseline = snapshot;
+  const tab = activeTab();
+  if (tab) {
+    tab.storedRecord = { saved_at: new Date().toISOString(), name: currentProjectName, project: { format_version: PROJECT_FORMAT_VERSION, app: 'TwisterV2 Web', app_version: APP_VERSION, ...JSON.parse(snapshot) } };
+    tab.stale = false;
   }
-  if (typeof indexedDB === 'undefined') return;
-  openPresetDB().then(db => new Promise((resolve, reject) => {
-    const tx = db.transaction(PRESET_STORE_NAME, 'readwrite');
-    tx.objectStore(PRESET_STORE_NAME).put(record, AUTOSAVE_STORE_KEY);
-    tx.oncomplete = resolve;
-    tx.onerror = () => reject(tx.error);
-  })).catch(() => {});
+  persistTabsSession();
 }
 
-function autosaveClear() {
-  autosaveRecordStale = false;
+function clearTabsStorage() {
+  try { localStorage.removeItem(TABS_LS_KEY); } catch (_) {}
   try { localStorage.removeItem(AUTOSAVE_LS_KEY); } catch (_) {}
   if (typeof indexedDB === 'undefined') return;
   openPresetDB().then(db => new Promise((resolve, reject) => {
     const tx = db.transaction(PRESET_STORE_NAME, 'readwrite');
+    tx.objectStore(PRESET_STORE_NAME).delete(TABS_STORE_KEY);
     tx.objectStore(PRESET_STORE_NAME).delete(AUTOSAVE_STORE_KEY);
     tx.oncomplete = resolve;
     tx.onerror = () => reject(tx.error);
-  })).catch(() => {});
+  })).catch(err => logDebug('Falha ao limpar salvamento automático: ' + ((err && err.message) || err), 'warn'));
+}
+
+function autosaveClear() {
+  autosaveRecordStale = false;
+  clearTabsStorage();
 }
 
 function autosaveFlush() {
   if (autosavePaused || autosavePendingSnapshot === null) return;
   const snapshot = autosavePendingSnapshot;
   autosavePendingSnapshot = null;
-  if (snapshot === autosaveDefaultSnapshot) { autosaveClear(); return; }
+  if (snapshot === autosaveDefaultSnapshot) {
+    autosaveBaseline = snapshot;
+    autosaveRecordStale = false;
+    const tab = activeTab();
+    // Aba voltou ao estado inicial: o rascunho dela deixa de existir na sessão salva.
+    if (tab) { tab.storedRecord = null; tab.stale = false; }
+    persistTabsSession();
+    return;
+  }
   autosaveWrite(snapshot);
 }
 
@@ -5898,11 +5949,11 @@ function scheduleAutosave() {
 stateManager.subscribe(() => scheduleAutosave());
 window.addEventListener('pagehide', autosaveFlush);
 
-async function autosaveRead() {
-  // localStorage é gravado de forma síncrona em todo flush (inclusive no pagehide); IndexedDB
-  // pode ficar para trás em recarregamentos rápidos. Lê localStorage primeiro.
+// localStorage é gravado de forma síncrona em todo flush (inclusive no pagehide); IndexedDB
+// pode ficar para trás em recarregamentos rápidos. Lê localStorage primeiro.
+async function autosaveReadRaw(lsKey, storeKey) {
   try {
-    const record = localStorage.getItem(AUTOSAVE_LS_KEY);
+    const record = localStorage.getItem(lsKey);
     if (record) return record;
   } catch (_) {}
   if (typeof indexedDB !== 'undefined') {
@@ -5910,12 +5961,12 @@ async function autosaveRead() {
       const db = await openPresetDB();
       const record = await new Promise((resolve, reject) => {
         const tx = db.transaction(PRESET_STORE_NAME, 'readonly');
-        const req = tx.objectStore(PRESET_STORE_NAME).get(AUTOSAVE_STORE_KEY);
+        const req = tx.objectStore(PRESET_STORE_NAME).get(storeKey);
         req.onsuccess = () => resolve(req.result);
         req.onerror = () => reject(tx.error);
       });
       if (typeof record === 'string' && record) return record;
-    } catch (_) {}
+    } catch (err) { logDebug('Falha ao ler salvamento automático: ' + ((err && err.message) || err), 'warn'); }
   }
   return null;
 }
@@ -5961,7 +6012,7 @@ decisionDialog.append(decisionTitle, decisionText, decisionHint, decisionInputRo
 decisionOverlay.appendChild(decisionDialog);
 document.body.appendChild(decisionOverlay);
 
-let decisionKind = null; // 'session' | 'link' | 'link-unsupported' | 'import' | 'preset' | 'file-name'
+let decisionKind = null; // 'session' | 'link' | 'link-unsupported' | 'import' | 'preset' | 'file-name' | 'tab-close' | 'tab-limit'
 let modalState = null;
 
 function setAutosavePaused(value) {
@@ -6055,37 +6106,386 @@ async function promptFileName({title, defaultName, extension, confirmLabel}) {
   return sanitizeFileName(res.value, extension) || sanitizeFileName(defaultName, extension) || null;
 }
 
-function restoreAutosaveSession() {
-  autosaveRead().then(record => {
-    if (!record) return;
-    try {
-      const parsed = JSON.parse(record);
-      const audited = ProjectAuditor.audit(parsed.project);
-      recordUndoSnapshot();
-      stateManager.replace(audited, {reason:'import'});
-      activeStageId = currentParams.design_pipeline[0]?.id || 'foundation_1';
-      viewport.hasFramedOnce = false;
-      autosaveBaseline = stateManager.snapshot();
-      autosaveRecordStale = false;
-      renameProject(typeof parsed.name === 'string' ? parsed.name : '');
-      logDebug(appT('Sessão anterior restaurada do salvamento automático.'), 'ok');
-      syncUI(); requestMeshUpdate(false);
-    } catch (err) {
-      autosaveClear();
-      renameProject('');
-      logDebug('Erro ao restaurar sessão automática: ' + err.message, 'err');
-    }
+// Abas de projetos (v2.1.2): cada aba tem estado, histórico (desfazer/refazer) e
+// recuperação independentes. O rascunho automático vira uma sessão multi-aba: um
+// registro por aba, gravado de forma síncrona no localStorage (IndexedDB como cópia).
+const TABS_LS_KEY = 'twisterv2.tabs.v1';
+const TABS_STORE_KEY = 'tabs_v1';
+const MAX_TABS = 8;
+const tabsState = { tabs: [], activeId: null };
+
+// Bloqueio de criação de aba no limite: diálogo central só com OK (o usuário lê e
+// fecha) + registro no log de debug. Distinto do fluxo de preset no limite, que
+// oferece substituir ou cancelar.
+function notifyTabLimit() {
+  logDebug(appT('Limite de abas atingido. Feche uma aba para abrir outra.'), 'warn');
+  openDecision({
+    kind: 'tab-limit',
+    title: appT('Limite de abas atingido'),
+    message: appT('Feche uma aba antes de abrir outra.'),
+    buttons: [{ id: 'ok', label: 'OK', primary: true }]
   });
 }
 
-function discardAutosaveSession() {
-  autosaveClear();
-  renameProject('');
-  logDebug(appT('Sessão automática descartada.'), 'info');
+function newTabId() { return 'tab-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); }
+function activeTab() { return tabsState.tabs.find(t => t.id === tabsState.activeId) || null; }
+function hasNonDefaultWork() { return stateManager.snapshot() !== autosaveDefaultSnapshot || !!currentProjectName; }
+
+const tabbarEl = document.createElement('div');
+tabbarEl.id = 'tabbar';
+tabbarEl.setAttribute('role', 'tablist');
+tabbarEl.setAttribute('aria-label', appT('Abas de projetos'));
+document.getElementById('titlebar').insertAdjacentElement('afterend', tabbarEl);
+
+function tabDisplayName(tab) {
+  const name = (tab.id === tabsState.activeId ? currentProjectName : tab.name) || '';
+  return name.trim() || appT('Projeto novo');
 }
 
-function showAutosaveBanner(parsed) {
-  const when = new Date(parsed.saved_at);
+function renderTabBar() {
+  tabbarEl.textContent = '';
+  for (const tab of tabsState.tabs) {
+    const isActive = tab.id === tabsState.activeId;
+    const el = document.createElement('div');
+    el.className = 'tab' + (isActive ? ' active' : '');
+    el.setAttribute('role', 'tab');
+    el.setAttribute('aria-selected', String(isActive));
+    el.dataset.tabId = tab.id;
+    el.tabIndex = 0;
+    const icon = document.createElement('span');
+    icon.className = 'tab-icon';
+    // ícone vetorial (independente de fonte/emoji do sistema)
+    icon.innerHTML = '<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" focusable="false"><path d="M8 1.8a6.2 6.2 0 1 1-6.2 6.2"/><path d="M8 5a3 3 0 1 0 3 3"/><circle cx="8" cy="8" r="1" fill="currentColor" stroke="none"/></svg>';
+    icon.setAttribute('aria-hidden', 'true');
+    const label = document.createElement('span');
+    label.className = 'tab-label';
+    label.setAttribute('data-i18n-ignore', 'true');
+    const display = tabDisplayName(tab);
+    label.textContent = display;
+    label.title = display;
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'tab-close';
+    close.dataset.tabId = tab.id;
+    close.textContent = '×';
+    close.title = appT('Fechar aba');
+    close.setAttribute('aria-label', appT('Fechar aba') + ' ' + display);
+    el.append(icon, label, close);
+    el.addEventListener('click', event => { if (!event.target.closest('.tab-close')) activateTab(tab.id); });
+    el.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); activateTab(tab.id); } });
+    el.addEventListener('auxclick', event => { if (event.button === 1) { event.preventDefault(); requestCloseTab(tab.id); } });
+    close.addEventListener('click', event => { event.stopPropagation(); requestCloseTab(tab.id); });
+    tabbarEl.appendChild(el);
+  }
+  const add = document.createElement('button');
+  add.type = 'button';
+  add.id = 'btn-new-tab';
+  add.textContent = '＋';
+  add.title = appT('Nova aba');
+  add.setAttribute('aria-label', appT('Nova aba'));
+  add.addEventListener('click', () => requestNewTab());
+  tabbarEl.appendChild(add);
+}
+
+function makeTab({ name = '', snapshot = null, baseline = null, stale = false, storedRecord = null, stageId = null, spline = 'radius_profile', seekerZ: sz = 100, undo = [], redo = [] } = {}) {
+  const snap = snapshot || autosaveDefaultSnapshot;
+  let firstStage = 'foundation_1';
+  try { firstStage = (JSON.parse(snap).design_pipeline || [])[0]?.id || 'foundation_1'; } catch (_) {}
+  return { id: newTabId(), name, snapshot: snap, baseline: baseline || snap, stale, storedRecord, stageId: stageId || firstStage, spline, seekerZ: sz, undo, redo };
+}
+
+function captureActiveTab() {
+  const tab = activeTab();
+  if (!tab) return;
+  tab.name = currentProjectName;
+  tab.snapshot = stateManager.snapshot();
+  tab.baseline = autosaveBaseline;
+  tab.stale = autosaveRecordStale;
+  tab.undo = undoStack.splice(0);
+  tab.redo = redoStack.splice(0);
+  tab.stageId = activeStageId;
+  tab.spline = activeSpline;
+  tab.seekerZ = seekerZ;
+}
+
+function activateTab(id) {
+  if (id === tabsState.activeId) return;
+  const next = tabsState.tabs.find(t => t.id === id);
+  if (!next) return;
+  autosaveFlush(); // grava pendências da aba atual antes de trocar
+  captureActiveTab();
+  tabsState.activeId = id;
+  clearTimeout(autosaveTimer);
+  autosavePendingSnapshot = null;
+  autosaveBaseline = next.baseline;
+  autosaveRecordStale = next.stale;
+  undoStack.push(...next.undo);
+  redoStack.push(...next.redo);
+  activeStageId = next.stageId;
+  activeSpline = next.spline;
+  seekerZ = next.seekerZ;
+  currentProjectName = next.name;
+  stateManager.replace(JSON.parse(next.snapshot), { reason: 'tab-switch' });
+  if (viewport) viewport.hasFramedOnce = false;
+  updateProjectTitle();
+  renderTabBar();
+  syncUI();
+  requestMeshUpdate(false);
+  syncHistoryButtons();
+  logDebug('Aba ativada: ' + tabDisplayName(next), 'info');
+}
+
+function requestNewTab() {
+  if (tabsState.tabs.length >= MAX_TABS) {
+    notifyTabLimit();
+    return null;
+  }
+  const tab = makeTab({});
+  tabsState.tabs.push(tab);
+  activateTab(tab.id);
+  renderTabBar();
+  logDebug('Nova aba criada.', 'info');
+  return tab;
+}
+
+function addProjectTab(audited, name) {
+  if (tabsState.tabs.length >= MAX_TABS) {
+    notifyTabLimit();
+    return null;
+  }
+  const snapshot = JSON.stringify(audited);
+  const tab = makeTab({ name: (name || '').trim(), snapshot, stageId: (audited.design_pipeline && audited.design_pipeline[0] && audited.design_pipeline[0].id) || 'foundation_1' });
+  tabsState.tabs.push(tab);
+  activateTab(tab.id);
+  return tab;
+}
+
+async function requestCloseTab(id) {
+  const tab = tabsState.tabs.find(t => t.id === id);
+  if (!tab) return;
+  // Regra do projeto: fechar aba SEMPRE pede confirmação, em diálogo central.
+  const res = await openDecision({
+    kind: 'tab-close',
+    title: appT('Fechar a aba'),
+    time: tabDisplayName(tab),
+    message: appT('O conteúdo não salvo em arquivo JSON será descartado.'),
+    hint: appT('Escolha uma opção para continuar.'),
+    allowEscape: true,
+    buttons: [
+      { id: 'cancel', label: appT('Cancelar') },
+      { id: 'close', label: appT('Fechar') },
+      { id: 'save', label: appT('Salvar'), primary: true }
+    ]
+  });
+  if (!res || res.button === 'cancel') { logDebug('Fechamento de aba cancelado.', 'info'); return; }
+  if (res.button === 'save') {
+    // "Salvar" só fecha a aba quando a gravação é confirmada; cancelar ou falhar mantém a aba aberta.
+    const saved = await saveTabBeforeClose(id);
+    if (!saved) return;
+  }
+  closeTabConfirmed(id);
+}
+
+// Grava o JSON do projeto pela janela nativa de salvamento (File System Access API,
+// presente no Edge/Chrome): nome do projeto preenchido e editável na própria janela e
+// gravação confirmada em disco. Retorna 'saved' (gravação confirmada), 'canceled'
+// (usuário desistiu, sem erro), 'error' (falha de gravação, já avisada em toast e log)
+// ou 'unavailable' (janela não abriu: quem chamou decide se usa o fluxo de download).
+async function saveProjectNative() {
+  let handle = null;
+  try {
+    handle = await window.showSaveFilePicker({
+      suggestedName: sanitizeFileName(projectDisplayName(), '.json'),
+      types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }]
+    });
+  } catch (err) {
+    if (err && err.name === 'AbortError') {
+      // Cancelamento não é erro: nada é gravado e nenhum download é acionado.
+      logDebug('Salvamento cancelado pelo usuário.', 'info');
+      return 'canceled';
+    }
+    logDebug('Janela de salvamento do navegador indisponível: ' + ((err && err.message) || err), 'warn');
+    return 'unavailable';
+  }
+  try {
+    const writable = await handle.createWritable();
+    await writable.write(new Blob([stateManager.serialize()], { type: 'application/json' }));
+    await writable.close(); // resolve somente após a gravação ser concluída
+    renameProject(handle.name.replace(/\.json$/i, ''));
+    logDebug(appT('Projeto salvo como') + ' ' + handle.name, 'ok');
+    return 'saved';
+  } catch (err) {
+    if (err && err.name === 'AbortError') {
+      logDebug('Salvamento cancelado pelo usuário.', 'info');
+      return 'canceled';
+    }
+    // Falha de gravação: erro visível e registrado, sem download automático.
+    logDebug('Erro ao gravar o arquivo JSON: ' + ((err && err.message) || err), 'err');
+    showStatusToast(appT('Não foi possível salvar o arquivo JSON.'), true);
+    return 'error';
+  }
+}
+
+// "Salvar" no diálogo de fechar aba: mesmo fluxo do botão Salvar JSON, com o nome do
+// projeto preenchido e editável. Em navegadores com File System Access API (Edge/Chrome),
+// a janela nativa de salvamento confirma a gravação em disco antes de a aba fechar.
+// Nos demais, o fluxo de download assume. A aba só fecha quando a gravação é confirmada.
+async function saveTabBeforeClose(id) {
+  const tab = tabsState.tabs.find(t => t.id === id);
+  if (!tab) return false;
+  if (id !== tabsState.activeId) activateTab(id); // garante salvar o conteúdo da aba que está fechando
+  // Detecção por capacidade (não pela marca do navegador): a janela nativa existe no Edge/Chrome.
+  if (typeof window.showSaveFilePicker === 'function') {
+    const result = await saveProjectNative();
+    if (result === 'saved') return true;
+    // Cancelamento ou falha de gravação: a aba continua aberta, sem download surpresa.
+    if (result === 'canceled' || result === 'error') return false;
+    // 'unavailable': segue para o fluxo de download abaixo
+  }
+  const fileName = await promptFileName({
+    title: appT('Salvar projeto em JSON'),
+    defaultName: projectDisplayName() + '.json',
+    extension: '.json',
+    confirmLabel: appT('Salvar')
+  });
+  if (!fileName) { logDebug('Salvamento cancelado; a aba continua aberta.', 'info'); return false; }
+  try {
+    downloadProjectJsonFile(fileName);
+  } catch (err) {
+    logDebug('Erro ao salvar o arquivo JSON: ' + ((err && err.message) || err), 'err');
+    showStatusToast(appT('Não foi possível salvar o arquivo JSON.'), true);
+    return false;
+  }
+  renameProject(fileName.replace(/\.json$/i, ''));
+  logDebug(appT('Projeto salvo como') + ' ' + fileName, 'ok');
+  // O download clássico não confirma a gravação em disco: a aba NÃO fecha sozinha.
+  logDebug('Download iniciado; a aba continua aberta porque este navegador não confirma a gravação do arquivo.', 'info');
+  showStatusToast(appT('Arquivo baixado. A aba continua aberta: este navegador não confirma a gravação.'), false);
+  return false;
+}
+
+function closeTabConfirmed(id) {
+  const index = tabsState.tabs.findIndex(t => t.id === id);
+  if (index < 0) return;
+  const wasActive = id === tabsState.activeId;
+  tabsState.tabs.splice(index, 1);
+  if (!tabsState.tabs.length) tabsState.tabs.push(makeTab({}));
+  if (wasActive) {
+    // descarta edições não gravadas da aba fechada e ativa a vizinha
+    clearTimeout(autosaveTimer);
+    autosavePendingSnapshot = null;
+    tabsState.activeId = null;
+    activateTab(tabsState.tabs[Math.min(index, tabsState.tabs.length - 1)].id);
+  }
+  persistTabsSession();
+  renderTabBar();
+  logDebug('Aba fechada.', 'info');
+}
+
+function persistTabsSession() {
+  for (const tab of tabsState.tabs) {
+    if (tab.id !== tabsState.activeId) continue;
+    const liveSnap = stateManager.snapshot();
+    if (autosaveRecordStale) continue; // preset/link recém-carregado: preserva o rascunho anterior até a primeira edição
+    if (liveSnap === autosaveDefaultSnapshot) tab.storedRecord = null;
+    else {
+      tab.storedRecord = { saved_at: new Date().toISOString(), name: currentProjectName, project: { format_version: PROJECT_FORMAT_VERSION, app: 'TwisterV2 Web', app_version: APP_VERSION, ...JSON.parse(liveSnap) } };
+      tab.stale = false;
+    }
+  }
+  const entries = tabsState.tabs.filter(t => t.storedRecord).map(t => ({ id: t.id, record: t.storedRecord }));
+  if (!entries.length) { clearTabsStorage(); return; }
+  const payload = JSON.stringify({ tabs_version: 1, activeId: tabsState.activeId, tabs: entries });
+  // localStorage é síncrono: grava primeiro para não depender de escrita assíncrona ao fechar a aba
+  try {
+    localStorage.setItem(TABS_LS_KEY, payload);
+  } catch (err) {
+    logDebug('Falha ao gravar salvamento automático (localStorage): ' + ((err && err.message) || err), 'warn');
+    if (!autosaveWarned) {
+      autosaveWarned = true;
+      showStatusToast(appT('Não foi possível gravar o salvamento automático neste navegador.'), true);
+    }
+  }
+  if (typeof indexedDB === 'undefined') return;
+  openPresetDB().then(db => new Promise((resolve, reject) => {
+    const tx = db.transaction(PRESET_STORE_NAME, 'readwrite');
+    tx.objectStore(PRESET_STORE_NAME).put(payload, TABS_STORE_KEY);
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+  })).catch(err => logDebug('Falha ao gravar salvamento automático (IndexedDB): ' + ((err && err.message) || err), 'warn'));
+}
+
+async function readTabsSession() {
+  const raw = await autosaveReadRaw(TABS_LS_KEY, TABS_STORE_KEY);
+  if (raw) {
+    try {
+      const session = JSON.parse(raw);
+      if (!session || !Array.isArray(session.tabs) || !session.tabs.length) return null;
+      const tabs = [];
+      for (const entry of session.tabs) {
+        if (!entry || !entry.record || typeof entry.record !== 'object' || !entry.record.project) continue;
+        const { format_version, app, app_version, ...savedState } = entry.record.project;
+        if (JSON.stringify(savedState) === autosaveDefaultSnapshot) continue;
+        tabs.push({ saved_at: entry.record.saved_at, name: typeof entry.record.name === 'string' ? entry.record.name : '', params: savedState, restoreId: entry.id });
+      }
+      if (!tabs.length) return null;
+      return { activeId: session.activeId, tabs };
+    } catch (err) {
+      logDebug('Falha ao ler sessão de abas salva: ' + ((err && err.message) || err), 'warn');
+      return null;
+    }
+  }
+  // Migração do rascunho único da v2.1.1: vira uma sessão de uma aba.
+  const legacy = await autosaveReadRaw(AUTOSAVE_LS_KEY, AUTOSAVE_STORE_KEY);
+  if (!legacy) return null;
+  try {
+    const parsed = JSON.parse(legacy);
+    if (!parsed || typeof parsed !== 'object' || !parsed.project) { autosaveClear(); return null; }
+    const { format_version, app, app_version, ...savedState } = parsed.project;
+    if (JSON.stringify(savedState) === autosaveDefaultSnapshot) return null;
+    return { activeId: null, tabs: [{ saved_at: parsed.saved_at, name: typeof parsed.name === 'string' ? parsed.name : '', params: savedState, restoreId: null }] };
+  } catch (_) { return null; }
+}
+
+function restoreTabsSession(session, { keepCurrentTab = false } = {}) {
+  let activatedId = null;
+  let restored = 0;
+  for (const entry of session.tabs) {
+    try {
+      const audited = ProjectAuditor.audit(entry.params);
+      const snapshot = JSON.stringify(audited);
+      const tab = makeTab({
+        name: entry.name || '',
+        snapshot,
+        storedRecord: { saved_at: entry.saved_at || new Date().toISOString(), name: entry.name || '', project: { format_version: PROJECT_FORMAT_VERSION, app: 'TwisterV2 Web', app_version: APP_VERSION, ...audited } },
+        stageId: (audited.design_pipeline && audited.design_pipeline[0] && audited.design_pipeline[0].id) || 'foundation_1'
+      });
+      tabsState.tabs.push(tab);
+      restored++;
+      if (!activatedId || (entry.restoreId && entry.restoreId === session.activeId)) activatedId = tab.id;
+    } catch (err) {
+      logDebug('Falha ao restaurar uma aba da sessão anterior: ' + ((err && err.message) || err), 'err');
+      showStatusToast(appT('Não foi possível restaurar uma das abas da sessão anterior.'), true);
+    }
+  }
+  if (!restored) return false;
+  const targetId = (keepCurrentTab && tabsState.activeId) ? tabsState.activeId : activatedId;
+  // remove a aba vazia criada na inicialização, se ainda intocada (padrão, sem nome,
+  // sem rascunho e sem histórico) — nunca remove a aba que vai ficar ativa
+  const pristineIdx = tabsState.tabs.findIndex(t => t.id !== targetId && t.snapshot === autosaveDefaultSnapshot && !t.name && !t.storedRecord && !t.undo.length && !t.redo.length);
+  if (pristineIdx >= 0) {
+    if (tabsState.tabs[pristineIdx].id === tabsState.activeId) tabsState.activeId = null;
+    tabsState.tabs.splice(pristineIdx, 1);
+  }
+  if (targetId && targetId !== tabsState.activeId) activateTab(targetId);
+  else renderTabBar();
+  logDebug(appT('Sessão anterior restaurada do salvamento automático.'), 'ok');
+  return true;
+}
+
+function showRestoreTabsDecision(session) {
+  const stamps = session.tabs.map(t => t.saved_at).filter(Boolean).sort();
+  const when = new Date(stamps[stamps.length - 1] || '');
   openDecision({
     kind: 'session',
     title: appT('Sessão anterior encontrada'),
@@ -6097,50 +6497,21 @@ function showAutosaveBanner(parsed) {
       { id: 'restore', label: appT('Restaurar'), primary: true }
     ]
   }).then(res => {
-    if (res && res.button === 'restore') restoreAutosaveSession();
-    else discardAutosaveSession();
-  });
-}
-
-function openSharedProject() {
-  const payload = decisionOverlay.dataset.payload;
-  if (!payload) return;
-  decompressProjectPayload(payload).then(text => {
-    try {
-      const audited = ProjectAuditor.audit(JSON.parse(text));
-      recordUndoSnapshot();
-      stateManager.replace(audited, {reason:'import'});
-      activeStageId = currentParams.design_pipeline[0]?.id || 'foundation_1';
-      viewport.hasFramedOnce = false;
-      autosaveBaseline = stateManager.snapshot();
-      autosaveRecordStale = true;
-      renameProject(decisionOverlay.dataset.name || appT('Projeto compartilhado'));
-      clearShareHash();
-      logDebug(appT('Projeto compartilhado aberto.'), 'ok');
-      syncUI(); requestMeshUpdate(false);
-    } catch (err) {
-      clearShareHash();
-      logDebug(appT('Não foi possível abrir o projeto deste link.'), 'err');
-      showShareError();
+    if (res && res.button === 'restore') {
+      autosaveClear(); // limpa o formato anterior antes de gravar a sessão restaurada
+      restoreTabsSession(session, { keepCurrentTab: hasNonDefaultWork() });
+      persistTabsSession();
+    } else {
+      autosaveClear();
+      logDebug(appT('Sessão automática descartada.'), 'info');
     }
-  }).catch(() => {
-    clearShareHash();
-    logDebug(appT('Não foi possível abrir o projeto deste link.'), 'err');
-    showShareError();
   });
 }
 
-async function readAutosaveDraft() {
-  try {
-    const record = await autosaveRead();
-    if (!record) return null;
-    const parsed = JSON.parse(record);
-    if (!parsed || typeof parsed !== 'object' || !parsed.project) { autosaveClear(); return null; }
-    const {format_version, app, app_version, ...savedState} = parsed.project;
-    if (JSON.stringify(savedState) === autosaveDefaultSnapshot) return null;
-    return parsed;
-  } catch (_) { return null; }
-}
+// Aba inicial: o estado global já corresponde ao projeto padrão.
+tabsState.tabs.push(makeTab({}));
+tabsState.activeId = tabsState.tabs[0].id;
+renderTabBar();
 
 // Compartilhamento de projeto via URL (#p=...): JSON compactado (deflate-raw) em base64url
 const SHARE_HASH_PREFIX = '#p=';
@@ -6197,57 +6568,40 @@ async function decompressProjectPayload(b64) {
   return new TextDecoder().decode(merged);
 }
 
+// Banner de avisos do compartilhamento (link longo ou falha ao abrir), abaixo da barra
+// de abas. A decisão de abrir link não usa mais este banner: links #p= abrem em aba
+// própria no fluxo de inicialização, sem destruir rascunhos.
 const shareBanner = document.createElement('div');
 shareBanner.className = 'autosave-banner';
 shareBanner.hidden = true;
 shareBanner.setAttribute('role', 'status');
 const shareText = document.createElement('span');
 shareText.className = 'autosave-text';
-shareText.textContent = appT('Este link contém um projeto compartilhado.');
-const shareOpenButton = document.createElement('button');
-shareOpenButton.type = 'button';
-shareOpenButton.className = 'primary';
-shareOpenButton.textContent = 'Abrir projeto';
-const shareIgnoreButton = document.createElement('button');
-shareIgnoreButton.type = 'button';
-shareIgnoreButton.textContent = 'Ignorar';
-shareBanner.append(shareText, shareOpenButton, shareIgnoreButton);
-document.getElementById('titlebar').insertAdjacentElement('afterend', shareBanner);
-
-let sharePendingDraft = null;
+const shareDismissButton = document.createElement('button');
+shareDismissButton.type = 'button';
+shareDismissButton.textContent = 'OK';
+shareBanner.append(shareText, shareDismissButton);
+tabbarEl.insertAdjacentElement('afterend', shareBanner);
 
 function hideShareBanner() {
   shareBanner.hidden = true;
 }
 
+shareDismissButton.addEventListener('click', hideShareBanner);
+
 function clearShareHash() {
   try { history.replaceState(null, '', location.pathname + location.search); } catch (_) {}
 }
 
-function resetShareBanner() {
-  shareText.textContent = appT('Este link contém um projeto compartilhado.');
-  shareOpenButton.hidden = false;
-  shareOpenButton.textContent = 'Abrir projeto';
-  shareIgnoreButton.textContent = 'Ignorar';
-}
-
 function showShareError() {
-  resetShareBanner();
   shareText.textContent = appT('Não foi possível abrir o projeto deste link.');
-  shareOpenButton.hidden = true;
   shareBanner.hidden = false;
 }
 
 function showShareInfo(text) {
-  resetShareBanner();
   shareText.textContent = text;
-  shareOpenButton.hidden = true;
-  shareIgnoreButton.textContent = 'OK';
   shareBanner.hidden = false;
 }
-
-shareOpenButton.addEventListener('click', hideShareBanner);
-shareIgnoreButton.addEventListener('click', hideShareBanner);
 
 // Importação de JSON (arrastar/soltar ou botão Abrir JSON): diálogo central pede
 // confirmação quando há projeto atual — padrão para decisões destrutivas.
@@ -6267,28 +6621,17 @@ async function handleProjectFile(file) {
     audited = ProjectAuditor.audit(JSON.parse(await file.text()));
   } catch (err) {
     logDebug('Erro ao ler JSON: ' + err.message, 'err');
+    showStatusToast(appT('Erro ao ler JSON:') + ' ' + file.name, true);
     return;
   }
   const baseName = file.name.replace(/\.json$/i, '');
-  if (stateManager.snapshot() !== autosaveDefaultSnapshot) {
-    const res = await openDecision({
-      kind: 'import',
-      title: appT('Importar projeto'),
-      message: appT('Substituir o projeto atual pelo arquivo importado?'),
-      time: file.name,
-      hint: appT('Escolha uma opção para continuar.'),
-      allowEscape: true,
-      buttons: [
-        { id: 'cancel', label: appT('Cancelar') },
-        { id: 'replace', label: appT('Substituir'), primary: true }
-      ]
-    });
-    if (!res || res.button !== 'replace') {
-      logDebug('Importacao cancelada.', 'info');
-      return;
-    }
+  // Com abas, importar não destrói trabalho: aba intocada (estado inicial) recebe o
+  // arquivo no lugar; aba com trabalho em andamento faz o arquivo abrir em nova aba.
+  if (stateManager.snapshot() === autosaveDefaultSnapshot) {
+    applyImportedProject(audited, baseName);
+    return;
   }
-  applyImportedProject(audited, baseName);
+  if (addProjectTab(audited, baseName)) logDebug('JSON importado com sucesso: ' + baseName, 'ok');
 }
 
 document.getElementById('btn-share-link').addEventListener('click', async () => {
@@ -6330,56 +6673,48 @@ document.getElementById('btn-share-link').addEventListener('click', async () => 
     }
     else window.prompt(appT('Copie o link do projeto:'), url);
   } catch (err) {
-    logDebug(appT('Não foi possível ler o projeto deste link.'), 'err');
+    logDebug(appT('Erro ao criar o link do projeto: ') + ((err && err.message) || err), 'err');
+    showStatusToast(appT('Não foi possível criar o link do projeto.'), true);
   }
 });
 
+// Inicialização com abas: um link #p= abre em aba própria (não destrói rascunhos) e a
+// sessão anterior, se existir, é oferecida para restauração em seguida.
 (async () => {
-  const draft = await readAutosaveDraft();
+  const session = await readTabsSession();
   if (location.hash.startsWith(SHARE_HASH_PREFIX) && typeof DecompressionStream !== 'undefined') {
-    sharePendingDraft = draft;
     const parsedHash = parseShareHash(location.hash);
-    decisionOverlay.dataset.payload = parsedHash.payload;
-    decisionOverlay.dataset.name = parsedHash.name;
-    openDecision({
-      kind: 'link',
-      title: appT('Este link contém um projeto compartilhado.'),
-      time: parsedHash.name,
-      message: draft ? appT('Você tem um rascunho local salvo; abrir o link não o apaga, mas a primeira edição nele o substituirá.') : (parsedHash.name ? '\u00a0' : ''),
-      hint: appT('Escolha uma opção para continuar.'),
-      buttons: [
-        { id: 'ignore', label: draft ? appT('Manter rascunho') : appT('Ignorar') },
-        { id: 'open', label: appT('Abrir projeto'), primary: true }
-      ]
-    }).then(res => {
-      if (res && res.button === 'open') {
-        sharePendingDraft = null;
-        openSharedProject();
-        return;
+    decompressProjectPayload(parsedHash.payload).then(text => {
+      try {
+        const audited = ProjectAuditor.audit(JSON.parse(text));
+        addProjectTab(audited, parsedHash.name || appT('Projeto compartilhado'));
+        clearShareHash();
+        logDebug(appT('Projeto compartilhado aberto.'), 'ok');
+      } catch (err) {
+        clearShareHash();
+        logDebug(appT('Não foi possível abrir o projeto deste link.'), 'err');
+        showShareError();
       }
+      if (session) showRestoreTabsDecision(session);
+    }).catch(() => {
       clearShareHash();
-      const pending = sharePendingDraft;
-      sharePendingDraft = null;
-      if (pending) showAutosaveBanner(pending);
+      logDebug(appT('Não foi possível abrir o projeto deste link.'), 'err');
+      showShareError();
+      if (session) showRestoreTabsDecision(session);
     });
     return;
   }
   if (location.hash.startsWith(SHARE_HASH_PREFIX)) {
-    sharePendingDraft = draft;
     clearShareHash();
     openDecision({
       kind: 'link-unsupported',
       title: appT('Este link contém um projeto compartilhado.'),
       message: appT('Seu navegador não suporta links de projeto.'),
       buttons: [{ id: 'ok', label: 'OK', primary: true }]
-    }).then(() => {
-      const pending = sharePendingDraft;
-      sharePendingDraft = null;
-      if (pending) showAutosaveBanner(pending);
-    });
+    }).then(() => { if (session) showRestoreTabsDecision(session); });
     return;
   }
-  if (draft) showAutosaveBanner(draft);
+  if (session) showRestoreTabsDecision(session);
 })();
 
 // Colar um link #p= numa janela onde o app ja esta aberto nao recarrega a pagina (so muda o hash);
@@ -6441,7 +6776,16 @@ function downloadProjectJsonFile(fileName) {
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
+// Botão Salvar JSON (e Ctrl/Cmd+S): mesma janela nativa de salvamento do diálogo de
+// fechar aba, sem fechar a aba. Sem a File System Access API (ou se a janela nativa não
+// abrir), usa o diálogo do app com nome preenchido/editável + download clássico.
 async function saveProjectJsonFlow() {
+  if (typeof window.showSaveFilePicker === 'function') {
+    const result = await saveProjectNative();
+    // Gravação confirmada, cancelamento ou erro já tratados: nada mais a fazer.
+    if (result !== 'unavailable') return;
+    // 'unavailable': segue para o fluxo de download abaixo
+  }
   const fileName = await promptFileName({
     title: appT('Salvar projeto em JSON'),
     defaultName: projectDisplayName() + '.json',
@@ -6449,7 +6793,13 @@ async function saveProjectJsonFlow() {
     confirmLabel: appT('Salvar')
   });
   if (!fileName) return;
-  downloadProjectJsonFile(fileName);
+  try {
+    downloadProjectJsonFile(fileName);
+  } catch (err) {
+    logDebug('Erro ao salvar o arquivo JSON: ' + ((err && err.message) || err), 'err');
+    showStatusToast(appT('Não foi possível salvar o arquivo JSON.'), true);
+    return;
+  }
   renameProject(fileName.replace(/\.json$/i, ''));
   logDebug(appT('Projeto salvo como') + ' ' + fileName, 'ok');
 }
@@ -6499,6 +6849,7 @@ async function exportStlBinary(fileName) {
     logDebug('STL Binário exportado (' + nF.toLocaleString() + ' faces).', 'ok');
   } catch (err) {
     logDebug('Erro ao exportar STL: ' + (err.message || err), 'err');
+    showStatusToast(appT('Não foi possível exportar o STL.'), true);
   } finally {
     if (progress) progress.hidden = true;
     if (btnStl) btnStl.disabled = false;
