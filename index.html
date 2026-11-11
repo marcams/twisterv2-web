@@ -15,7 +15,7 @@ FOR A PARTICULAR PURPOSE. See LICENSE for the complete license text.
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TwisterV2 Web v2.1.3</title>
+<title>TwisterV2 Web v2.1.4</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
         integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ=="
         crossorigin="anonymous"></script>
@@ -246,7 +246,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
 <header id="titlebar">
   <div class="brand">
     <span>TwisterV2 Web</span>
-    <span class="brand-badge">v2.1.3</span>
+    <span class="brand-badge">v2.1.4</span>
     <span id="project-name" class="project-name" data-i18n-ignore="true" title="Projeto novo">Projeto novo</span>
   </div>
   <div class="toolbar">
@@ -282,11 +282,11 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
         <div class="about-kicker">Sobre o aplicativo</div>
         <h1 id="about-title">TwisterV2 Web</h1>
       </div>
-      <span class="brand-badge">v2.1.3</span>
+      <span class="brand-badge">v2.1.4</span>
     </div>
     <p id="about-description" class="about-description">Ferramenta de modelagem paramétrica para criar, visualizar e exportar luminárias Twister em 3D.</p>
     <dl class="about-meta">
-      <div><dt>Versão</dt><dd>2.1.3</dd></div>
+      <div><dt>Versão</dt><dd>2.1.4</dd></div>
       <div><dt>Criador</dt><dd>Marcelo Silva<br><a href="mailto:marcams@gmail.com">marcams@gmail.com</a></dd></div>
       <div><dt>Aplicativo</dt><dd>TwisterV2 Web</dd></div>
       <div><dt>Licença do aplicativo</dt><dd><a href="LICENSE" target="_blank" rel="noopener noreferrer">GNU AGPL v3.0 ou posterior</a></dd></div>
@@ -494,7 +494,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, .stage-card:foc
 <footer id="statusbar">
   <div class="status-left">
     <span id="status-dot" class="status-dot"></span>
-    <span id="status-text" role="status" aria-live="polite">Inicializando TwisterV2 v2.1.3...</span>
+    <span id="status-text" role="status" aria-live="polite">Inicializando TwisterV2 v2.1.4...</span>
   </div>
   <progress id="mesh-progress" max="100" value="0" aria-label="Progresso da geração da malha" hidden></progress>
 </footer>
@@ -572,7 +572,7 @@ const APP_TRANSLATIONS = {
   'Tangentes do nó:':['Node tangents:','Tangentes do nó:','Tangentes del nodo:'], 'Independentes':['Independent','Independentes','Independientes'], 'Vinculadas':['Linked','Vinculadas','Vinculadas'],
   'Vincular tangentes do nó':['Link node tangents','Vincular tangentes do nó','Vincular tangentes del nodo'], 'Desvincular tangentes do nó':['Unlink node tangents','Desvincular tangentes do nó','Desvincular tangentes del nodo'],
   'Excluir nó':['Delete node','Excluir nó','Eliminar nodo'], 'Inserir nó com valores…':['Insert node with values…','Inserir nó com valores…','Insertar nodo con valores…'],
-  'Inicializando TwisterV2 v2.1.3...':['Initializing TwisterV2 v2.1.3...','Inicializando TwisterV2 v2.1.3...','Iniciando TwisterV2 v2.1.3...'], 'Progresso da geração da malha':['Mesh generation progress','Progresso da geração da malha','Progreso de generación de malla'],
+  'Inicializando TwisterV2 v2.1.4...':['Initializing TwisterV2 v2.1.4...','Inicializando TwisterV2 v2.1.4...','Iniciando TwisterV2 v2.1.4...'], 'Progresso da geração da malha':['Mesh generation progress','Progresso da geração da malha','Progreso de generación de malla'],
   'Escala radial':['Radial scale','Escala radial','Escala radial'], 'Normalização da forma':['Shape normalization','Normalização da forma','Normalización de la forma'], 'Multiplicador':['Multiplier','Multiplicador','Multiplicador'],
   'Raio externo fixo':['Fixed outer radius','Raio externo fixo','Radio exterior fijo'], 'Raio interno fixo':['Fixed inner radius','Raio interno fixo','Radio interior fijo'], 'Forma da fundação':['Foundation shape','Forma da fundação','Forma de la base'],
   'Círculo':['Circle','Círculo','Círculo'], 'Quadrado':['Square','Quadrado','Cuadrado'], 'Polígono':['Polygon','Polígono','Polígono'], 'Estrela':['Star','Estrela','Estrella'], 'Coração':['Heart','Coração','Corazón'], 'Gota':['Teardrop','Gota','Gota'],
@@ -729,7 +729,7 @@ function projectDisplayName() {
 }
 function updateProjectTitle() {
   const label = projectDisplayName();
-  document.title = `${label} · ${appT('TwisterV2 Web v2.1.3')}`;
+  document.title = `${label} · ${appT('TwisterV2 Web v2.1.4')}`;
   const el = document.getElementById('project-name');
   if (el) { el.textContent = label; el.title = label; }
 }
@@ -2765,7 +2765,7 @@ StageRegistry.register('harmonics',HarmonicsStage,'Harmonics');
 StageRegistry.register('reaction_diffusion',ReactionDiffusionStage,'Reaction Diffusion');
 const FACE_ROLE_OUTER_WALL=0,FACE_ROLE_INNER_WALL=1,FACE_ROLE_CAP=2,FACE_ROLE_RIM=3;
 
-const APP_VERSION='2.1.3';
+const APP_VERSION='2.1.4';
 const PROJECT_FORMAT_VERSION=2;
 
 class ProjectAuditor {
@@ -6591,7 +6591,8 @@ const THUMB_MAX_LAYERS = 96;
 const THUMB_MAX_ANGULAR = 144;
 const THUMB_RD_MAX_GRID = 128;
 const THUMB_RD_MAX_ITERATIONS = 1500;
-const THUMB_TIMEOUT_MS = 8000;
+const THUMB_TIMEOUT_MS = 8000; // aviso, sem descartar um resultado ainda em andamento
+const THUMB_HARD_TIMEOUT_MS = 60000; // limite real; encerra o Worker antes do proximo item
 const THUMB_CACHE_MAX_ENTRIES = 48;
 const THUMB_CACHE_PREFIX = 'thumb:';
 const THUMB_FALLBACK_NOTICE = 'Miniatura gerada na thread principal: Worker indisponível; a interface pode ficar lenta por alguns segundos.';
@@ -6679,11 +6680,11 @@ function galleryAvailable() {
 // miniaturas, em vez de um Worker temporario por imagem (o churn de criar e
 // destruir isolates pressionou a memoria nativa nas medicoes do prototipo).
 // Encerrado quando a galeria fecha; recriado na proxima abertura. Se o Worker
-// faltar ou falhar, cai para a thread principal com aviso, como o app ja faz.
+// faltar ou falhar, o cartao continua disponivel, mas a falha e registrada.
 let thumbWorker = null;
 let thumbWorkerUrl = null;
 let thumbWorkerJobId = 0;
-let thumbFallbackWarned = false;
+let thumbPendingJob = null;
 
 function getThumbWorker() {
   if (thumbWorker) return thumbWorker;
@@ -6700,33 +6701,45 @@ function getThumbWorker() {
 }
 
 function terminateThumbWorker() {
+  if (thumbPendingJob) thumbPendingJob.cancel();
   if (thumbWorker) { thumbWorker.terminate(); thumbWorker = null; }
 }
 
-function thumbGenerateMesh(params) {
+function thumbGenerateMesh(params, onSlow = () => {}) {
   return new Promise((resolve, reject) => {
-    const generateLocally = () => {
-      if (!thumbFallbackWarned) {
-        thumbFallbackWarned = true;
-        logDebug(appT(THUMB_FALLBACK_NOTICE), 'warn');
-      }
-      try { resolve(generateMeshData(params)); } catch (err) { reject(err); }
-    };
     const worker = getThumbWorker();
-    if (!worker) { generateLocally(); return; }
+    // Nunca roda a malha da galeria na thread da interface: o modelo continua
+    // acessivel pelo cartao, mesmo se o navegador nao oferecer Workers.
+    if (!worker) { reject(new Error('Worker de miniatura indisponivel.')); return; }
+    if (thumbPendingJob) { reject(new Error('Ja existe uma miniatura em andamento.')); return; }
     const id = ++thumbWorkerJobId;
-    const cleanup = () => { if (thumbWorker === worker) { worker.onmessage = null; worker.onerror = null; worker.onmessageerror = null; } };
+    let settled = false, softTimer, hardTimer;
+    const job = { cancel: () => finish(new Error('Geracao de miniatura cancelada.'), null, true) };
+    const finish = (error, result, stopWorker = false) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(softTimer); clearTimeout(hardTimer);
+      worker.onmessage = null; worker.onerror = null; worker.onmessageerror = null;
+      if (thumbPendingJob === job) thumbPendingJob = null;
+      if (stopWorker) {
+        worker.terminate();
+        if (thumbWorker === worker) thumbWorker = null;
+      }
+      if (error) reject(error); else resolve(result);
+    };
+    thumbPendingJob = job;
+    softTimer = setTimeout(() => { if (!settled) onSlow(); }, THUMB_TIMEOUT_MS);
+    hardTimer = setTimeout(() => finish(new Error('tempo limite de 60 s excedido; Worker encerrado'), null, true), THUMB_HARD_TIMEOUT_MS);
     worker.onmessage = event => {
       const data = event.data || {};
-      if (data.type === 'progress' || data.id !== id) return;
-      cleanup();
-      if (data.type === 'result' && meshWorkerClient._hasUsableResult(data.result)) resolve(data.result);
-      else generateLocally();
+      if (data.id !== id || data.type === 'progress') return;
+      if (data.type === 'result' && meshWorkerClient._hasUsableResult(data.result)) finish(null, data.result);
+      else finish(new Error(data.error || 'Resultado de miniatura invalido.'), null, true);
     };
-    worker.onerror = () => { cleanup(); terminateThumbWorker(); generateLocally(); };
-    worker.onmessageerror = () => { cleanup(); terminateThumbWorker(); generateLocally(); };
+    worker.onerror = event => finish(new Error(event.message || 'Falha no Worker de miniatura.'), null, true);
+    worker.onmessageerror = () => finish(new Error('Falha ao receber a miniatura do Worker.'), null, true);
     try { worker.postMessage({id, params}); }
-    catch (err) { cleanup(); generateLocally(); }
+    catch (err) { finish(err, null, true); }
   });
 }
 
@@ -6853,12 +6866,6 @@ async function thumbCacheClear() {
   });
 }
 
-function withThumbTimeout(promise, ms) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error('tempo limite de ' + Math.round(ms / 1000) + ' s excedido')), ms))
-  ]);
-}
 
 function setThumbCardImage(card, dataUrl, label) {
   const thumb = card.querySelector('.preset-thumb');
@@ -6914,7 +6921,15 @@ async function populatePresetThumbs(runRecord) {
       const tParams = performance.now();
       const params = buildThumbParams(item.text);
       const tMesh = performance.now();
-      const result = await withThumbTimeout(thumbGenerateMesh(params), THUMB_TIMEOUT_MS);
+      const result = await thumbGenerateMesh(params, () => {
+        item.slow = true;
+        if (token === thumbQueueToken && !presetDropdown.hidden) {
+          const thumb = item.card.querySelector('.preset-thumb');
+          if (thumb) thumb.title = appT('Gerando miniatura…');
+        }
+        logDebug('Miniatura do preset ' + item.label + ': geracao acima de 8 s; aguardando o Worker (limite de 60 s).', 'info');
+      });
+      if (token !== thumbQueueToken || presetDropdown.hidden) { runRecord.aborted = true; break; }
       const tRender = performance.now();
       const dataUrl = renderThumbDataUrl(result);
       const tEnd = performance.now();
@@ -6925,6 +6940,7 @@ async function populatePresetThumbs(runRecord) {
       if (token === thumbQueueToken && !presetDropdown.hidden) setThumbCardImage(item.card, dataUrl, item.label);
       generated++;
     } catch (err) {
+      if (token !== thumbQueueToken || presetDropdown.hidden) { runRecord.aborted = true; break; }
       item.ms = performance.now() - started;
       item.error = String((err && err.message) || err);
       if (token === thumbQueueToken && !presetDropdown.hidden) setThumbCardError(item.card);
@@ -7053,11 +7069,11 @@ function renderPresetDropdown() {
 window.__twisterThumbTest = {
   stats: () => thumbStats.runs.map(run => ({
     startedAt: run.startedAt, finishedAt: run.finishedAt, aborted: run.aborted,
-    items: run.items.map(item => ({ label: item.label, fromCache: item.fromCache, ms: item.ms, stages: item.stages || null, error: item.error }))
+    items: run.items.map(item => ({ label: item.label, fromCache: item.fromCache, ms: item.ms, stages: item.stages || null, error: item.error, slow: !!item.slow }))
   })),
   clearCache: async () => { thumbMemoryCache.clear(); await thumbCacheClear(); },
   resetStats: () => { thumbStats.runs.length = 0; },
-  engine: () => ({ version: THUMB_ENGINE_VERSION, size: THUMB_SIZE_PX, maxLayers: THUMB_MAX_LAYERS, maxAngular: THUMB_MAX_ANGULAR, rdGrid: THUMB_RD_MAX_GRID, rdIterations: THUMB_RD_MAX_ITERATIONS, timeoutMs: THUMB_TIMEOUT_MS })
+  engine: () => ({ version: THUMB_ENGINE_VERSION, size: THUMB_SIZE_PX, maxLayers: THUMB_MAX_LAYERS, maxAngular: THUMB_MAX_ANGULAR, rdGrid: THUMB_RD_MAX_GRID, rdIterations: THUMB_RD_MAX_ITERATIONS, timeoutMs: THUMB_TIMEOUT_MS, hardTimeoutMs: THUMB_HARD_TIMEOUT_MS })
 };
 
 

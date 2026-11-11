@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.1.4 - 2026-11-11
+
+Changes since v2.1.3 (published 2026-11-09).
+
+### Fixed
+- **Preset gallery thumbnails no longer give up after 8 seconds.** A thumbnail still being generated when the 8-second mark passes now keeps running until it finishes, so heavy presets (such as Presets 04 and 05) get their thumbnails.
+- **A stuck thumbnail generation is terminated after 60 seconds** before the queue moves on to the next one, so one failed generation no longer delays the rest.
+- **Closing the preset gallery cancels the pending thumbnail generation.**
+- **A thumbnail-generation error no longer runs heavy synchronous work on the interface thread.** The thumbnail shows the error instead, and the model remains openable from its card.
+
+### Notes and limits
+- Mesh engine, built-in presets and quality parameters are unchanged from v2.1.3.
+
 ## v2.1.3 - 2026-11-09
 
 Changes since v2.1.2 (published 2026-11-06).
